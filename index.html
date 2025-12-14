@@ -2,59 +2,86 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>3DPrintedUSA – Bitcoin 3D Print Shop</title>
+<title>3DPrintedUSA – Complete Bitcoin 3D Print Shop</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Inter,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
 header{padding:25px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222}
 header h1{font-size:24px;font-weight:800}
+nav a{color:#fff;margin-left:20px;text-decoration:none;opacity:.8}
+nav a:hover{opacity:1}
 .hero{text-align:center;padding:120px 30px}
-.hero h2{font-size:48px;font-weight:800;margin-bottom:15px}
+.hero h2{font-size:50px;font-weight:800;margin-bottom:15px}
 .hero p{opacity:.8;max-width:700px;margin:auto}
 .section{padding:70px 40px;max-width:1200px;margin:auto}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px;margin-top:40px}
 .product{background:#111;border:1px solid #222;border-radius:14px;padding:25px}
 .price{opacity:.7;margin-bottom:15px}
 button{background:#1f8cff;border:none;color:#fff;padding:10px 18px;border-radius:20px;cursor:pointer}
+#cart{position:fixed;top:90px;right:20px;background:#111;border:1px solid #222;border-radius:14px;padding:20px;width:280px}
+#cart h4{margin-bottom:10px}
+.cart-item{font-size:14px;opacity:.85;margin-bottom:5px}
+#wishlist{position:fixed;top:90px;left:20px;background:#111;border:1px solid #222;border-radius:14px;padding:20px;width:280px}
+#wishlist h4{margin-bottom:10px}
+.wish-item{font-size:14px;opacity:.85;margin-bottom:5px}
 #paybar{display:none;position:fixed;bottom:0;left:0;width:100%;background:#111;border-top:1px solid #222;padding:20px;text-align:center}
 #paybar p{opacity:.85;margin-top:8px;font-size:14px}
 footer{text-align:center;padding:40px;border-top:1px solid #222;opacity:.6}
+.chat-btn{position:fixed;bottom:25px;right:25px;background:#1f8cff;color:#fff;border:none;padding:15px 22px;border-radius:50px;cursor:pointer;box-shadow:0 0 25px rgba(31,140,255,0.5);z-index:200}
 </style>
 </head>
 <body>
-
 <header>
 <h1>3DPrintedUSA</h1>
+<nav>
+<a href="#shop">Shop</a>
+<a href="#checkout">Checkout</a>
+<a href="#about">About</a>
+</nav>
 </header>
 
 <section class="hero">
 <h2>Premium 3D Printed Products</h2>
-<p>Bitcoin-only checkout. Anonymous. Secure. No accounts required.</p>
+<p>Bitcoin-only checkout. Anonymous, secure, no accounts required. Browse products and add them to your cart or wishlist.</p>
 </section>
 
-<section class="section">
+<section class="section" id="shop">
 <h2>Shop</h2>
 <div class="products">
 <div class="product">
 <h3>Desk Organizer</h3>
 <div class="price">$24.99</div>
-<button onclick="showPay()">Buy with Bitcoin</button>
+<button onclick="addToCart('Desk Organizer',24.99)">Add to Cart</button>
+<button onclick="addToWishlist('Desk Organizer')">Add to Wishlist</button>
 </div>
 <div class="product">
 <h3>Phone Stand</h3>
 <div class="price">$14.99</div>
-<button onclick="showPay()">Buy with Bitcoin</button>
+<button onclick="addToCart('Phone Stand',14.99)">Add to Cart</button>
+<button onclick="addToWishlist('Phone Stand')">Add to Wishlist</button>
 </div>
 <div class="product">
 <h3>Custom 3D Print</h3>
 <div class="price">Custom</div>
-<button onclick="showPay()">Buy with Bitcoin</button>
+<button onclick="addToCart('Custom 3D Print',0)">Add to Cart</button>
+<button onclick="addToWishlist('Custom 3D Print')">Add to Wishlist</button>
 </div>
 </div>
 </section>
+
+<div id="cart">
+<h4>Shopping Cart</h4>
+<div id="cartItems"></div>
+<p>Total: $<span id="total">0.00</span></p>
+<button onclick="showPay()">Checkout (Bitcoin)</button>
+</div>
+
+<div id="wishlist">
+<h4>Wishlist</h4>
+<div id="wishItems"></div>
+</div>
 
 <div id="paybar">
 <strong>Bitcoin Address</strong><br>
@@ -62,11 +89,29 @@ footer{text-align:center;padding:40px;border-top:1px solid #222;opacity:.6}
 <p>Address for shipping and name for shipping (no real name required)</p>
 </div>
 
+<section class="section" id="about">
+<h2>About 3DPrintedUSA</h2>
+<p>3DPrintedUSA delivers professional-grade 3D printing solutions focused on quality, reliability, and modern design. Anonymous crypto checkout ensures privacy and safety.</p>
+</section>
+
 <footer>
 © 2025 3DPrintedUSA · Bitcoin Payments Only
 </footer>
 
+<button class="chat-btn" onclick="alert('Chat loads below')">💬 Chat</button>
+
 <script>
+// Cart logic
+let cart=[];
+function addToCart(name,price){cart.push({name,price});renderCart();}
+function renderCart(){let el=document.getElementById('cartItems');el.innerHTML='';let total=0;cart.forEach(i=>{el.innerHTML+=`<div class='cart-item'>${i.name}</div>`;total+=i.price});document.getElementById('total').innerText=total.toFixed(2)}
+
+// Wishlist logic
+let wishlist=[];
+function addToWishlist(name){wishlist.push(name);renderWishlist();}
+function renderWishlist(){let el=document.getElementById('wishItems');el.innerHTML='';wishlist.forEach(i=>{el.innerHTML+=`<div class='wish-item'>${i}</div>`})}
+
+// Show Bitcoin paybar
 function showPay(){document.getElementById('paybar').style.display='block'}
 
 // Anonymous chat username
@@ -77,7 +122,7 @@ var Tawk_API=Tawk_API||{};
 Tawk_API.visitor = { name: anonName };
 var Tawk_LoadStart=new Date();
 (function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+var s1=document.createElement('script'),s0=document.getElementsByTagName('script')[0];
 s1.async=true;
 s1.src='https://embed.tawk.to/YOUR_TAWK_ID/1abcdef';
 s1.charset='UTF-8';
@@ -85,6 +130,5 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
-
 </body>
 </html>
