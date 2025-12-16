@@ -34,7 +34,7 @@ overflow-x:hidden;
 .ship-banner{
 position:fixed;
 top:0;left:0;right:0;
-height:40px;
+height:42px;
 background:var(--danger);
 display:flex;
 align-items:center;
@@ -56,7 +56,7 @@ animation:marquee 7s ease-in-out infinite alternate;
 /* HEADER */
 header{
 position:sticky;
-top:40px;
+top:42px;
 background:var(--bg);
 border-bottom:1px solid var(--border);
 z-index:250;
@@ -89,7 +89,7 @@ padding-top:120px;
 .hero-box{
 background:rgba(0,0,0,.65);
 padding:40px 30px;
-border-radius:20px;
+border-radius:22px;
 max-width:900px;
 text-align:center;
 box-shadow:0 20px 60px var(--shadow);
@@ -98,29 +98,20 @@ box-shadow:0 20px 60px var(--shadow);
 .hero p{opacity:.9}
 .stars{color:#f5c542;margin-top:10px;font-size:20px}
 
-/* MATERIALS */
+/* MATERIALS – FILAMENT BACKGROUND */
 .materials{
 position:relative;
-padding:120px 20px;
-}
-.materials-bg{
-position:absolute;inset:0;
-background:url("filament.png") center/cover no-repeat;
-}
-.materials-overlay{
-position:absolute;inset:0;
-background:rgba(0,0,0,.65);
+padding:140px 20px;
+background:
+linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+url("filament.png") center/cover no-repeat;
 }
 .materials-inner{
-position:relative;
 max-width:900px;
 margin:auto;
-padding:40px;
-background:rgba(0,0,0,.4);
-border-radius:20px;
 text-align:center;
-box-shadow:0 20px 60px var(--shadow);
 }
+.materials h2{font-size:38px;margin-bottom:18px}
 
 /* PRODUCTS */
 .section{padding:90px 0}
@@ -134,7 +125,7 @@ gap:30px;
 .product{
 background:var(--panel);
 border:1px solid var(--border);
-border-radius:18px;
+border-radius:20px;
 padding:20px;
 text-align:center;
 transition:.3s;
@@ -142,18 +133,18 @@ cursor:pointer;
 }
 .product:hover{
 transform:translateY(-6px);
-box-shadow:0 14px 30px var(--shadow);
+box-shadow:0 16px 35px var(--shadow);
 }
 .product img{
 width:100%;
-height:180px;
+height:190px;
 object-fit:cover;
-border-radius:12px;
+border-radius:14px;
 margin-bottom:12px;
 }
 .orders{color:var(--ok);font-size:14px;margin-bottom:8px}
 
-/* BUTTONS */
+/* BUTTON */
 button{
 background:var(--accent);
 border:none;
@@ -173,7 +164,7 @@ top:20px;right:20px;
 width:360px;
 background:var(--panel);
 padding:22px;
-border-radius:18px;
+border-radius:20px;
 z-index:500;
 box-shadow:0 20px 60px var(--shadow);
 }
@@ -187,7 +178,7 @@ font-size:20px;background:none;border:none;color:#fff;
 display:none;
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.8);
+background:rgba(0,0,0,.85);
 z-index:600;
 align-items:center;
 justify-content:center;
@@ -196,8 +187,8 @@ justify-content:center;
 background:var(--panel);
 max-width:420px;
 width:90%;
-border-radius:20px;
-padding:25px;
+border-radius:22px;
+padding:26px;
 text-align:center;
 box-shadow:0 20px 60px var(--shadow);
 }
@@ -205,7 +196,7 @@ box-shadow:0 20px 60px var(--shadow);
 width:100%;
 height:220px;
 object-fit:cover;
-border-radius:14px;
+border-radius:16px;
 margin-bottom:14px;
 }
 
@@ -215,7 +206,7 @@ position:fixed;
 bottom:140px;
 right:20px;
 background:var(--accent);
-padding:14px 24px;
+padding:14px 26px;
 border-radius:30px;
 font-weight:700;
 opacity:0;
@@ -245,6 +236,7 @@ opacity:.7;
 /* MOBILE */
 @media(max-width:700px){
 .hero h2{font-size:32px}
+.materials{padding:100px 20px}
 }
 </style>
 </head>
@@ -274,8 +266,6 @@ opacity:.7;
 </section>
 
 <section class="materials">
-<div class="materials-bg"></div>
-<div class="materials-overlay"></div>
 <div class="materials-inner">
 <h2>Our Materials & Process</h2>
 <p>
@@ -299,7 +289,7 @@ Bitcoin-only payments protect privacy. Discreet worldwide packaging.
 <p>Total: $<span id="total">0.00</span></p>
 </div>
 
-<!-- PRODUCT MODAL -->
+<!-- MODAL -->
 <div id="modal" onclick="closeModal(event)">
 <div class="modal-box">
 <button class="close" onclick="hideModal()">×</button>
@@ -327,43 +317,43 @@ last=cur;
 });
 
 const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
-const base=rand(900,1400);
+const base=rand(900,1600);
 
 const products=[
 {
 name:"Not a Glock .22LR Kit",
-price:399,
+price:699,
 img:"NAG2.jpg",
-orders:base+rand(0,150),
-desc:"High-quality precision printed kit using reinforced PLA+ filament."
+orders:base+rand(0,200),
+desc:"High precision premium PLA+ kit reinforced with carbon and metal particles."
 },
 {
 name:"HD22 Kit",
-price:549,
+price:849,
 img:"hs222.jpg",
-orders:base+rand(0,150),
-desc:"Durable and reliable design with 100% infill construction."
+orders:base+rand(0,200),
+desc:"Heavy-duty design, 100% infill, built for maximum durability."
 },
 {
 name:"Gambino Kit",
-price:279,
+price:549,
 img:"gambino2.jpg",
-orders:base+rand(0,150),
-desc:"Compact design, strong material blend, tested for durability."
+orders:base+rand(0,200),
+desc:"Compact high-strength printed kit with reinforced structure."
 },
 {
 name:"Cabfare Kit",
-price:229,
+price:499,
 img:"cabfare2.jpg",
-orders:base+rand(0,150),
-desc:"Reinforced structure for long-term reliability."
+orders:base+rand(0,200),
+desc:"Balanced performance kit with thick walls and solid infill."
 },
 {
 name:"Harlot Kit",
-price:179,
+price:429,
 img:"harlot2.jpg",
-orders:base+rand(0,150),
-desc:"Minimalist design, lightweight and extremely strong."
+orders:base+rand(0,200),
+desc:"Minimalist yet extremely strong PLA+ construction."
 }
 ];
 
@@ -371,10 +361,9 @@ const cart=[];
 let activeProduct=null;
 
 function render(){
-const el=document.getElementById("products");
-el.innerHTML="";
+productsDiv.innerHTML="";
 products.forEach((p,i)=>{
-el.innerHTML+=`
+productsDiv.innerHTML+=`
 <div class="product" onclick="showModal(${i})">
 <img src="${p.img}">
 <h3>${p.name}</h3>
@@ -384,6 +373,7 @@ el.innerHTML+=`
 </div>`;
 });
 }
+const productsDiv=document.getElementById("products");
 render();
 
 function showModal(i){
@@ -395,7 +385,6 @@ mPrice.innerText=activeProduct.price;
 mOrders.innerText=activeProduct.orders;
 modal.style.display="flex";
 }
-
 function hideModal(){modal.style.display="none"}
 function closeModal(e){if(e.target.id==="modal")hideModal()}
 
@@ -405,19 +394,17 @@ updateCart();
 toast();
 hideModal();
 }
-
 function updateCart(){
 let t=0,h="";
 cart.forEach(i=>{t+=i.price;h+=`${i.name}<br>`});
 cartItems.innerHTML=h;
 total.innerText=t.toFixed(2);
 }
-
 function toast(){
-const t=document.getElementById("toast");
-t.classList.add("show");
-setTimeout(()=>t.classList.remove("show"),1400);
+toastEl.classList.add("show");
+setTimeout(()=>toastEl.classList.remove("show"),1400);
 }
+const toastEl=document.getElementById("toast");
 
 function showCart(){cartPopup.style.display="block"}
 function closeCart(){cartPopup.style.display="none"}
