@@ -21,7 +21,7 @@ h1,h2,h3,h4,h5{margin-bottom:16px;font-weight:800;}
 p{margin-bottom:16px;opacity:.9;}
 
 /* Banner */
-.ship-banner{position:fixed;top:0;left:0;right:0;height:36px;display:flex;align-items:center;justify-content:center;background:var(--danger);font-weight:800;letter-spacing:.3px;z-index:200;box-shadow:0 2px 8px var(--shadow);}
+.ship-banner{position:fixed;top:0;left:0;right:0;height:36px;display:flex;align-items:center;justify-content:center;background:var(--danger);font-weight:800;letter-spacing:.3px;z-index:200;box-shadow:0 2px 8px var(--shadow);font-size:16px;}
 
 /* Header */
 header{position:sticky;top:36px;background:var(--bg);border-bottom:1px solid var(--border);z-index:150;box-shadow:0 2px 10px var(--shadow);}
@@ -45,7 +45,7 @@ nav a:hover{opacity:1; color:var(--accent);}
 .product{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center;transition:transform .3s, box-shadow .3s;cursor:pointer;}
 .product:hover{transform:translateY(-4px);box-shadow:0 8px 20px var(--shadow);}
 .carousel{display:flex;overflow-x:auto;gap:10px;scroll-snap-type:x mandatory;width:100%;margin-bottom:10px;}
-.carousel img{width:100%;border-radius:10px;scroll-snap-align:start;flex-shrink:0;transition:.3s;}
+.carousel img{width:100%;border-radius:10px;scroll-snap-align:start;flex-shrink:0;transition:.3s;object-fit:cover;}
 select{margin:10px 0;padding:8px;border-radius:10px;background:#0e0e0e;color:#fff;border:1px solid var(--border);width:100%;}
 
 /* Buttons */
@@ -74,10 +74,18 @@ footer{text-align:center;padding:80px 20px;border-top:1px solid var(--border);op
 .hero h2{font-size:44px}
 .products{grid-template-columns:1fr}
 }
+
 @media(max-width:600px){
-.hero h2{font-size:36px}
-.hero p{font-size:18px}
-.section{padding:60px 15px}
+.hero{padding:80px 15px 40px 15px;}
+.hero h2{font-size:28px;}
+.hero p{font-size:16px;}
+.section{padding:60px 15px;}
+.products{grid-template-columns:1fr;gap:20px;}
+.product .carousel img{height:200px;}
+.cart-fab{right:15px;bottom:60px;}
+.ship-banner{height:28px;font-size:14px;}
+select, button{font-size:16px;padding:10px 16px;}
+.stack .product p{font-size:14px;}
 }
 </style>
 </head>
@@ -253,10 +261,3 @@ fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=u
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
