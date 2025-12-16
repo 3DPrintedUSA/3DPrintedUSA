@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>3DPrintedUSA – Premium 3D Printed Products</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -60,10 +60,20 @@ nav a{color:#fff;margin-left:18px;text-decoration:none;opacity:.85;font-weight:6
 nav a:hover{opacity:1; color:var(--accent);}
 
 /* Hero */
-.hero{text-align:center;padding:140px 20px 80px 20px;background:linear-gradient(135deg,#0a0a0a,#111111);}
-.hero h2{font-size:56px;font-weight:800;line-height:1.1;margin-bottom:16px;}
-.hero p{opacity:.85;font-size:20px;max-width:800px;margin:auto;margin-bottom:16px;}
-.stars{color:#f5c542;font-size:22px;margin-top:10px;}
+.hero{
+  text-align:center;
+  padding:100px 20px 40px 20px;
+}
+.hero h2{font-size:48px;font-weight:800;line-height:1.1;margin-bottom:16px;}
+.hero p{opacity:.85;font-size:18px;max-width:800px;margin:auto;margin-bottom:8px;}
+.stars{color:#f5c542;font-size:20px;margin-bottom:16px;}
+.hero img{
+  width:100%;
+  max-width:1000px;
+  border-radius:16px;
+  margin-top:20px;
+  box-shadow:0 8px 20px var(--shadow);
+}
 
 /* Sections */
 .section{padding:80px 0;}
@@ -101,11 +111,12 @@ footer{text-align:center;padding:80px 20px;border-top:1px solid var(--border);op
 
 /* Responsive */
 @media(max-width:900px){
-.hero h2{font-size:44px}
+.hero h2{font-size:36px}
+.hero img{margin-top:16px;}
 .products{grid-template-columns:1fr}
 }
 @media(max-width:600px){
-.hero{padding:80px 15px 40px 15px;}
+.hero{padding:60px 15px 30px 15px;}
 .hero h2{font-size:28px;}
 .hero p{font-size:16px;}
 .section{padding:60px 15px;}
@@ -120,9 +131,9 @@ select, button{font-size:16px;padding:10px 16px;}
 </head>
 <body>
 
-<div class="ship-banner" id="shipBanner"><span>🚚 Worldwide Shipping · International 1–2 weeks · USA 5–7 days</span></div>
+<div class="ship-banner"><span>🚚 Worldwide Shipping · International 1–2 weeks · USA 5–7 days</span></div>
 
-<header id="mainHeader">
+<header>
   <div class="container header-inner">
     <h1>3DPrintedUSA</h1>
     <nav>
@@ -133,10 +144,13 @@ select, button{font-size:16px;padding:10px 16px;}
   </div>
 </header>
 
-<section class="hero" id="heroSection">
-  <h2>Premium 3D Printed Products</h2>
-  <p>Bitcoin-only checkout · Fully anonymous · Discreet worldwide shipping</p>
-  <div class="stars">★★★★☆ 4.8 / 5.0</div>
+<section class="hero">
+  <div class="hero-content">
+    <h2>Premium 3D Printed Products</h2>
+    <p>Bitcoin-only checkout · Fully anonymous · Discreet worldwide shipping</p>
+    <div class="stars">★★★★☆ 4.8 / 5.0</div>
+    <img src="background.png" alt="Hero Image">
+  </div>
 </section>
 
 <section class="section container" id="materialsSection">
@@ -146,6 +160,7 @@ All products are <strong>handcrafted or 3D printed</strong> using our <strong>PL
 </p>
 </section>
 
+<!-- Shop / Cart / Payment code same as before -->
 <section class="section container" id="shop">
 <h2>Shop</h2>
 <div class="products" id="productsContainer"></div>
@@ -180,7 +195,6 @@ Payments are final once confirmed on the blockchain. Always verify your country�
 </p>
 </section>
 
-<!-- Cart popup -->
 <div id="cartPopup">
 <button class="close" onclick="closeCart()">×</button>
 <h4>Shopping Cart</h4>
@@ -191,7 +205,6 @@ Payments are final once confirmed on the blockchain. Always verify your country�
 <p id="minOrderWarning" style="color:#c92a2a;font-weight:700;"></p>
 </div>
 
-<!-- Paybar -->
 <div id="paybar">
 <button class="close" onclick="closePay()">×</button>
 <p id="usdAmount"></p>
@@ -209,10 +222,10 @@ Payments are final once confirmed on the blockchain. Always verify your country�
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
+// Product/cart/pay code same as before
 const BTC_ADDRESS="bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy";
 const colors=["Red","Blue","Yellow","White","Black"];
 let cart=[],btcRate=0;
-
 const products=[
 {name:"Not a Glock .22LR Kit",price:350,images:["NAG2.jpg"]},
 {name:"HD22 Kit",price:500,images:["hs222.jpg"]},
@@ -282,19 +295,6 @@ new QRCode(document.getElementById("qr"),`bitcoin:${BTC_ADDRESS}?amount=${btc}`)
 function closePay(){document.getElementById("paybar").style.display="none"}
 function toast(){const t=document.getElementById("toast");t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1200);}
 fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd").then(r=>r.json()).then(d=>btcRate=1/d.bitcoin.usd);
-
-// Scroll hide header/banner smoothly
-let lastScroll=0;
-const hideElements=[document.getElementById('shipBanner'), document.getElementById('mainHeader')];
-window.addEventListener('scroll',()=>{
-  const currentScroll=window.pageYOffset;
-  if(currentScroll>lastScroll && currentScroll>50){
-    hideElements.forEach(el=>el.style.transform='translateY(-150%)');
-  } else {
-    hideElements.forEach(el=>el.style.transform='translateY(0)');
-  }
-  lastScroll=currentScroll;
-});
 </script>
 </body>
 </html>
