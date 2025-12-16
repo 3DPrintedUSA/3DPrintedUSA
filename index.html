@@ -1,213 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>3DPrintedUSA – Professional 3D Printed Shop</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<title>3DPrintedUSA – Premium 3D Printed Products</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 <style>
+:root {
+  --bg:#0a0a0a; --panel:#111; --border:#222;
+  --accent:#1f8cff; --accent-dark:#0f6ac3;
+  --danger:#c92a2a; --ok:#6dff9c;
+  --shadow:rgba(0,0,0,0.5);
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
-header{padding:25px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222;position:sticky;top:0;background:#0a0a0a;z-index:100}
-header h1{font-size:28px;font-weight:800}
-nav a{color:#fff;margin-left:20px;text-decoration:none;opacity:.85;font-weight:500}
-nav a:hover{opacity:1}
-.hero{text-align:center;padding:100px 20px}
-.hero h2{font-size:48px;font-weight:800;margin-bottom:20px}
-.hero p{opacity:.8;max-width:700px;margin:auto;font-size:18px}
-.section{padding:60px 20px;max-width:1200px;margin:auto}
-.filters{text-align:center;margin-bottom:30px}
-.filters button{margin:0 5px;background:#222;color:#fff;padding:8px 15px;border-radius:20px;cursor:pointer;font-weight:500;opacity:.7;transition:0.2s}
-.filters button.active, .filters button:hover{opacity:1;background:#1f8cff}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px;margin-top:20px}
-.product{background:#111;border:1px solid #222;border-radius:14px;padding:20px;transition:0.3s;position:relative}
-.product:hover{transform:translateY(-5px);box-shadow:0 0 25px rgba(31,140,255,0.5)}
-.product h3{margin-bottom:8px}
-.product p{opacity:.7;font-size:14px;margin-bottom:10px}
-.price{opacity:.8;margin-bottom:15px}
-.product img{width:100%;height:auto;border-radius:8px;margin-bottom:15px;}
-button{background:#1f8cff;border:none;color:#fff;padding:12px 20px;border-radius:25px;cursor:pointer;transition:0.2s;font-weight:600}
-button:hover{background:#0f6ac3}
-#cartPopup{display:none;position:fixed;top:20px;right:20px;background:#111;border:1px solid #222;border-radius:16px;padding:25px;width:320px;z-index:105;box-shadow:0 0 30px rgba(31,140,255,0.5)}
-#cartPopup h4{margin-bottom:15px;font-size:18px}
-.cart-item{font-size:14px;opacity:.85;margin-bottom:8px}
-#cartPopup button.closeCart{position:absolute;top:8px;right:10px;background:none;border:none;color:#fff;font-size:18px;cursor:pointer}
-#paybar{display:none;position:fixed;bottom:20px;right:20px;width:320px;background:#1f1f1f;border:1px solid #222;border-radius:16px;padding:20px;text-align:center;box-shadow:0 0 30px rgba(31,140,255,0.5);z-index:106}
-#paybar p{opacity:.85;margin-top:10px;font-size:14px}
-#paybar button.close{position:absolute;top:8px;right:10px;background:none;border:none;color:#fff;font-size:18px;cursor:pointer}
-#paybar canvas{margin-top:10px;}
-footer{text-align:center;padding:40px;border-top:1px solid #222;opacity:.6;font-size:14px}
-.chat-btn{background:#1f8cff;color:#fff;border:none;padding:12px 20px;border-radius:25px;cursor:pointer;transition:0.3s;font-weight:600;position:fixed;right:20px;bottom:25px;z-index:200}
-.chat-btn:hover{background:#0f6ac3}
-.toast{position:fixed;bottom:90px;right:20px;background:#1f8cff;padding:15px 25px;border-radius:25px;color:#fff;opacity:0;transition:0.4s;z-index:300;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#fff;line-height:1.7;font-size:16px;}
+.container{max-width:1200px;margin:auto;padding:0 20px;}
+.center{text-align:center;}
+.max{max-width:900px;margin:auto;}
+h1,h2,h3,h4,h5{margin-bottom:16px;font-weight:800;}
+p{margin-bottom:16px;opacity:.9;}
+
+/* Banner */
+.ship-banner{position:fixed;top:0;left:0;right:0;height:36px;display:flex;align-items:center;justify-content:center;background:var(--danger);font-weight:800;letter-spacing:.3px;z-index:200;box-shadow:0 2px 8px var(--shadow);}
+
+/* Header */
+header{position:sticky;top:36px;background:var(--bg);border-bottom:1px solid var(--border);z-index:150;box-shadow:0 2px 10px var(--shadow);}
+.header-inner{display:flex;justify-content:space-between;align-items:center;padding:18px 0;}
+nav a{color:#fff;margin-left:18px;text-decoration:none;opacity:.85;font-weight:600;transition:.3s;}
+nav a:hover{opacity:1; color:var(--accent);}
+
+/* Language selector */
+.lang-select{display:flex;align-items:center;gap:8px;margin-left:20px;}
+.lang-select img{width:24px;height:16px;cursor:pointer;border:1px solid #333;border-radius:3px;transition:.3s;}
+.lang-select img:hover{transform:scale(1.2);}
+
+/* Hero */
+.hero{text-align:center;padding:140px 20px 80px 20px;background:linear-gradient(135deg,#0a0a0a,#111111);}
+.hero h2{font-size:56px;font-weight:800;line-height:1.1;margin-bottom:16px;}
+.hero p{opacity:.85;font-size:20px;max-width:800px;margin:auto;margin-bottom:16px;}
+.stars{color:#f5c542;font-size:22px;margin-top:10px;}
+
+/* Sections */
+.section{padding:80px 0;}
+.section h2{text-align:center;font-size:38px;margin-bottom:36px;}
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:30px;}
+
+/* Products */
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;}
+.product{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center;transition:transform .3s, box-shadow .3s;cursor:pointer;}
+.product:hover{transform:translateY(-4px);box-shadow:0 8px 20px var(--shadow);}
+.carousel{display:flex;overflow-x:auto;gap:10px;scroll-snap-type:x mandatory;width:100%;margin-bottom:10px;}
+.carousel img{width:100%;border-radius:10px;scroll-snap-align:start;flex-shrink:0;transition:.3s;}
+select{margin:10px 0;padding:8px;border-radius:10px;background:#0e0e0e;color:#fff;border:1px solid var(--border);width:100%;}
+
+/* Buttons */
+button{background:var(--accent);border:none;color:#fff;padding:12px 20px;border-radius:25px;font-weight:700;cursor:pointer;transition:.3s;}
+button:hover{background:var(--accent-dark);}
+button:focus{outline:none;}
+
+/* Cart */
+#cartPopup,#paybar{display:none;position:fixed;right:20px;width:360px;background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px;z-index:300;box-shadow:0 8px 30px var(--shadow);}
+#cartPopup{top:20px}
+#paybar{bottom:20px;text-align:center}
+.close{position:absolute;top:10px;right:12px;background:none;border:none;color:#fff;font-size:20px;cursor:pointer;}
+.cart-item{font-size:14px;margin-bottom:8px}
+.cart-item span{float:right;cursor:pointer;}
+
+/* Floating */
+.cart-fab{position:fixed;right:20px;bottom:80px;border-radius:50px;background:#333;z-index:250;box-shadow:0 4px 12px var(--shadow);}
+.toast{position:fixed;bottom:180px;right:20px;background:var(--accent);padding:14px 24px;border-radius:30px;opacity:0;transition:.3s;box-shadow:0 4px 16px var(--shadow);}
 .toast.show{opacity:1;}
-@media (max-width:600px){.hero h2{font-size:36px}.products{grid-template-columns:1fr}.hero p{font-size:16px}}
+
+/* Footer */
+footer{text-align:center;padding:80px 20px;border-top:1px solid var(--border);opacity:.8;font-size:14px;}
+
+/* Responsive */
+@media(max-width:900px){
+.hero h2{font-size:44px}
+.products{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+.hero h2{font-size:36px}
+.hero p{font-size:18px}
+.section{padding:60px 15px}
+}
 </style>
 </head>
 <body>
 
+<div class="ship-banner">🚚 Worldwide Shipping · International 1–2 weeks · USA 5–7 days</div>
+
 <header>
-<h1>3DPrintedUSA</h1>
-<nav>
-<a href="#shop">Shop</a>
-<a href="#checkout" onclick="showPay()">Checkout</a>
-<a href="#contact" onclick="alert('Email: cojacob230@gmail.com')">Contact</a>
-</nav>
+  <div class="container header-inner">
+    <div style="display:flex; align-items:center; gap:20px;">
+      <h1>3DPrintedUSA</h1>
+      <div class="lang-select" id="langSelect">
+        <img src="https://flagcdn.com/us.svg" alt="USA" title="USA" onclick="changeLang('en','us')">
+        <img src="https://flagcdn.com/de.svg" alt="Germany" title="Germany" onclick="changeLang('de','de')">
+        <img src="https://flagcdn.com/fr.svg" alt="France" title="France" onclick="changeLang('fr','fr')">
+      </div>
+    </div>
+    <nav>
+      <a href="#shop">Shop</a>
+      <a href="#" onclick="showCart()">Cart</a>
+      <a href="#disclaimer">Disclaimer</a>
+    </nav>
+  </div>
 </header>
 
 <section class="hero">
-<h2>Premium 3D Printed Products</h2>
-<p>Bitcoin-only checkout. Anonymous, secure, no accounts required. Browse products and add them to your cart. International shipping available with track & trace.</p>
+  <h2 id="heroTitle">Premium 3D Printed Products</h2>
+  <p id="heroDesc">Bitcoin-only checkout · Fully anonymous · Discreet worldwide shipping</p>
+  <div class="stars">★★★★☆ 4.8 / 5.0</div>
 </section>
 
-<section class="section" id="shop">
-<h2>Shop</h2>
+<section class="section container">
+<h2 id="materialTitle">Our Materials & Process</h2>
+<p class="center max" id="materialDesc">
+All products are <strong>handcrafted or 3D printed</strong> using our <strong>own PLA+</strong> filament
+blended with <strong>carbon and metal particles</strong> for extra strength. We print every item
+with <strong>100% infill</strong> ensuring maximum durability. Our expert staff performs rigorous
+quality checks on every product. <br><br>
+We only accept <strong>Bitcoin payments</strong> to protect customer privacy. No accounts,
+emails, or personal information are stored, ensuring full anonymity. Each item is carefully
+packaged for discreet shipping worldwide.
+</p>
+</section>
 
-<div class="filters">
-<button class="active" onclick="filterProducts('all')">All</button>
-<button onclick="filterProducts('kit')">Kits</button>
-<button onclick="filterProducts('complete')">Complete Builds</button>
-</div>
-
+<section class="section container" id="shop">
+<h2 id="shopTitle">Shop</h2>
 <div class="products" id="productsContainer"></div>
 </section>
 
+<section class="section container">
+<h2 id="shippingTitle">Shipping, Privacy & Warranty</h2>
+<div class="stack">
+<div class="product"><h3>Worldwide Shipping</h3>
+<p>Tracked shipping to 150+ countries. USA: 5–7 days. International: 1–2 weeks. Fully discreet packaging.</p></div>
+<div class="product"><h3>Privacy First</h3>
+<p>We store no personal information. Bitcoin-only payment protects your anonymity.</p></div>
+<div class="product"><h3>6-Month Warranty</h3>
+<p>All products come with a 6-month functional warranty. Defective items are replaced or refunded.</p></div>
+<div class="product"><h3>Bitcoin Payments</h3>
+<p>Only Bitcoin accepted. USA customers can buy via Cash App. International: use trusted exchanges.</p></div>
+</div>
+</section>
+
+<section class="section container" id="disclaimer">
+<h2 id="disclaimerTitle">Legal & Payment Disclaimer</h2>
+<p class="center max" id="disclaimerDesc" style="opacity:.85">
+Customers are responsible for compliance with all local, state, and national laws.
+We cannot be held liable for misuse of our products.<br><br>
+<strong>Payment:</strong><br>
+• USA: Buy Bitcoin via Cash App → send to our address.<br>
+• International: Use any trusted Bitcoin exchange to send payment.<br><br>
+Payments are final once confirmed on the blockchain. Always verify your country’s laws before ordering.
+</p>
+</section>
+
 <div id="cartPopup">
-<button class="closeCart" onclick="closeCart()">&times;</button>
+<button class="close" onclick="closeCart()">×</button>
 <h4>Shopping Cart</h4>
 <div id="cartItems"></div>
 <p>Total: $<span id="total">0.00</span></p>
-<button onclick="showPay()">Checkout (Bitcoin)</button>
+<button style="width:100%" onclick="showPay()">Checkout (Bitcoin)</button>
 </div>
 
 <div id="paybar">
-<button class="close" onclick="closePay()">&times;</button>
-<strong>Bitcoin Payment</strong>
+<button class="close" onclick="closePay()">×</button>
+<p id="usdAmount"></p>
 <p id="btcAmount"></p>
-<p id="btcAddress" style="word-break:break-all;font-weight:600;"></p>
+<p id="btcAddress" style="word-break:break-all;font-weight:700"></p>
 <canvas id="qr"></canvas>
-<p style="opacity:.7;margin-top:8px;">Send exactly this BTC amount to the address above.</p>
 </div>
 
-<div class="toast" id="toast">Added to Cart!</div>
+<div class="toast" id="toast">Added to cart</div>
+<button class="cart-fab" onclick="showCart()">🛒</button>
 
-<footer>
-© 2025 3DPrintedUSA · Bitcoin Payments Only · International shipping available with track & trace
-</footer>
-
-<button class="chat-btn" onclick="alert('Email: cojacob230@gmail.com')">💬 Chat / Contact</button>
+<footer>© 2025 3DPrintedUSA · Bitcoin only · International shipping</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-// Product data
-const products = [
-{ name:"Not a Glock .22LR Kit", price:350, desc:"High-quality .22LR kit for hobbyists.", img:"https://placehold.co/600x400?text=Not+a+Glock+.22LR+Kit", category:"kit" },
-{ name:"HD22 Kit", price:500, desc:"Durable HD22 kit, perfect for beginners.", img:"https://placehold.co/600x400?text=HD22+Kit", category:"kit" },
-{ name:"Gambino Kit", price:250, desc:"Compact kit for versatile builds.", img:"https://placehold.co/600x400?text=Gambino+Kit", category:"kit" },
-{ name:"Cabfare Kit", price:200, desc:"Reliable kit with all essential parts.", img:"https://placehold.co/600x400?text=Cabfare+Kit", category:"kit" },
-{ name:"Harlot Kit", price:150, desc:"Lightweight and easy to assemble.", img:"https://placehold.co/600x400?text=Harlot+Kit", category:"kit" },
-{ name:"HD22 Complete", price:625, desc:"Ready-to-use HD22 complete build.", img:"https://placehold.co/600x400?text=HD22+Complete", category:"complete" },
-{ name:"Not a Glock .22LR Complete", price:560, desc:"Full .22LR build, assembled and ready.", img:"https://placehold.co/600x400?text=Not+a+Glock+.22LR+Complete", category:"complete" },
-{ name:"Gambino Complete", price:400, desc:"Compact complete build with 20% discount.", img:"https://placehold.co/600x400?text=Gambino+Complete", category:"complete" },
-{ name:"Cabfare Complete", price:350, desc:"Reliable full build kit.", img:"https://placehold.co/600x400?text=Cabfare+Complete", category:"complete" },
-{ name:"Harlot Complete", price:250, desc:"Lightweight and ready to ship.", img:"https://placehold.co/600x400?text=Harlot+Complete", category:"complete" },
-{ name:"Switch", price:100, desc:"Innovative new design, perfect for enthusiasts.", img:"https://placehold.co/600x400?text=Switch", category:"kit" }
+const BTC_ADDRESS="bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy";
+const colors=["Red","Blue","Yellow","White","Black"];
+let cart=[],btcRate=0;
+
+const products=[
+{name:"HD22 Kit",price:500,images:["https://placehold.co/600x400?text=HD22+Front","https://placehold.co/600x400?text=HD22+Side"]},
+{name:"Gambino Complete",price:400,images:["https://placehold.co/600x400?text=Gambino+Front","https://placehold.co/600x400?text=Gambino+Side"]}
 ];
 
-let cart = [];
-let btcRate = 0;
-
-// Render products
-function renderProducts(filter="all"){
-    const container = document.getElementById("productsContainer");
-    container.innerHTML = "";
-    products.forEach(p=>{
-        if(filter==="all" || p.category===filter){
-            container.innerHTML += `
-            <div class="product">
-                <img src="${p.img}" alt="${p.name}">
-                <h3>${p.name}</h3>
-                <p>${p.desc}</p>
-                <div class="price">$${p.price.toFixed(2)}</div>
-                <button onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
-            </div>`;
-        }
-    });
+function renderProducts(){
+const c=document.getElementById("productsContainer");
+c.innerHTML="";
+products.forEach(p=>{
+c.innerHTML+=`
+<div class="product">
+<div class="carousel">
+${p.images.map(i=>`<img src="${i}">`).join("")}
+</div>
+<h3>${p.name}</h3>
+<p>$${p.price}</p>
+<select id="c_${p.name}">
+${colors.map(c=>`<option>${c}</option>`).join("")}
+</select>
+<button onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
+</div>`;
+});
 }
 renderProducts();
 
-function filterProducts(category){
-    document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-    event.target.classList.add("active");
-    renderProducts(category);
-}
-
-// Cart functions
 function addToCart(name,price){
-    cart.push({name,price});
-    renderCart();
-    showCart();
-    showToast();
+const color=document.getElementById("c_"+name).value;
+cart.push({name,price,color});
+renderCart();toast();
 }
 function renderCart(){
-    let el=document.getElementById('cartItems'); el.innerHTML=''; let total=0;
-    cart.forEach(i=>{ el.innerHTML+=`<div class='cart-item'>${i.name}</div>`; total+=i.price; });
-    document.getElementById('total').innerText=total.toFixed(2);
+let el=document.getElementById("cartItems"),t=0;
+el.innerHTML="";
+cart.forEach((i,idx)=>{el.innerHTML+=`${i.name} (${i.color}) <span onclick="cart.splice(${idx},1);renderCart()">✕</span><br>`;t+=i.price;});
+document.getElementById("total").innerText=t.toFixed(2);
 }
-function showCart(){document.getElementById('cartPopup').style.display='block'}
-function closeCart(){document.getElementById('cartPopup').style.display='none'}
-function showPay(){document.getElementById('paybar').style.display='block';generateQR();}
-function closePay(){document.getElementById('paybar').style.display='none'}
-function showToast(){
-    const t=document.getElementById('toast');
-    t.classList.add('show');
-    setTimeout(()=>{t.classList.remove('show');},1500);
+function showCart(){document.getElementById("cartPopup").style.display="block"}
+function closeCart(){document.getElementById("cartPopup").style.display="none"}
+function showPay(){
+document.getElementById("paybar").style.display="block";
+const usd=cart.reduce((a,b)=>a+b.price,0);
+const btc=(usd*btcRate).toFixed(6);
+document.getElementById("usdAmount").innerText="USD: $"+usd;
+document.getElementById("btcAmount").innerText="BTC: "+btc;
+document.getElementById("btcAddress").innerText=BTC_ADDRESS;
+new QRCode(document.getElementById("qr"),`bitcoin:${BTC_ADDRESS}?amount=${btc}`);
 }
+function closePay(){document.getElementById("paybar").style.display="none"}
+function toast(){const t=document.getElementById("toast");t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1200);}
+fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd").then(r=>r.json()).then(d=>btcRate=1/d.bitcoin.usd);
 
-// Fetch BTC rate from Coindesk
-async function fetchBTC(){
-    try{
-        const res = await fetch('https://api.coindesk.com/v1/bpi/currentprice/USD.json');
-        const data = await res.json();
-        btcRate = 1/data.bpi.USD.rate_float;
-    } catch(err){
-        console.log("BTC fetch error:",err);
-        btcRate = 0.000035;
-    }
+// Language change
+function changeLang(lang,flag){
+  const heroTexts={
+    en:["Premium 3D Printed Products","Bitcoin-only checkout · Fully anonymous · Discreet worldwide shipping"],
+    de:["Premium 3D-Druck Produkte","Nur Bitcoin-Zahlung · Vollständig anonym · Diskreter weltweiter Versand"],
+    fr:["Produits 3D Premium","Paiement uniquement en Bitcoin · Entièrement anonyme · Livraison discrète dans le monde entier"]
+  };
+  document.getElementById("heroTitle").innerText = heroTexts[lang][0];
+  document.getElementById("heroDesc").innerText = heroTexts[lang][1];
 }
-fetchBTC();
-
-// Generate QR and BTC amount
-function generateQR(){
-    const totalUSD = cart.reduce((a,b)=>a+b.price,0);
-    const btcTotal = (totalUSD * btcRate).toFixed(6);
-    document.getElementById('btcAmount').innerText = `Amount to pay: ${btcTotal} BTC`;
-    const btcAddress = 'bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy';
-    document.getElementById('btcAddress').innerText = btcAddress;
-    document.getElementById('qr').innerHTML = "";
-    new QRCode(document.getElementById('qr'), {text:`bitcoin:${btcAddress}?amount=${btcTotal}`, width:180, height:180});
-}
-
-// Update BTC every 10 minutes if paybar open
-setInterval(async()=>{
-    await fetchBTC();
-    if(document.getElementById('paybar').style.display==='block'){
-        generateQR();
-    }
-},600000);
-
-// Anonymous chat
-var anonName = 'user_' + Math.random().toString(36).substring(2,8);
-var Tawk_API=Tawk_API||{};
-Tawk_API.visitor = { name: anonName };
-var Tawk_LoadStart=new Date();
-(function(){var s1=document.createElement('script'),s0=document.getElementsByTagName('script')[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/YOUR_TAWK_ID/1abcdef';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
 </script>
 </body>
 </html>
