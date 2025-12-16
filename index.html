@@ -13,28 +13,25 @@
   --shadow:rgba(0,0,0,0.5);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:#fff;line-height:1.7;font-size:16px;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#fff;line-height:1.7;font-size:16px;overflow-x:hidden;}
 .container{max-width:1200px;margin:auto;padding:0 20px;}
 .center{text-align:center;}
 .max{max-width:900px;margin:auto;}
 h1,h2,h3,h4,h5{margin-bottom:16px;font-weight:800;}
 p{margin-bottom:16px;opacity:.9;}
 
-/* Banner */
+/* Shipping banner */
 .ship-banner{
   position:fixed;top:0;left:0;right:0;height:40px;
   display:flex;align-items:center;justify-content:center;
   background:var(--danger);font-weight:800;letter-spacing:.3px;
   z-index:200;box-shadow:0 2px 8px var(--shadow);
-  overflow:hidden;
+  overflow:hidden;transition:transform .5s;
 }
 .ship-banner span{
-  display:inline-block;
-  color:#ff4c4c;
-  padding-top:6px;
-  white-space:nowrap;
-  font-size:16px;
-  text-shadow: 1px 1px 2px #000;
+  display:inline-block;color:#ff4c4c;
+  padding-top:6px;white-space:nowrap;
+  font-size:16px;text-shadow:1px 1px 2px #000;
   animation: prcMarquee 6s cubic-bezier(.55,.085,.68,.53) infinite alternate;
 }
 @keyframes prcMarquee {
@@ -47,31 +44,47 @@ p{margin-bottom:16px;opacity:.9;}
 
 /* Header */
 header{
-  position:sticky;
-  top:40px;
-  background:var(--bg);
+  position:sticky;top:40px;background:var(--bg);
   border-bottom:1px solid var(--border);
   z-index:150;
   box-shadow:0 2px 10px var(--shadow);
-  transition:transform .5s ease;
+  transition:transform .5s;
 }
-.header-inner{display:flex;justify-content:space-between;align-items:center;padding:18px 0;}
+.header-inner{display:flex;justify-content:space-between;align-items:center;padding:18px 0;transition:all .5s;}
 nav a{color:#fff;margin-left:18px;text-decoration:none;opacity:.85;font-weight:600;transition:.3s;}
-nav a:hover{opacity:1; color:var(--accent);}
+nav a:hover{opacity:1;color:var(--accent);}
 
 /* Hero */
 .hero{
+  position:relative;
   text-align:center;
-  padding:100px 20px 40px 20px;
+  height:calc(100vh - 40px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:url('background.png') center/cover no-repeat;
 }
-.hero h2{font-size:48px;font-weight:800;line-height:1.1;margin-bottom:16px;}
-.hero p{opacity:.85;font-size:18px;max-width:800px;margin:auto;margin-bottom:8px;}
-.stars{color:#f5c542;font-size:20px;margin-bottom:16px;}
-.hero img{
-  width:100%;
-  max-width:1000px;
+.hero h2{font-size:48px;font-weight:800;line-height:1.1;margin-bottom:16px;text-shadow:2px 2px 8px #000;}
+.hero p{opacity:.85;font-size:18px;max-width:800px;margin:auto;margin-bottom:8px;text-shadow:1px 1px 4px #000;}
+.stars{color:#f5c542;font-size:20px;margin-bottom:16px;text-shadow:1px 1px 2px #000;}
+
+/* Materials Section */
+.materials-section{
+  position:relative;color:#fff;text-align:center;padding:100px 20px;overflow:hidden;
+}
+.materials-section::before{
+  content:"";
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  background:url('filament.png') center/cover no-repeat;
+  opacity:0.3;z-index:0;
+}
+.materials-section .content{
+  position:relative;z-index:1;
+  max-width:900px;margin:auto;
+  background:rgba(0,0,0,0.5);
+  padding:30px 20px;
   border-radius:16px;
-  margin-top:20px;
   box-shadow:0 8px 20px var(--shadow);
 }
 
@@ -84,8 +97,9 @@ nav a:hover{opacity:1; color:var(--accent);}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;}
 .product{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center;transition:transform .3s, box-shadow .3s;cursor:pointer;}
 .product:hover{transform:translateY(-4px);box-shadow:0 8px 20px var(--shadow);}
+.product .ordered-count{margin-top:6px;font-size:14px;color:#1dfc7d;}
 .carousel{display:flex;overflow-x:auto;gap:10px;scroll-snap-type:x mandatory;width:100%;margin-bottom:10px;}
-.carousel img{width:100%;border-radius:10px;scroll-snap-align:start;flex-shrink:0;transition:.3s;object-fit:cover;}
+.carousel img{width:100%;border-radius:10px;scroll-snap-align:start;flex-shrink:0;transition:.3s;object-fit:cover;height:180px;}
 select{margin:10px 0;padding:8px;border-radius:10px;background:#0e0e0e;color:#fff;border:1px solid var(--border);width:100%;}
 
 /* Buttons */
@@ -93,15 +107,14 @@ button{background:var(--accent);border:none;color:#fff;padding:12px 20px;border-
 button:hover{background:var(--accent-dark);}
 button:focus{outline:none;}
 
-/* Cart */
+/* Cart & Paybar */
 #cartPopup,#paybar{display:none;position:fixed;right:20px;width:360px;background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px;z-index:300;box-shadow:0 8px 30px var(--shadow);}
-#cartPopup{top:20px}
-#paybar{bottom:20px;text-align:center}
+#cartPopup{top:20px} #paybar{bottom:20px;text-align:center;}
 .close{position:absolute;top:10px;right:12px;background:none;border:none;color:#fff;font-size:20px;cursor:pointer;}
 .cart-item{font-size:14px;margin-bottom:8px}
 .cart-item span{float:right;cursor:pointer;}
 
-/* Floating */
+/* Floating Cart & Toast */
 .cart-fab{position:fixed;right:20px;bottom:80px;border-radius:50px;background:#333;z-index:250;box-shadow:0 4px 12px var(--shadow);}
 .toast{position:fixed;bottom:180px;right:20px;background:var(--accent);padding:14px 24px;border-radius:30px;opacity:0;transition:.3s;box-shadow:0 4px 16px var(--shadow);}
 .toast.show{opacity:1;}
@@ -111,17 +124,17 @@ footer{text-align:center;padding:80px 20px;border-top:1px solid var(--border);op
 
 /* Responsive */
 @media(max-width:900px){
-.hero h2{font-size:36px}
-.hero img{margin-top:16px;}
-.products{grid-template-columns:1fr}
+.hero h2{font-size:36px;}
+.hero p{font-size:16px;}
+.materials-section{padding:60px 15px;}
+.products{grid-template-columns:1fr;}
+.product .carousel img{height:150px;}
 }
 @media(max-width:600px){
-.hero{padding:60px 15px 30px 15px;}
+.hero{padding:60px 15px;}
 .hero h2{font-size:28px;}
-.hero p{font-size:16px;}
-.section{padding:60px 15px;}
+.hero p{font-size:14px;}
 .products{grid-template-columns:1fr;gap:20px;}
-.product .carousel img{height:200px;}
 .cart-fab{right:15px;bottom:60px;}
 .ship-banner{height:30px;font-size:14px;}
 select, button{font-size:16px;padding:10px 16px;}
@@ -145,22 +158,20 @@ select, button{font-size:16px;padding:10px 16px;}
 </header>
 
 <section class="hero">
-  <div class="hero-content">
-    <h2>Premium 3D Printed Products</h2>
-    <p>Bitcoin-only checkout · Fully anonymous · Discreet worldwide shipping</p>
-    <div class="stars">★★★★☆ 4.8 / 5.0</div>
-    <img src="background.png" alt="Hero Image">
+  <h2>Premium 3D Printed Products</h2>
+  <p>Bitcoin-only checkout · Fully anonymous · Discreet worldwide shipping</p>
+  <div class="stars">★★★★☆ 4.8 / 5.0</div>
+</section>
+
+<section class="materials-section">
+  <div class="content">
+    <h2>Our Materials & Process</h2>
+    <p>
+      All products are <strong>handcrafted or 3D printed</strong> using our <strong>PLA+</strong> filament blended with <strong>carbon and metal particles</strong> for extra strength. 100% infill ensures maximum durability. Orders are checked rigorously. Bitcoin-only payments protect privacy. Discreet worldwide packaging.
+    </p>
   </div>
 </section>
 
-<section class="section container" id="materialsSection">
-<h2>Our Materials & Process</h2>
-<p class="center max">
-All products are <strong>handcrafted or 3D printed</strong> using our <strong>PLA+</strong> filament blended with <strong>carbon and metal particles</strong> for extra strength. 100% infill ensures maximum durability. Orders are checked rigorously. Bitcoin-only payments protect privacy. Discreet worldwide packaging.
-</p>
-</section>
-
-<!-- Shop / Cart / Payment code same as before -->
 <section class="section container" id="shop">
 <h2>Shop</h2>
 <div class="products" id="productsContainer"></div>
@@ -222,22 +233,38 @@ Payments are final once confirmed on the blockchain. Always verify your country�
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-// Product/cart/pay code same as before
+// Header & shipping banner scroll hide/show
+let lastScroll=0;
+const header=document.querySelector('header');
+const banner=document.querySelector('.ship-banner');
+window.addEventListener('scroll',()=>{
+  const current=window.pageYOffset;
+  if(current>lastScroll){
+    header.style.transform='translateY(-100%)';
+    banner.style.transform='translateY(-100%)';
+  } else {
+    header.style.transform='translateY(0)';
+    banner.style.transform='translateY(0)';
+  }
+  lastScroll=current;
+});
+
+// Products / Cart / Payment
 const BTC_ADDRESS="bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy";
 const colors=["Red","Blue","Yellow","White","Black"];
 let cart=[],btcRate=0;
 const products=[
-{name:"Not a Glock .22LR Kit",price:350,images:["NAG2.jpg"]},
-{name:"HD22 Kit",price:500,images:["hs222.jpg"]},
-{name:"Gambino Kit",price:250,images:["gambino2.jpg"]},
-{name:"Cabfare Kit",price:200,images:["cabfare2.jpg"]},
-{name:"Harlot Kit",price:150,images:["harlot2.jpg"]},
-{name:"HD22 Complete",price:625,images:["hs22.jpg"]},
-{name:"Not a Glock .22LR Complete",price:560,images:["NAG.jpg"]},
-{name:"Gambino Complete",price:400,images:["gambino.jpg"]},
-{name:"Cabfare Complete",price:350,images:["cabfare.jpg"]},
-{name:"Harlot Complete",price:250,images:["harlot.jpg"]},
-{name:"Glock Switch",price:25,images:["switch.jpg"]},
+{name:"Not a Glock .22LR Kit",price:350,images:["NAG2.jpg"],ordered:1029},
+{name:"HD22 Kit",price:500,images:["hs222.jpg"],ordered:1029},
+{name:"Gambino Kit",price:250,images:["gambino2.jpg"],ordered:1029},
+{name:"Cabfare Kit",price:200,images:["cabfare2.jpg"],ordered:1029},
+{name:"Harlot Kit",price:150,images:["harlot2.jpg"],ordered:1029},
+{name:"HD22 Complete",price:625,images:["hs22.jpg"],ordered:1029},
+{name:"Not a Glock .22LR Complete",price:560,images:["NAG.jpg"],ordered:1029},
+{name:"Gambino Complete",price:400,images:["gambino.jpg"],ordered:1029},
+{name:"Cabfare Complete",price:350,images:["cabfare.jpg"],ordered:1029},
+{name:"Harlot Complete",price:250,images:["harlot.jpg"],ordered:1029},
+{name:"Glock Switch",price:25,images:["switch.jpg"],ordered:1029},
 ];
 
 function renderProducts(){
@@ -251,6 +278,7 @@ ${p.images.map(i=>`<img src="${i}">`).join("")}
 </div>
 <h3>${p.name}</h3>
 <p>€${p.price}</p>
+<p class="ordered-count">${p.ordered}x besteld</p>
 <select id="c_${p.name}">
 ${colors.map(c=>`<option>${c}</option>`).join("")}
 </select>
@@ -272,15 +300,15 @@ cart.forEach((i,idx)=>{
   el.innerHTML+=`${i.name} (${i.color}) <span onclick="cart.splice(${idx},1);renderCart()">✕</span><br>`;
   t+=i.price;
 });
-if(t>=200) shipping=0; else if(t>0) shipping=15; else shipping=0;
+shipping=t>=200?0:(t>0?15:0);
 document.getElementById("shippingCost").innerText="Shipping: €"+shipping.toFixed(2);
 let totalWithShipping=t+shipping;
 document.getElementById("total").innerText=totalWithShipping.toFixed(2);
 document.getElementById("minOrderWarning").innerText=totalWithShipping<50?"Minimum order is €50. Amount will be refunded if below €50.":"";
 }
 
-function showCart(){document.getElementById("cartPopup").style.display="block"}
-function closeCart(){document.getElementById("cartPopup").style.display="none"}
+function showCart(){document.getElementById("cartPopup").style.display="block";}
+function closeCart(){document.getElementById("cartPopup").style.display="none";}
 function showPay(){
 const total=parseFloat(document.getElementById("total").innerText);
 if(total<50){alert("Order must be at least €50."); return;}
@@ -292,9 +320,5 @@ document.getElementById("btcAmount").innerText="BTC: "+btc;
 document.getElementById("btcAddress").innerText=BTC_ADDRESS;
 new QRCode(document.getElementById("qr"),`bitcoin:${BTC_ADDRESS}?amount=${btc}`);
 }
-function closePay(){document.getElementById("paybar").style.display="none"}
-function toast(){const t=document.getElementById("toast");t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1200);}
-fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd").then(r=>r.json()).then(d=>btcRate=1/d.bitcoin.usd);
-</script>
-</body>
-</html>
+function closePay(){document.getElementById("paybar").style.display="none";}
+function toast(){const t=document.getElementById("toast");t.classList.add("show");
