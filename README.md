@@ -16,7 +16,7 @@ Features:
 
 How to Access the Site:
 
-Open the live site: https://cojacob230-byte.github.io/3DPrintedUSA/
+Open the live site: https://3dprintedusa.github.io/3DPrintedUSA/
 
 Browse products, add them to the cart, and click Buy with Bitcoin
 
