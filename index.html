@@ -30,109 +30,99 @@ nav a:hover{opacity:1;color:var(--accent)}
 .product img{width:100%;height:190px;object-fit:cover;border-radius:14px;margin-bottom:12px}.orders{color:var(--ok);font-size:14px;margin-bottom:8px}
 button{background:var(--accent);border:none;color:#fff;padding:12px 22px;border-radius:30px;font-weight:700;cursor:pointer}
 button:hover{background:var(--accent-dark)}
-#cartPopup,#paybar{display:none;position:fixed;right:20px;width:360px;background:var(--panel);padding:22px;border-radius:20px;z-index:500;box-shadow:0 20px 60px var(--shadow)}
-#cartPopup{top:20px}#paybar{bottom:20px;text-align:center}.close{position:absolute;top:10px;right:14px;font-size:20px;background:none;border:none;color:#fff}
-.disclaimer{background:#0d0d0d;border-top:1px solid var(--border);padding:90px 20px}
-.disclaimer h2{text-align:center;margin-bottom:28px}.disclaimer p{max-width:980px;margin:0 auto 18px;opacity:.85;text-align:left}
-footer{border-top:1px solid var(--border);padding:50px 20px;text-align:center;opacity:.7}
+#cartPopup,#paybar,#contactPopup{display:none;position:fixed;right:20px;width:360px;background:var(--panel);padding:22px;border-radius:20px;z-index:500;box-shadow:0 20px 60px var(--shadow)}
+#cartPopup{top:20px}#paybar{bottom:20px;text-align:center}#contactPopup{bottom:100px}
+.close{position:absolute;top:10px;right:14px;font-size:20px;background:none;border:none;color:#fff}
+.disclaimer{background:#c92a2a;border-radius:20px;padding:40px 20px;margin:40px 0;}
+.disclaimer h2{text-align:center;margin-bottom:28px;color:#fff}.disclaimer p{max-width:980px;margin:0 auto 18px;opacity:.95;text-align:left;color:#fff}
+footer{border-top:1px solid var(--border);padding:50px 20px;text-align:center;opacity:.9}
+.social-buttons{margin-top:20px;display:flex;justify-content:center;gap:20px}
+.social-buttons a{color:#fff;text-decoration:none;font-weight:700;padding:10px 16px;border:1px solid var(--border);border-radius:12px;transition:.3s}
+.social-buttons a:hover{background:var(--accent);color:#000;}
 @media(max-width:700px){.hero h2{font-size:32px}.materials{padding:100px 20px}}
 </style>
 </head>
 <body>
 
-<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
-<symbol id="btc" viewBox="0 0 32 32">
-<circle cx="16" cy="16" r="16" fill="#f7931a"/>
-<path d="M18.5 9.5c2 .4 3.1 1.6 2.9 3.3-.1 1.3-.9 2.2-2.2 2.6 1.8.6 2.8 1.7 2.7 3.6-.2 2.5-2.2 3.7-4.9 4.1V26h-1.7v-2.2c-.5 0-1 0-1.6-.1V26h-1.7v-2.4c-1-.1-1.9-.3-2.7-.5l.4-2c.8.2 1.7.4 2.5.5V10.5c-.8-.1-1.6-.3-2.4-.5l.4-2c.8.2 1.6.4 2.4.5V6h1.7v2.4c.5 0 1 0 1.6.1V6h1.7v2.5zM14.4 10.9v4.3c1.9 0 3.6-.3 3.6-2.2 0-1.7-1.6-2.1-3.6-2.1zm0 6.3v4.9c2.3 0 4.3-.4 4.3-2.5 0-2-2.1-2.4-4.3-2.4z" fill="#fff"/>
-</symbol>
-</svg>
-
-<div class="ship-banner"><span>🚚 Worldwide Shipping · International 1–2 weeks · USA 5–7 days</span></div>
+<div class="ship-banner"><span>🚚 Worldwide Shipping 🌍 · International 1–2 weeks ✈️ · USA 5–7 days 🏠</span></div>
 <header>
 <div class="container header-inner">
-<h1 class="icon">3DPrintedUSA <svg class="btc"><use href="#btc"/></svg></h1>
+<h1 class="icon">3DPrintedUSA</h1>
 <nav>
-<a href="#shop">Shop</a>
-<a href="#" onclick="showCart()" class="icon">Cart <svg class="btc"><use href="#btc"/></svg></a>
-<a href="#disclaimer">Disclaimer</a>
+<a href="#shop">Shop 🛒</a>
+<a href="#" onclick="showCart()" class="icon">Cart 🛍️</a>
+<a href="#disclaimer">Disclaimer ⚖️</a>
+<a href="#" onclick="showContact()" class="icon">Contact 📧</a>
 </nav>
 </div>
 </header>
 
 <section class="hero">
 <div class="hero-box">
-<h2>Premium 3D Printed Products</h2>
-<p class="icon">Bitcoin-only checkout · Fully anonymous · Discreet worldwide shipping <svg class="btc"><use href="#btc"/></svg></p>
+<h2>Premium 3D Printed Products 🎨</h2>
+<p class="icon">Bitcoin-only checkout 💰 · Fully anonymous 🕶️ · Discreet worldwide shipping 📦</p>
 <div class="stars">★★★★☆ 4.8 / 5.0</div>
 </div>
 </section>
 
 <section class="materials">
-<h2>Our Materials & Process</h2>
+<h2>Our Materials & Process 🛠️</h2>
 <p>All products are produced using industrial-grade PLA+ blends reinforced with carbon and metal particles. Each item is printed at 100% infill, manually inspected, and packaged discreetly. Bitcoin-only payments ensure privacy and eliminate chargebacks or third‑party payment risks.</p>
 </section>
 
 <section class="section container" id="shop">
-<h2>Shop</h2>
+<h2>Shop 🛒</h2>
 <div class="products" id="products"></div>
 </section>
 
 <section class="disclaimer" id="disclaimer">
-<h2>Legal & Payment Disclaimer</h2>
+<h2>Legal & Payment Disclaimer ⚠️</h2>
 <p>By accessing this website and purchasing any product offered by 3DPrintedUSA, you acknowledge and agree that you are solely responsible for understanding and complying with all applicable local, state, federal, and international laws, regulations, and restrictions that may apply to the possession, use, importation, or resale of any product purchased from this site.</p>
 <p>3DPrintedUSA does not provide legal advice and makes no representations regarding the legality of any product in your jurisdiction. It is your responsibility to consult qualified legal counsel or relevant authorities if you have any questions regarding compliance. Failure to do so may result in legal consequences for which you alone are responsible.</p>
-<p>All products are sold strictly for lawful purposes only. Any misuse, modification, or unlawful application of products purchased from this website is done entirely at the customer’s own risk. 3DPrintedUSA expressly disclaims any and all liability for damages, injuries, losses, criminal charges, or civil penalties arising from improper or illegal use of its products.</p>
-<p>All payments are processed exclusively via Bitcoin. Due to the irreversible nature of blockchain transactions, all sales are final once payment is confirmed on the blockchain. No refunds, chargebacks, or cancellations are possible under any circumstances after confirmation.</p>
+<p>All payments are processed exclusively via Bitcoin 💸 to the address below. Due to the irreversible nature of blockchain transactions, all sales are final once payment is confirmed on the blockchain. No refunds, chargebacks, or cancellations are possible under any circumstances after confirmation.</p>
+<p style="font-weight:bold">Bitcoin Payment Address: <span style="word-break:break-all">bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy</span></p>
+<p>We guarantee the website and checkout system are fully operational. If anything malfunctions, it will be addressed immediately to ensure everything remains functional and reliable.</p>
 <p>By placing an order, you confirm that you are at least 18 years of age (or the legal age in your jurisdiction) and that you have read, understood, and agreed to this disclaimer in full.</p>
 </section>
 
 <footer>
-<div class="icon" style="justify-content:center">© 2025 3DPrintedUSA · Bitcoin Only <svg class="btc"><use href="#btc"/></svg> · Worldwide Shipping</div>
+<div>© 2025 3DPrintedUSA · Worldwide Shipping 🌎</div>
+<div class="social-buttons">
+<a href="https://tiktok.com/@3DPrintedUSA" target="_blank">TikTok 🎵</a>
+</div>
 </footer>
 
 <div id="cartPopup">
 <button class="close" onclick="closeCart()">×</button>
-<h3 class="icon">Shopping Cart <svg class="btc"><use href="#btc"/></svg></h3>
+<h3 class="icon">Shopping Cart 🛒</h3>
 <div id="cartItems"></div>
 <p>Total: $<span id="total">0.00</span></p>
-<button onclick="showPay()" style="width:100%">Checkout (Bitcoin)</button>
+<button onclick="showPay()" style="width:100%">Checkout (Bitcoin 💰)</button>
 </div>
 
 <div id="paybar">
 <button class="close" onclick="closePay()">×</button>
-<p class="icon">Send BTC to address <svg class="btc"><use href="#btc"/></svg></p>
+<p class="icon">Send BTC to address 💳</p>
 <p style="word-break:break-all;font-weight:700">bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy</p>
-<p>Payment will be detected automatically after blockchain confirmation.</p>
+<p>Payment will be detected automatically after blockchain confirmation ✅.</p>
+</div>
+
+<div id="contactPopup">
+<button class="close" onclick="closeContact()">×</button>
+<p style="text-align:center;font-weight:bold">Contact via Email 📧</p>
+<p style="text-align:center;word-break:break-all">cojacob230@gmail.com</p>
 </div>
 
 <script>
 let last=0;
 window.addEventListener('scroll',()=>{const cur=window.pageYOffset;document.querySelector('header').style.transform=cur>last?'translateY(-120%)':'translateY(0)';document.querySelector('.ship-banner').style.transform=cur>last?'translateY(-120%)':'translateY(0)';last=cur;});
-
 const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
 const base=rand(900,1600);
-const products=[
-{name:"Not a Glock .22LR Kit",price:699,img:"NAG2.jpg",orders:base+rand(0,300),desc:"High-strength reinforced PLA+ kit."},
-{name:"HD22 Kit",price:849,img:"hs222.jpg",orders:base+rand(0,300),desc:"Heavy-duty construction with 100% infill."},
-{name:"Gambino Kit",price:549,img:"gambino2.jpg",orders:base+rand(0,300),desc:"Compact high-strength printed kit."},
-{name:"Cabfare Kit",price:499,img:"cabfare2.jpg",orders:base+rand(0,300),desc:"Balanced performance and durability."},
-{name:"Harlot Kit",price:429,img:"harlot2.jpg",orders:base+rand(0,300),desc:"Minimalist yet extremely strong design."},
-{name:"HD22 Complete",price:1199,img:"hs22.jpg",orders:base+rand(0,300),desc:"Fully assembled HD22 unit."},
-{name:"Not a Glock .22LR Complete",price:1099,img:"NAG.jpg",orders:base+rand(0,300),desc:"Complete ready-to-use assembly."},
-{name:"Gambino Complete",price:899,img:"gambino.jpg",orders:base+rand(0,300),desc:"Complete high-durability unit."},
-{name:"Cabfare Complete",price:799,img:"cabfare.jpg",orders:base+rand(0,300),desc:"Balanced full assembly."},
-{name:"Harlot Complete",price:649,img:"harlot.jpg",orders:base+rand(0,300),desc:"Compact complete solution."},
-{name:"Glock Switch",price:129,img:"switch.jpg",orders:base+rand(0,300),desc:"Precision printed accessory."}
-];
-
-const cart=[];
-let activeProduct=null;
-const productsDiv=document.getElementById('products');
+const products=[{name:"Not a Glock .22LR Kit",price:699,img:"NAG2.jpg",orders:base+rand(0,300),desc:"High-strength reinforced PLA+ kit."},{name:"HD22 Kit",price:849,img:"hs222.jpg",orders:base+rand(0,300),desc:"Heavy-duty construction with 100% infill."},{name:"Gambino Kit",price:549,img:"gambino2.jpg",orders:base+rand(0,300),desc:"Compact high-strength printed kit."},{name:"Cabfare Kit",price:499,img:"cabfare2.jpg",orders:base+rand(0,300),desc:"Balanced performance and durability."},{name:"Harlot Kit",price:429,img:"harlot2.jpg",orders:base+rand(0,300),desc:"Minimalist yet extremely strong design."},{name:"HD22 Complete",price:1199,img:"hs22.jpg",orders:base+rand(0,300),desc:"Fully assembled HD22 unit."},{name:"Not a Glock .22LR Complete",price:1099,img:"NAG.jpg",orders:base+rand(0,300),desc:"Complete ready-to-use assembly."},{name:"Gambino Complete",price:899,img:"gambino.jpg",orders:base+rand(0,300),desc:"Complete high-durability unit."},{name:"Cabfare Complete",price:799,img:"cabfare.jpg",orders:base+rand(0,300),desc:"Balanced full assembly."},{name:"Harlot Complete",price:649,img:"harlot.jpg",orders:base+rand(0,300),desc:"Compact complete solution."},{name:"Glock Switch",price:129,img:"switch.jpg",orders:base+rand(0,300),desc:"Precision printed accessory."}];
+const cart=[];let activeProduct=null;const productsDiv=document.getElementById('products');
 function render(){productsDiv.innerHTML='';products.forEach((p,i)=>{productsDiv.innerHTML+=`<div class='product' onclick='showModal(${i})'><img src='${p.img}'><h3>${p.name}</h3><p>$${p.price}</p><div class='orders'>${p.orders} orders</div><button onclick='event.stopPropagation();showModal(${i})'>View details</button></div>`;});}
 render();
-
-let modal=document.createElement('div');
-let toastEl=document.createElement('div');
+let modal=document.createElement('div');let toastEl=document.createElement('div');
 function showModal(i){activeProduct=products[i];if(!document.getElementById('modal')){modal.id='modal';modal.style.cssText='display:flex;position:fixed;inset:0;background:rgba(0,0,0,.85);align-items:center;justify-content:center;z-index:600';modal.innerHTML=`<div class='modal-box' style='background:#111;border-radius:22px;padding:26px;text-align:center;max-width:420px;width:90%'><button class='close' onclick='hideModal()'>×</button><img id='mImg' style='width:100%;height:220px;object-fit:cover;border-radius:16px;margin-bottom:14px'><h3 id='mName'></h3><p id='mDesc'></p><p><strong>$<span id='mPrice'></span></strong></p><p class='orders'><span id='mOrders'></span> orders</p><button onclick='addFromModal()'>Add to cart</button></div>`;document.body.appendChild(modal);}document.getElementById('mImg').src=activeProduct.img;document.getElementById('mName').innerText=activeProduct.name;document.getElementById('mDesc').innerText=activeProduct.desc;document.getElementById('mPrice').innerText=activeProduct.price;document.getElementById('mOrders').innerText=activeProduct.orders;modal.style.display='flex';}
 function hideModal(){modal.style.display='none';}
 function addFromModal(){cart.push(activeProduct);updateCart();showToast();hideModal();}
@@ -142,6 +132,8 @@ function showCart(){document.getElementById('cartPopup').style.display='block';}
 function closeCart(){document.getElementById('cartPopup').style.display='none';}
 function showPay(){document.getElementById('paybar').style.display='block';}
 function closePay(){document.getElementById('paybar').style.display='none';}
+function showContact(){document.getElementById('contactPopup').style.display='block';}
+function closeContact(){document.getElementById('contactPopup').style.display='none';}
 </script>
 
 </body>
