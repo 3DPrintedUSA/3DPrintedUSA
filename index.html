@@ -18,7 +18,6 @@
 --ok:#6dff9c;
 --shadow:rgba(0,0,0,.6);
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
 body{
 font-family:Inter,sans-serif;
@@ -27,7 +26,6 @@ color:#fff;
 line-height:1.6;
 overflow-x:hidden;
 }
-
 .container{max-width:1200px;margin:auto;padding:0 20px}
 
 /* SHIPPING BAR */
@@ -98,25 +96,22 @@ box-shadow:0 20px 60px var(--shadow);
 .hero p{opacity:.9}
 .stars{color:#f5c542;margin-top:10px;font-size:20px}
 
-/* MATERIALS – FILAMENT BACKGROUND */
+/* MATERIALS */
 .materials{
-position:relative;
 padding:140px 20px;
 background:
 linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
 url("filament.png") center/cover no-repeat;
-}
-.materials-inner{
-max-width:900px;
-margin:auto;
 text-align:center;
 }
 .materials h2{font-size:38px;margin-bottom:18px}
+.materials p{max-width:900px;margin:auto}
 
-/* PRODUCTS */
+/* SECTION */
 .section{padding:90px 0}
 .section h2{text-align:center;font-size:36px;margin-bottom:40px}
 
+/* PRODUCTS */
 .products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -157,10 +152,10 @@ cursor:pointer;
 button:hover{background:var(--accent-dark)}
 
 /* CART */
-#cartPopup{
+#cartPopup,#paybar{
 display:none;
 position:fixed;
-top:20px;right:20px;
+right:20px;
 width:360px;
 background:var(--panel);
 padding:22px;
@@ -168,6 +163,8 @@ border-radius:20px;
 z-index:500;
 box-shadow:0 20px 60px var(--shadow);
 }
+#cartPopup{top:20px}
+#paybar{bottom:20px;text-align:center}
 .close{
 position:absolute;top:10px;right:14px;
 font-size:20px;background:none;border:none;color:#fff;
@@ -190,7 +187,6 @@ width:90%;
 border-radius:22px;
 padding:26px;
 text-align:center;
-box-shadow:0 20px 60px var(--shadow);
 }
 .modal-box img{
 width:100%;
@@ -226,11 +222,25 @@ border-radius:40px;
 z-index:400;
 }
 
+/* DISCLAIMER */
+.disclaimer{
+background:#0d0d0d;
+border-top:1px solid var(--border);
+padding:80px 20px;
+}
+.disclaimer p{
+max-width:900px;
+margin:auto;
+opacity:.8;
+text-align:center;
+}
+
+/* FOOTER */
 footer{
 border-top:1px solid var(--border);
-padding:60px 20px;
+padding:50px 20px;
 text-align:center;
-opacity:.7;
+opacity:.6;
 }
 
 /* MOBILE */
@@ -253,6 +263,7 @@ opacity:.7;
 <nav>
 <a href="#shop">Shop</a>
 <a href="#" onclick="showCart()">Cart</a>
+<a href="#disclaimer">Disclaimer</a>
 </nav>
 </div>
 </header>
@@ -266,14 +277,12 @@ opacity:.7;
 </section>
 
 <section class="materials">
-<div class="materials-inner">
 <h2>Our Materials & Process</h2>
 <p>
 All products are handcrafted or 3D printed using PLA+ filament blended with carbon and metal particles for extra strength.
 100% infill ensures maximum durability. Orders are rigorously checked.
 Bitcoin-only payments protect privacy. Discreet worldwide packaging.
 </p>
-</div>
 </section>
 
 <section class="section container" id="shop">
@@ -281,12 +290,37 @@ Bitcoin-only payments protect privacy. Discreet worldwide packaging.
 <div class="products" id="products"></div>
 </section>
 
+<section class="disclaimer" id="disclaimer">
+<h2 style="text-align:center;margin-bottom:20px">Legal & Payment Disclaimer</h2>
+<p>
+Customers are responsible for compliance with all local, state and national laws.
+We are not liable for misuse of any product.  
+Payments are final once confirmed on the blockchain.  
+Minimum order value applies. Always verify your local regulations before ordering.
+</p>
+</section>
+
+<footer>
+© 2025 3DPrintedUSA · Bitcoin only · Worldwide shipping
+</footer>
+
 <!-- CART -->
 <div id="cartPopup">
 <button class="close" onclick="closeCart()">×</button>
 <h3>Shopping Cart</h3>
 <div id="cartItems"></div>
 <p>Total: $<span id="total">0.00</span></p>
+<button onclick="showPay()" style="width:100%">Checkout (Bitcoin)</button>
+</div>
+
+<!-- PAYMENT -->
+<div id="paybar">
+<button class="close" onclick="closePay()">×</button>
+<p>Send BTC to address:</p>
+<p style="word-break:break-all;font-weight:700">
+bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy
+</p>
+<p>Payment will be detected automatically.</p>
 </div>
 
 <!-- MODAL -->
@@ -305,8 +339,6 @@ Bitcoin-only payments protect privacy. Discreet worldwide packaging.
 <div class="toast" id="toast">Added to cart</div>
 <button class="cart-fab" onclick="showCart()">🛒 Cart</button>
 
-<footer>© 2025 3DPrintedUSA · Bitcoin only · Worldwide shipping</footer>
-
 <script>
 let last=0;
 window.addEventListener("scroll",()=>{
@@ -320,41 +352,16 @@ const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
 const base=rand(900,1600);
 
 const products=[
-{
-name:"Not a Glock .22LR Kit",
-price:699,
-img:"NAG2.jpg",
-orders:base+rand(0,200),
-desc:"High precision premium PLA+ kit reinforced with carbon and metal particles."
-},
-{
-name:"HD22 Kit",
-price:849,
-img:"hs222.jpg",
-orders:base+rand(0,200),
-desc:"Heavy-duty design, 100% infill, built for maximum durability."
-},
-{
-name:"Gambino Kit",
-price:549,
-img:"gambino2.jpg",
-orders:base+rand(0,200),
-desc:"Compact high-strength printed kit with reinforced structure."
-},
-{
-name:"Cabfare Kit",
-price:499,
-img:"cabfare2.jpg",
-orders:base+rand(0,200),
-desc:"Balanced performance kit with thick walls and solid infill."
-},
-{
-name:"Harlot Kit",
-price:429,
-img:"harlot2.jpg",
-orders:base+rand(0,200),
-desc:"Minimalist yet extremely strong PLA+ construction."
-}
+{name:"Not a Glock .22LR Kit",price:699,img:"NAG2.jpg",orders:base+rand(0,200),
+desc:"Premium PLA+ kit reinforced with carbon and metal particles."},
+{name:"HD22 Kit",price:849,img:"hs222.jpg",orders:base+rand(0,200),
+desc:"Heavy-duty construction with 100% infill."},
+{name:"Gambino Kit",price:549,img:"gambino2.jpg",orders:base+rand(0,200),
+desc:"Compact high-strength printed kit."},
+{name:"Cabfare Kit",price:499,img:"cabfare2.jpg",orders:base+rand(0,200),
+desc:"Balanced performance and durability."},
+{name:"Harlot Kit",price:429,img:"harlot2.jpg",orders:base+rand(0,200),
+desc:"Minimalist yet extremely strong design."}
 ];
 
 const cart=[];
@@ -408,6 +415,8 @@ const toastEl=document.getElementById("toast");
 
 function showCart(){cartPopup.style.display="block"}
 function closeCart(){cartPopup.style.display="none"}
+function showPay(){paybar.style.display="block"}
+function closePay(){paybar.style.display="none"}
 </script>
 
 </body>
