@@ -17,6 +17,10 @@ body{font-family:Inter,sans-serif;background:var(--bg);color:#fff;line-height:1.
 header{position:sticky;top:42px;background:var(--bg);border-bottom:1px solid var(--border);z-index:250;transition:transform .4s ease}
 .header-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
 .logo{font-size:22px;font-weight:800;letter-spacing:-0.5px}
+.header-right{display:flex;align-items:center;gap:15px}
+.cart-btn{background:none;border:none;color:#fff;font-size:24px;cursor:pointer;padding:8px;display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:10px;transition:.3s;position:relative}
+.cart-btn:hover{background:rgba(255,255,255,0.1)}
+.cart-count{position:absolute;top:2px;right:2px;background:var(--danger);color:#fff;font-size:12px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800}
 .hamburger{background:none;border:none;color:#fff;font-size:28px;cursor:pointer;padding:8px;display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:10px;transition:.3s}
 .hamburger:hover{background:rgba(255,255,255,0.1)}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:1000;display:none;align-items:center;justify-content:center;animation:fadeIn 0.3s ease}
@@ -28,26 +32,44 @@ header{position:sticky;top:42px;background:var(--bg);border-bottom:1px solid var
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;background:url("background.png") center/cover no-repeat;padding-top:120px}
 .hero-box{background:rgba(0,0,0,.65);padding:42px 32px;border-radius:22px;max-width:900px;text-align:center;box-shadow:0 20px 60px var(--shadow)}
-.hero h2{font-size:48px;margin-bottom:12px}.hero p{opacity:.9}.stars{color:#f5c542;margin-top:10px;font-size:20px}
-.materials{padding:140px 20px;background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),url("filament.png") center/cover no-repeat;text-align:center}
-.materials h2{font-size:38px;margin-bottom:18px}.materials p{max-width:900px;margin:auto}
+.hero h2{font-size:48px;margin-bottom:20px}.hero p{opacity:.9;margin-bottom:20px}.stars{color:#f5c542;margin-top:10px;font-size:20px}
+.hero-buttons{display:flex;gap:20px;justify-content:center;margin-top:30px}
+.hero-buttons button{padding:15px 30px;font-size:18px;min-width:180px}
+.materials{padding:100px 20px;background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),url("filament.png") center/cover no-repeat;text-align:center}
+.materials h2{font-size:38px;margin-bottom:18px}.materials p{max-width:900px;margin:0 auto 18px;font-size:18px;line-height:1.8}
 .section{padding:90px 0}.section h2{text-align:center;font-size:36px;margin-bottom:40px}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px}
 .product{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:20px;text-align:center;transition:.3s;cursor:pointer}
 .product:hover{transform:translateY(-6px);box-shadow:0 16px 35px var(--shadow)}
 .product img{width:100%;height:190px;object-fit:cover;border-radius:14px;margin-bottom:12px}.orders{color:var(--ok);font-size:14px;margin-bottom:8px}
-button{background:var(--accent);border:none;color:#fff;padding:12px 22px;border-radius:30px;font-weight:700;cursor:pointer}
+.product h3{margin-bottom:10px;font-size:18px}
+.prices{display:flex;justify-content:center;align-items:center;gap:10px;margin:10px 0}
+.original-price{text-decoration:line-through;color:#999;font-size:16px}
+.discounted-price{color:var(--ok);font-size:22px;font-weight:800}
+.sale-badge{background:var(--danger);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:800;margin-bottom:10px;display:inline-block}
+button{background:var(--accent);border:none;color:#fff;padding:12px 22px;border-radius:30px;font-weight:700;cursor:pointer;transition:.3s}
 button:hover{background:var(--accent-dark)}
-#cartPopup,#paybar,#contactPopup{display:none;position:fixed;right:20px;width:360px;background:var(--panel);padding:22px;border-radius:20px;z-index:500;box-shadow:0 20px 60px var(--shadow)}
-#cartPopup{top:20px}#paybar{bottom:20px;text-align:center}#contactPopup{bottom:100px}
+.secondary-btn{background:transparent;border:2px solid var(--accent)}
+.secondary-btn:hover{background:var(--accent)}
+#cartPopup{display:none;position:fixed;right:20px;top:20px;width:360px;background:var(--panel);padding:22px;border-radius:20px;z-index:500;box-shadow:0 20px 60px var(--shadow)}
 .close{position:absolute;top:10px;right:14px;font-size:20px;background:none;border:none;color:#fff}
+.payment-popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:1000;align-items:center;justify-content:center}
+.payment-box{background:var(--panel);border-radius:22px;padding:30px;max-width:500px;width:90%;text-align:center;border:1px solid var(--border)}
+.payment-box h2{margin-bottom:20px;color:var(--ok)}
+.btc-address{background:rgba(0,0,0,0.5);padding:15px;border-radius:15px;margin:20px 0;word-break:break-all;font-family:monospace;font-size:16px;border:1px solid var(--border)}
+.payment-buttons{display:flex;gap:15px;justify-content:center;margin:25px 0;flex-wrap:wrap}
+.payment-btn{display:flex;flex-direction:column;align-items:center;gap:8px;padding:15px;background:rgba(255,255,255,0.05);border-radius:15px;min-width:120px;transition:.3s;cursor:pointer;border:1px solid var(--border)}
+.payment-btn:hover{background:var(--accent);color:#000}
+.payment-btn img{width:40px;height:40px}
+.copy-btn{background:var(--ok);color:#000;font-weight:800;width:100%;margin-bottom:15px}
+.copy-btn:hover{background:#4dff88}
 .disclaimer{background:#c92a2a;border-radius:20px;padding:40px 20px;margin:40px 0;}
 .disclaimer h2{text-align:center;margin-bottom:28px;color:#fff}.disclaimer p{max-width:980px;margin:0 auto 18px;opacity:.95;text-align:left;color:#fff}
 footer{border-top:1px solid var(--border);padding:50px 20px;text-align:center;opacity:.9}
 .social-buttons{margin-top:20px;display:flex;justify-content:center;gap:20px}
 .social-buttons a{color:#fff;text-decoration:none;font-weight:700;padding:10px 16px;border:1px solid var(--border);border-radius:12px;transition:.3s}
 .social-buttons a:hover{background:var(--accent);color:#000;}
-@media(max-width:700px){.hero h2{font-size:32px}.materials{padding:100px 20px}}
+@media(max-width:700px){.hero h2{font-size:32px}.materials{padding:80px 20px}.materials p{font-size:16px}.hero-buttons{flex-direction:column;align-items:center}.payment-buttons{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -56,17 +78,21 @@ footer{border-top:1px solid var(--border);padding:50px 20px;text-align:center;op
 <header>
 <div class="container header-inner">
 <div class="logo icon">3DPrintedUSA</div>
+<div class="header-right">
+<button class="cart-btn" onclick="showCart()">
+🛍️
+<span id="cartCounter" class="cart-count" style="display:none">0</span>
+</button>
 <button class="hamburger" onclick="openMenu()">☰</button>
+</div>
 </div>
 </header>
 
 <div id="navOverlay" class="overlay">
 <button class="close-overlay" onclick="closeMenu()">×</button>
 <div class="overlay-content">
-<a href="#shop" onclick="closeMenu()">Shop 🛒</a>
-<a href="#" onclick="closeMenu();showCart();">Cart 🛍️</a>
-<a href="#disclaimer" onclick="closeMenu()">Disclaimer ⚖️</a>
 <a href="#" onclick="closeMenu();showContact();">Contact 📧</a>
+<a href="#disclaimer" onclick="closeMenu()">Disclaimer ⚖️</a>
 </div>
 </div>
 
@@ -75,12 +101,17 @@ footer{border-top:1px solid var(--border);padding:50px 20px;text-align:center;op
 <h2>Premium 3D Printed Products 🎨</h2>
 <p class="icon">Bitcoin-only checkout 💰 · Fully anonymous 🕶️ · Discreet worldwide shipping 📦</p>
 <div class="stars">★★★★☆ 4.8 / 5.0</div>
+<div class="hero-buttons">
+<button onclick="scrollToShop()">Shop Now 🛒</button>
+<button class="secondary-btn" onclick="showContact()">Contact Us 📧</button>
+</div>
 </div>
 </section>
 
 <section class="materials">
 <h2>Our Materials & Process 🛠️</h2>
-<p>All products are produced using industrial-grade PLA+ blends reinforced with carbon and metal particles. Each item is printed at 100% infill, manually inspected, and packaged discreetly. Bitcoin-only payments ensure privacy and eliminate chargebacks or third‑party payment risks.</p>
+<p>At 3DPrintedUSA, we've developed our own proprietary PLA+ composite, blending high-grade PLA with stainless steel particles and carbon fiber strands. This fusion creates a material with exceptional strength, a smooth surface finish, heat resistance, and precise dimensional accuracy (±0.05mm tolerance).</p>
+<p>Each product is printed at 100% infill, stress-tested for 24 hours, manually inspected, and discreetly packaged. Bitcoin-only payments ensure privacy and eliminate chargebacks.</p>
 </section>
 
 <section class="section container" id="shop">
@@ -110,20 +141,49 @@ footer{border-top:1px solid var(--border);padding:50px 20px;text-align:center;op
 <h3 class="icon">Shopping Cart 🛒</h3>
 <div id="cartItems"></div>
 <p>Total: $<span id="total">0.00</span></p>
-<button onclick="showPay()" style="width:100%">Checkout (Bitcoin 💰)</button>
+<button onclick="showPaymentPopup()" style="width:100%">Proceed to Payment (Bitcoin 💰)</button>
 </div>
 
-<div id="paybar">
-<button class="close" onclick="closePay()">×</button>
-<p class="icon">Send BTC to address 💳</p>
-<p style="word-break:break-all;font-weight:700">bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy</p>
-<p>Payment will be detected automatically after blockchain confirmation ✅.</p>
+<div id="paymentPopup" class="payment-popup">
+<div class="payment-box">
+<button class="close" onclick="closePaymentPopup()">×</button>
+<h2 class="icon">Bitcoin Payment 💸</h2>
+<p>Send exact amount to the address below:</p>
+<div class="btc-address" id="paymentAddress">bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy</div>
+<button class="copy-btn" onclick="copyAddress()">📋 Copy Bitcoin Address</button>
+<p style="margin:15px 0;opacity:0.9;">Need Bitcoin? Buy instantly:</p>
+<div class="payment-buttons">
+<div class="payment-btn" onclick="window.open('https://cash.app/bitcoin', '_blank')">
+<div style="font-size:28px;">💵</div>
+<div>CashApp</div>
+</div>
+<div class="payment-btn" onclick="window.open('https://www.binance.com/en/buy-bitcoin', '_blank')">
+<div style="font-size:28px;">⚡</div>
+<div>Binance</div>
+</div>
+<div class="payment-btn" onclick="window.open('https://www.coinbase.com/buy-bitcoin', '_blank')">
+<div style="font-size:28px;">🪙</div>
+<div>Coinbase</div>
+</div>
+<div class="payment-btn" onclick="window.open('https://kraken.com/buy-bitcoin', '_blank')">
+<div style="font-size:28px;">🔱</div>
+<div>Kraken</div>
+</div>
+</div>
+<p style="color:var(--ok);margin:15px 0;">✅ Payment detected automatically after 2 confirmations</p>
+<p style="opacity:0.8;font-size:14px;">After payment, keep this window open until confirmed</p>
+</div>
 </div>
 
-<div id="contactPopup">
+<div id="contactPopup" class="payment-popup">
+<div class="payment-box">
 <button class="close" onclick="closeContact()">×</button>
-<p style="text-align:center;font-weight:bold">Contact via Email 📧</p>
-<p style="text-align:center;word-break:break-all">cojacob230@gmail.com</p>
+<h2 class="icon">Contact Us 📧</h2>
+<p>For order inquiries, support, or questions:</p>
+<div class="btc-address">cojacob230@gmail.com</div>
+<button class="copy-btn" onclick="copyEmail()">📋 Copy Email Address</button>
+<p style="margin-top:20px;opacity:0.9;">Response time: 12-24 hours</p>
+</div>
 </div>
 
 <script>
@@ -131,24 +191,34 @@ let last=0;
 window.addEventListener('scroll',()=>{const cur=window.pageYOffset;document.querySelector('header').style.transform=cur>last?'translateY(-120%)':'translateY(0)';document.querySelector('.ship-banner').style.transform=cur>last?'translateY(-120%)':'translateY(0)';last=cur;});
 const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
 const base=rand(900,1600);
+
+// Bereken 10% korting voor kits en completes
+const calculateDiscountedPrice = (price, name) => {
+  if (name.includes("Kit") || name.includes("Complete")) {
+    return price * 0.9; // 10% korting
+  }
+  return price;
+};
+
 const products=[
-  {name:"Not a Glock .22LR Kit",price:699,img:"NAG2.jpg",orders:base+rand(0,300),desc:"High-strength reinforced PLA+ kit."},
-  {name:"HD22 Kit",price:849,img:"hs222.jpg",orders:base+rand(0,300),desc:"Heavy-duty construction with 100% infill."},
-  {name:"Gambino Kit",price:549,img:"gambino2.jpg",orders:base+rand(0,300),desc:"Compact high-strength printed kit."},
-  {name:"Cabfare Kit",price:499,img:"cabfare2.jpg",orders:base+rand(0,300),desc:"Balanced performance and durability."},
-  {name:"Harlot Kit",price:429,img:"harlot2.jpg",orders:base+rand(0,300),desc:"Minimalist yet extremely strong design."},
-  {name:"HD22 Complete",price:1199,img:"hs22.jpg",orders:base+rand(0,300),desc:"Fully assembled HD22 unit."},
-  {name:"Not a Glock .22LR Complete",price:1099,img:"NAG.jpg",orders:base+rand(0,300),desc:"Complete ready-to-use assembly."},
-  {name:"Gambino Complete",price:899,img:"gambino.jpg",orders:base+rand(0,300),desc:"Complete high-durability unit."},
-  {name:"Cabfare Complete",price:799,img:"cabfare.jpg",orders:base+rand(0,300),desc:"Balanced full assembly."},
-  {name:"Harlot Complete",price:649,img:"harlot.jpg",orders:base+rand(0,300),desc:"Compact complete solution."},
-  {name:"Glock Switch",price:129,img:"switch.jpg",orders:base+rand(0,300),desc:"Precision printed accessory."},
-  {name:"Knuckle Dusters",price:5,img:"knuckle.jpg",orders:base+rand(0,300),desc:"Self-defense knuckle dusters made from reinforced PLA+."},
-  {name:"Invisible Switch",price:50,img:"invisible_switch.jpg",orders:base+rand(0,300),desc:"Discreet and reliable invisible switch."},
-  {name:"Glock 19 Gen 3 Frame Goud",price:100,img:"glock19_gold.jpg",orders:base+rand(0,300),desc:"Gold-colored Glock 19 Gen 3 frame, printed with reinforced PLA+."},
-  {name:"Extended Mag for Not A Glock .22lr",price:30,img:"extended_mag.jpg",orders:base+rand(0,300),desc:"High-capacity extended magazine for the Not A Glock .22lr."},
-  {name:"Glock 26 Magazine 10 Round",price:25,img:"glock26_mag.jpg",orders:base+rand(0,300),desc:"10-round magazine for Glock 26, printed with reinforced PLA+."}
+  {name:"Not a Glock .22LR Kit",price:699,img:"NAG2.jpg",orders:base+rand(0,300),desc:"High-strength reinforced PLA+ kit. Our custom metal-carbon composite ensures maximum durability."},
+  {name:"HD22 Kit",price:849,img:"hs222.jpg",orders:base+rand(0,300),desc:"Heavy-duty construction with 100% infill. Engineered for reliability with our proprietary PLA+ blend."},
+  {name:"Gambino Kit",price:549,img:"gambino2.jpg",orders:base+rand(0,300),desc:"Compact high-strength printed kit. Perfect balance of size and durability with carbon reinforcement."},
+  {name:"Cabfare Kit",price:499,img:"cabfare2.jpg",orders:base+rand(0,300),desc:"Balanced performance and durability. Features our signature smooth finish."},
+  {name:"Harlot Kit",price:429,img:"harlot2.jpg",orders:base+rand(0,300),desc:"Minimalist yet extremely strong design. Metal particles add weight and strength."},
+  {name:"HD22 Complete",price:1199,img:"hs22.jpg",orders:base+rand(0,300),desc:"Fully assembled HD22 unit. Ready to use with all components from our premium materials."},
+  {name:"Not a Glock .22LR Complete",price:1099,img:"NAG.jpg",orders:base+rand(0,300),desc:"Complete ready-to-use assembly. Perfect fitment guaranteed with our precision calibration."},
+  {name:"Gambino Complete",price:899,img:"gambino.jpg",orders:base+rand(0,300),desc:"Complete high-durability unit. Every component made from our custom PLA+ composite."},
+  {name:"Cabfare Complete",price:799,img:"cabfare.jpg",orders:base+rand(0,300),desc:"Balanced full assembly. Exceptional surface finish with reinforced structure."},
+  {name:"Harlot Complete",price:649,img:"harlot.jpg",orders:base+rand(0,300),desc:"Compact complete solution. Professional-grade construction throughout."},
+  {name:"Glock Switch",price:129,img:"switch.jpg",orders:base+rand(0,300),desc:"Precision printed accessory. Made with reinforced materials for reliable performance."},
+  {name:"Knuckle Dusters",price:5,img:"knuckle.jpg",orders:base+rand(0,300),desc:"Self-defense knuckle dusters made from reinforced PLA+. Metal particles add substantial weight."},
+  {name:"Invisible Switch",price:50,img:"invisible_switch.jpg",orders:base+rand(0,300),desc:"Discreet and reliable invisible switch. Carbon fiber reinforcement ensures longevity."},
+  {name:"Glock 19 Gen 3 Frame Goud",price:100,img:"glock19_gold.jpg",orders:base+rand(0,300),desc:"Gold-colored Glock 19 Gen 3 frame. Printed with reinforced PLA+ composite for enhanced durability."},
+  {name:"Extended Mag for Not A Glock .22lr",price:30,img:"extended_mag.jpg",orders:base+rand(0,300),desc:"High-capacity extended magazine. Reinforced feed lips and body for reliable performance."},
+  {name:"Glock 26 Magazine 10 Round",price:25,img:"glock26_mag.jpg",orders:base+rand(0,300),desc:"10-round magazine for Glock 26. Printed with reinforced PLA+ for durability and smooth feeding."}
 ];
+
 const cart=[];let activeProduct=null;const productsDiv=document.getElementById('products');
 
 function openMenu() {
@@ -161,30 +231,180 @@ function closeMenu() {
   document.body.style.overflow = 'auto';
 }
 
+function scrollToShop() {
+  document.getElementById('shop').scrollIntoView({behavior: 'smooth'});
+}
+
+function updateCartCounter() {
+  const counter = document.getElementById('cartCounter');
+  if (cart.length > 0) {
+    counter.textContent = cart.length;
+    counter.style.display = 'flex';
+  } else {
+    counter.style.display = 'none';
+  }
+}
+
 // Sluit menu met ESC toets
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeMenu();
 });
 
-function render(){productsDiv.innerHTML='';products.forEach((p,i)=>{productsDiv.innerHTML+=`<div class='product' onclick='showModal(${i})'><img src='${p.img}'><h3>${p.name}</h3><p>$${p.price}</p><div class='orders'>${p.orders} orders</div><button onclick='event.stopPropagation();showModal(${i})'>View details</button></div>`;});}
+function render(){
+  productsDiv.innerHTML='';
+  products.forEach((p,i)=>{
+    const isDiscounted = p.name.includes("Kit") || p.name.includes("Complete");
+    const discountedPrice = isDiscounted ? calculateDiscountedPrice(p.price, p.name) : p.price;
+    
+    productsDiv.innerHTML+=`
+      <div class='product' onclick='showModal(${i})'>
+        ${isDiscounted ? '<div class="sale-badge">🔥 10% OFF SALE 🔥</div>' : ''}
+        <img src='${p.img}'>
+        <h3>${p.name}</h3>
+        <div class="prices">
+          ${isDiscounted ? `<span class="original-price">$${p.price}</span>` : ''}
+          <span class="${isDiscounted ? 'discounted-price' : ''}">$${isDiscounted ? discountedPrice.toFixed(0) : p.price}</span>
+        </div>
+        <div class='orders'>${p.orders} orders</div>
+        <button onclick='event.stopPropagation();showModal(${i})'>View details</button>
+      </div>`;
+  });
+}
+
 render();
+
 let modal=document.createElement('div');let toastEl=document.createElement('div');
-function showModal(i){activeProduct=products[i];if(!document.getElementById('modal')){modal.id='modal';modal.style.cssText='display:flex;position:fixed;inset:0;background:rgba(0,0,0,.85);align-items:center;justify-content:center;z-index:600';modal.innerHTML=`<div class='modal-box' style='background:#111;border-radius:22px;padding:26px;text-align:center;max-width:420px;width:90%'><button class='close' onclick='hideModal()'>×</button><img id='mImg' style='width:100%;height:220px;object-fit:cover;border-radius:16px;margin-bottom:14px'><h3 id='mName'></h3><p id='mDesc'></p><p><strong>$<span id='mPrice'></span></strong></p><p class='orders'><span id='mOrders'></span> orders</p><button onclick='addFromModal()'>Add to cart</button></div>`;document.body.appendChild(modal);}document.getElementById('mImg').src=activeProduct.img;document.getElementById('mName').innerText=activeProduct.name;document.getElementById('mDesc').innerText=activeProduct.desc;document.getElementById('mPrice').innerText=activeProduct.price;document.getElementById('mOrders').innerText=activeProduct.orders;modal.style.display='flex';}
+
+function showModal(i){
+  activeProduct=products[i];
+  const isDiscounted = activeProduct.name.includes("Kit") || activeProduct.name.includes("Complete");
+  const discountedPrice = isDiscounted ? calculateDiscountedPrice(activeProduct.price, activeProduct.name) : activeProduct.price;
+  
+  if(!document.getElementById('modal')){
+    modal.id='modal';
+    modal.style.cssText='display:flex;position:fixed;inset:0;background:rgba(0,0,0,.85);align-items:center;justify-content:center;z-index:600';
+    modal.innerHTML=`
+      <div class='modal-box' style='background:#111;border-radius:22px;padding:26px;text-align:center;max-width:420px;width:90%'>
+        <button class='close' onclick='hideModal()'>×</button>
+        ${isDiscounted ? '<div class="sale-badge" style="margin-bottom:15px;">🔥 10% OFF SALE 🔥</div>' : ''}
+        <img id='mImg' style='width:100%;height:220px;object-fit:cover;border-radius:16px;margin-bottom:14px'>
+        <h3 id='mName'></h3>
+        <p id='mDesc'></p>
+        <div style="margin:15px 0;">
+          ${isDiscounted ? `<span style="text-decoration:line-through;color:#999;margin-right:10px;">$${activeProduct.price}</span>` : ''}
+          <span style="color:var(--ok);font-size:24px;font-weight:800;">$${isDiscounted ? discountedPrice.toFixed(0) : activeProduct.price}</span>
+        </div>
+        <p class='orders'><span id='mOrders'></span> orders</p>
+        <button onclick='addFromModal()'>Add to cart</button>
+      </div>`;
+    document.body.appendChild(modal);
+  }
+  document.getElementById('mImg').src=activeProduct.img;
+  document.getElementById('mName').innerText=activeProduct.name;
+  document.getElementById('mDesc').innerText=activeProduct.desc;
+  document.getElementById('mOrders').innerText=activeProduct.orders;
+  modal.style.display='flex';
+}
+
 function hideModal(){modal.style.display='none';}
-function addFromModal(){cart.push(activeProduct);updateCart();showToast();hideModal();}
-function updateCart(){let t=0,h='';cart.forEach(i=>{t+=i.price;h+=`${i.name}<br>`});document.getElementById('cartItems').innerHTML=h;document.getElementById('total').innerText=t.toFixed(2);}
-function showToast(){if(!document.getElementById('toast')){toastEl.id='toast';toastEl.className='toast';toastEl.style.cssText='position:fixed;bottom:140px;right:20px;background:var(--accent);padding:14px 26px;border-radius:30px;font-weight:700;opacity:0;transform:translateY(20px);transition:.35s;z-index:700';toastEl.innerText='Added to cart';document.body.appendChild(toastEl);}toastEl.classList.add('show');setTimeout(()=>toastEl.classList.remove('show'),1400);}
-function showCart(){closeMenu();document.getElementById('cartPopup').style.display='block';}
-function closeCart(){document.getElementById('cartPopup').style.display='none';}
-function showPay(){document.getElementById('paybar').style.display='block';}
-function closePay(){document.getElementById('paybar').style.display='none';}
-function showContact(){closeMenu();document.getElementById('contactPopup').style.display='block';}
-function closeContact(){document.getElementById('contactPopup').style.display='none';}
+
+function addFromModal(){
+  const isDiscounted = activeProduct.name.includes("Kit") || activeProduct.name.includes("Complete");
+  const discountedPrice = isDiscounted ? calculateDiscountedPrice(activeProduct.price, activeProduct.name) : activeProduct.price;
+  
+  cart.push({
+    ...activeProduct,
+    price: discountedPrice
+  });
+  updateCart();
+  updateCartCounter();
+  showToast();
+  hideModal();
+}
+
+function updateCart(){
+  let t=0,h='';
+  cart.forEach(i=>{
+    t+=i.price;
+    h+=`${i.name} - $${i.price.toFixed(0)}<br>`;
+  });
+  document.getElementById('cartItems').innerHTML=h;
+  document.getElementById('total').innerText=t.toFixed(2);
+}
+
+function showToast(){
+  if(!document.getElementById('toast')){
+    toastEl.id='toast';
+    toastEl.className='toast';
+    toastEl.style.cssText='position:fixed;bottom:140px;right:20px;background:var(--accent);padding:14px 26px;border-radius:30px;font-weight:700;opacity:0;transform:translateY(20px);transition:.35s;z-index:700';
+    toastEl.innerText='Added to cart';
+    document.body.appendChild(toastEl);
+  }
+  toastEl.style.opacity=1;
+  toastEl.style.transform='translateY(0)';
+  setTimeout(()=>{
+    toastEl.style.opacity=0;
+    toastEl.style.transform='translateY(20px)';
+  },1400);
+}
+
+function showCart(){
+  closeMenu();
+  document.getElementById('cartPopup').style.display='block';
+}
+
+function closeCart(){
+  document.getElementById('cartPopup').style.display='none';
+}
+
+function showPaymentPopup(){
+  closeCart();
+  document.getElementById('paymentPopup').style.display='flex';
+}
+
+function closePaymentPopup(){
+  document.getElementById('paymentPopup').style.display='none';
+}
+
+function copyAddress(){
+  const address = document.getElementById('paymentAddress').textContent;
+  navigator.clipboard.writeText(address).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    const originalText = btn.textContent;
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => {
+      btn.textContent = originalText;
+    }, 2000);
+  });
+}
+
+function copyEmail(){
+  const email = 'cojacob230@gmail.com';
+  navigator.clipboard.writeText(email).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    const originalText = btn.textContent;
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => {
+      btn.textContent = originalText;
+    }, 2000);
+  });
+}
+
+function showContact(){
+  closeMenu();
+  document.getElementById('contactPopup').style.display='flex';
+}
+
+function closeContact(){
+  document.getElementById('contactPopup').style.display='none';
+}
 
 // Sluit modals als er buiten wordt geklikt
 window.onclick = function(event) {
   if (event.target == modal) hideModal();
   if (event.target == document.getElementById('navOverlay')) closeMenu();
+  if (event.target == document.getElementById('paymentPopup')) closePaymentPopup();
+  if (event.target == document.getElementById('contactPopup')) closeContact();
 }
 </script>
 
