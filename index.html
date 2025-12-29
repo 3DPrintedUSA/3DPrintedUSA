@@ -55,7 +55,7 @@
 
         /* ==================== HEADER ==================== */
         .main-header {
-            position: sticky; top: 48px; /* Below banner */
+            position: sticky; top: 48px;
             background: rgba(10, 10, 10, 0.97); backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border); z-index: 900;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
@@ -67,16 +67,15 @@
         .logo-container {
             display: flex; align-items: center; gap: 15px;
         }
-        /* VERVANG 'logo.png' HIERONDER MET JE EIGEN LOGO-BESTAND */
-        .site-logo { height: 50px; width: auto; display: block; }
         .logo-text {
-            font-size: 24px; font-weight: 800; letter-spacing: -0.5px;
+            font-size: 28px; font-weight: 800; letter-spacing: -0.5px;
             color: var(--text);
             display: flex; flex-direction: column; line-height: 1.1;
         }
+        .logo-text .accent { color: var(--accent); }
         .logo-subtitle {
             font-size: 11px; font-weight: 500; color: var(--text-muted);
-            letter-spacing: 0.5px;
+            letter-spacing: 0.5px; margin-top: 3px;
         }
         .header-right { display: flex; align-items: center; gap: 20px; }
         .cart-btn, .hamburger {
@@ -102,20 +101,20 @@
         .hero {
             min-height: 100vh;
             display: flex; align-items: center; justify-content: center;
-            /* VERVANG DE URL HIERONDER MET JE EIGEN 'background.png' PAD */
-            background: linear-gradient(135deg, rgba(10,10,10,0.92) 0%, rgba(26,26,26,0.95) 100%),
-                        url('background.png') center/cover no-repeat;
-            padding: 148px 20px 80px; /* Adjusted for banners */
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            padding: 148px 20px 80px;
             position: relative; overflow: hidden;
         }
         .hero::before {
             content: ''; position: absolute; top:0; left:0; right:0; bottom:0;
-            background: radial-gradient(circle at 20% 30%, rgba(31,140,255,0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 70%, rgba(46,204,113,0.05) 0%, transparent 50%);
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(31,140,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(46,204,113,0.05) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(0,0,0,0.7) 0%, transparent 100%);
             pointer-events: none;
         }
         .hero-box {
-            background: rgba(26,26,26,0.78); backdrop-filter: blur(12px);
+            background: rgba(26,26,26,0.85); backdrop-filter: blur(12px);
             padding: 60px 50px; border-radius: 28px; max-width: 1000px;
             text-align: center; box-shadow: 0 30px 60px var(--shadow);
             border: 1px solid rgba(255,255,255,0.08); position: relative; z-index: 1;
@@ -173,9 +172,14 @@
         /* ==================== MATERIALS SECTION ==================== */
         .materials {
             padding: 120px 20px; text-align: center; position: relative;
-            /* VERVANG DE URL HIERONDER MET JE EIGEN 'filament.png' PAD */
-            background: linear-gradient(135deg, rgba(10,10,10,0.97) 0%, rgba(26,26,26,0.98) 100%),
-                        url('filament.png') center/cover no-repeat fixed;
+            background: linear-gradient(135deg, #0a0a0a 0%, #111 100%);
+        }
+        .materials::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(circle at 70% 20%, rgba(31,140,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 30% 80%, rgba(46,204,113,0.03) 0%, transparent 50%);
+            pointer-events: none;
         }
         .section-header {
             font-size: 44px; margin-bottom: 25px; position: relative;
@@ -190,7 +194,7 @@
             max-width: 1000px; margin: 0 auto;
             background: rgba(26,26,26,0.75); backdrop-filter: blur(15px);
             padding: 50px; border-radius: 24px; border: 1px solid var(--border);
-            text-align: left;
+            text-align: left; position: relative; z-index: 1;
         }
         .materials p {
             margin-bottom: 30px; font-size: 18px; line-height: 1.9;
@@ -262,13 +266,25 @@
             transform: translateY(-12px); box-shadow: 0 25px 50px var(--shadow);
             border-color: var(--accent);
         }
-        /* VERVANG ALLE 'src' ATTRIBUTEN IN DE PRODUCT <img> TAGS (via JavaScript) */
-        .product-image {
-            width: 100%; height: 220px; object-fit: contain;
-            border-radius: 14px; margin-bottom: 20px;
-            background: rgba(255,255,255,0.03); padding: 15px;
+        .product-image-container {
+            width: 100%; height: 220px; margin-bottom: 20px;
+            border-radius: 14px; overflow: hidden;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(0,0,0,0.3));
+            display: flex; align-items: center; justify-content: center;
             border: 1px solid rgba(255,255,255,0.05);
         }
+        .product-image {
+            width: 100%; height: 100%;
+            object-fit: contain; padding: 15px;
+        }
+        .image-placeholder {
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            color: var(--text-light);
+        }
+        .image-placeholder i { font-size: 48px; margin-bottom: 15px; color: var(--accent); opacity: 0.5; }
+        .image-placeholder span { font-size: 14px; text-align: center; max-width: 80%; }
         .orders {
             color: var(--ok); font-size: 14px; margin-bottom: 12px;
             display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -300,11 +316,14 @@
         }
         .footer-content { max-width: 1200px; margin: 0 auto; }
         .footer-brand { margin-bottom: 40px; }
-        /* VERVANG 'logo.png' HIERONDER MET JE EIGEN LOGO-BESTAND */
-        .footer-logo { height: 60px; width: auto; margin-bottom: 15px; }
+        .footer-logo-text {
+            font-size: 32px; font-weight: 800; color: var(--text);
+            margin-bottom: 10px;
+        }
+        .footer-logo-text .accent { color: var(--accent); }
         .footer-text { color: var(--text-light); font-size: 16px; margin-bottom: 10px; }
 
-        /* SHIPPING CARRIERS */
+        /* SHIPPING CARRIERS - NU MET ICONEN IN PLAATS VAN LOGO'S */
         .shipping-carriers {
             display: flex; justify-content: center; align-items: center;
             gap: 40px; margin: 50px 0; flex-wrap: wrap;
@@ -312,12 +331,16 @@
         .carrier-item {
             display: flex; flex-direction: column; align-items: center; gap: 10px;
             transition: all 0.3s ease;
-            filter: grayscale(20%) brightness(1.1);
         }
-        .carrier-item:hover { transform: translateY(-5px); filter: grayscale(0%) brightness(1.2); }
-        /* VERVANG ALLE 'src' PADEN HIERONDER MET JE EIGEN LOGO-BESTANDEN */
-        .carrier-logo { height: 40px; width: auto; object-fit: contain; }
-        .carrier-name { font-size: 13px; color: var(--text-light); font-weight: 600; letter-spacing: 0.5px; }
+        .carrier-item:hover { transform: translateY(-5px); }
+        .carrier-icon {
+            font-size: 32px; color: var(--accent);
+            width: 60px; height: 60px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .carrier-name { font-size: 14px; color: var(--text-light); font-weight: 600; letter-spacing: 0.5px; }
 
         /* SOCIAL & INFO LINKS */
         .footer-links {
@@ -387,7 +410,7 @@
             word-break: break-all; text-align: center;
         }
 
-        /* ==================== CART & PAYMENT POPUPS (SIMPLIFIED) ==================== */
+        /* ==================== CART & PAYMENT POPUPS ==================== */
         #cartPopup {
             display: none; position: fixed; right: 20px; top: 120px;
             width: 380px; max-height: 80vh; background: var(--panel); padding: 25px;
@@ -443,43 +466,6 @@
         }
         .payment-header h2 { color: #fff; font-size: 24px; margin: 0; }
         .payment-body { padding: 30px; }
-        .amount-display {
-            background: rgba(0,0,0,0.3); border-radius: 15px; padding: 25px;
-            text-align: center; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.1);
-            position: relative; overflow: hidden;
-        }
-        .amount-display::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-            background: linear-gradient(90deg, var(--ok), #4CAF50);
-        }
-        .amount-label { color: #999; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .amount { color: var(--ok); font-size: 42px; font-weight: 800; margin: 10px 0; }
-        .btc-amount { color: #999; font-size: 16px; margin-top: 10px; }
-        .important-note {
-            background: rgba(255,193,7,0.15); border: 1px solid rgba(255,193,7,0.3);
-            border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center;
-        }
-        .important-note p { color: #ffd54f; font-size: 14px; font-weight: 600; margin: 0; line-height: 1.6; }
-        .btc-address-container {
-            background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px;
-            margin: 25px 0; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .btc-label { color: #999; font-size: 12px; margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 1px; }
-        .btc-address {
-            word-break: break-all; font-family: 'Courier New', monospace;
-            font-size: 16px; color: #fff; margin-bottom: 20px; padding: 10px;
-            background: rgba(0,0,0,0.5); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .copy-btn {
-            background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%); color: #fff;
-            font-weight: 800; width: 100%; padding: 15px; border-radius: 10px;
-            border: none; cursor: pointer; transition: all 0.3s ease; font-size: 16px;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-        .copy-btn:hover {
-            background: linear-gradient(90deg, #45a049 0%, #4CAF50 100%);
-            transform: translateY(-3px); box-shadow: 0 10px 20px rgba(76,175,80,0.3);
-        }
 
         /* ==================== RESPONSIVE DESIGN ==================== */
         @media (max-width: 768px) {
@@ -494,14 +480,16 @@
             .section-header, .section h2 { font-size: 32px; }
             .materials-content, .disclaimer-content { padding: 30px; }
             .products { grid-template-columns: 1fr; gap: 25px; }
-            .shipping-carriers { gap: 25px; } .carrier-logo { height: 35px; }
+            .shipping-carriers { gap: 25px; } .carrier-icon { font-size: 28px; width: 50px; height: 50px; }
             #cartPopup { width: 90%; right: 5%; left: 5%; top: 100px; }
+            .logo-text { font-size: 24px; }
         }
         @media (max-width: 480px) {
-            .header-inner { height: 70px; } .site-logo { height: 40px; }
-            .logo-text { font-size: 20px; } .hero h1 { font-size: 30px; }
+            .header-inner { height: 70px; }
+            .logo-text { font-size: 22px; } .hero h1 { font-size: 30px; }
             .hero-subtitle { font-size: 16px; } .section-header, .section h2 { font-size: 28px; }
             .materials-content, .disclaimer-content { padding: 20px; }
+            .shipping-carriers { gap: 15px; }
         }
     </style>
 </head>
@@ -528,10 +516,8 @@
     <header class="main-header">
         <div class="container header-inner">
             <div class="logo-container">
-                <!-- VERVANG 'logo.png' MET JE EIGEN LOGO-BESTAND -->
-                <img src="logo.png" alt="3DPrintedUSA Logo" class="site-logo">
                 <div class="logo-text">
-                    3DPrintedUSA
+                    <span class="accent">3D</span>PrintedUSA
                     <span class="logo-subtitle">PREMIUM 3D PRINTED PRODUCTS</span>
                 </div>
             </div>
@@ -643,18 +629,18 @@
     <footer>
         <div class="container footer-content">
             <div class="footer-brand">
-                <!-- VERVANG 'logo.png' MET JE EIGEN LOGO-BESTAND -->
-                <img src="logo.png" alt="3DPrintedUSA Logo" class="footer-logo">
+                <div class="footer-logo-text">
+                    <span class="accent">3D</span>PrintedUSA
+                </div>
                 <p class="footer-text">Premium 3D Printed Components | Worldwide Shipping</p>
                 <p class="footer-text">© 2025 3DPrintedUSA. All transactions are final.</p>
             </div>
             <div class="shipping-carriers">
-                <!-- VERVANG ALLE 'src' PADEN HIERONDER MET JE EIGEN LOGO-BESTANDEN -->
-                <div class="carrier-item"><img src="shipping/usps-logo.png" alt="USPS Logo" class="carrier-logo"><div class="carrier-name">USPS</div></div>
-                <div class="carrier-item"><img src="shipping/ups-logo.png" alt="UPS Logo" class="carrier-logo"><div class="carrier-name">UPS</div></div>
-                <div class="carrier-item"><img src="shipping/dhl-logo.png" alt="DHL Logo" class="carrier-logo"><div class="carrier-name">DHL</div></div>
-                <div class="carrier-item"><img src="shipping/fedex-logo.png" alt="FedEx Logo" class="carrier-logo"><div class="carrier-name">FedEx</div></div>
-                <div class="carrier-item"><img src="shipping/amazon-logo.png" alt="Amazon Logistics Logo" class="carrier-logo"><div class="carrier-name">Amazon</div></div>
+                <div class="carrier-item"><div class="carrier-icon"><i class="fas fa-shipping-fast"></i></div><div class="carrier-name">USPS</div></div>
+                <div class="carrier-item"><div class="carrier-icon"><i class="fas fa-truck"></i></div><div class="carrier-name">UPS</div></div>
+                <div class="carrier-item"><div class="carrier-icon"><i class="fas fa-plane"></i></div><div class="carrier-name">DHL</div></div>
+                <div class="carrier-item"><div class="carrier-icon"><i class="fas fa-box"></i></div><div class="carrier-name">FedEx</div></div>
+                <div class="carrier-item"><div class="carrier-icon"><i class="fas fa-store"></i></div><div class="carrier-name">Amazon</div></div>
             </div>
             <div class="footer-links">
                 <a href="#" onclick="showShippingInfo()" class="footer-link-item"><i class="fas fa-truck-fast footer-link-icon"></i><span class="footer-link-text">Shipping Info</span></a>
@@ -727,7 +713,7 @@
                     <i class="fas fa-box"></i><h3>Discreet & Secure Packaging</h3><p>All items are shipped in plain, unmarked boxes or padded mailers with no external indication of the contents. Your privacy is paramount.</p>
                 </div>
                 <div class="feature-item" style="margin-bottom:25px; background: rgba(255,255,255,0.03);">
-                    <i class="fas fa-globe-americas"></i><h3>Worldwide Delivery Network</h3><p>We ship internationally via trusted carriers like USPS, UPS, DHL, FedEx, and Amazon Logistics[citation:6]. Delivery times vary by destination and carrier selection.</p>
+                    <i class="fas fa-globe-americas"></i><h3>Worldwide Delivery Network</h3><p>We ship internationally via trusted carriers like USPS, UPS, DHL, FedEx, and Amazon Logistics. Delivery times vary by destination and carrier selection.</p>
                 </div>
                 <div class="feature-item" style="margin-bottom:25px; background: rgba(255,255,255,0.03);">
                     <i class="fas fa-clock"></i><h3>Estimated Delivery Windows</h3><p><strong>United States:</strong> 5-7 business days (standard).<br><strong>International:</strong> 1-2 weeks (standard).<br>Expedited options may be available upon request.</p>
@@ -748,7 +734,13 @@
                 <button class="close" onclick="hideModal()" aria-label="Close Modal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <img id="modalImage" class="modal-image" alt="Product Image" src="">
+                <div class="product-image-container">
+                    <img id="modalImage" class="product-image" alt="Product Image" src="" onerror="this.style.display='none'; document.getElementById('modalPlaceholder').style.display='flex';">
+                    <div id="modalPlaceholder" class="image-placeholder" style="display:none;">
+                        <i class="fas fa-cube"></i>
+                        <span id="placeholderText"></span>
+                    </div>
+                </div>
                 <div id="modalDescription" class="modal-description"></div>
                 <div class="modal-specs"><h4>Product Specifications</h4><ul id="modalSpecs"></ul></div>
                 <div class="prices" style="flex-direction:row;justify-content:space-between;align-items:center;margin:25px 0;">
@@ -765,27 +757,60 @@
 
     <script>
         // ==================== CONFIGURATION & DATA ====================
-        // Updated product list with your specified prices and image paths
+        // Updated product list with your specified prices and NO image dependency
         const products = [
             // KITS
-            { name: "Not a Glock .22LR Kit", price: 400, discount: 0, img: "products/nag-kit.jpg", orders: 4200, desc: "99% printed pistol platform...", type: "Kit", specs: ["Spec 1", "Spec 2"] },
-            { name: "HD22 Kit", price: 550, discount: 0, img: "products/hd22-kit.jpg", orders: 3800, desc: "Heavy-duty construction...", type: "Kit", specs: ["Spec 1", "Spec 2"] },
-            { name: "Gambino Kit", price: 100, discount: 0, img: "products/gambino-kit.jpg", orders: 3100, desc: "Compact high-strength design...", type: "Kit", specs: ["Spec 1", "Spec 2"] },
-            { name: "Cabfare Kit", price: 100, discount: 0, img: "products/cabfare-kit.jpg", orders: 2900, desc: "Balanced performance...", type: "Kit", specs: ["Spec 1", "Spec 2"] },
-            { name: "Harlot Kit", price: 150, discount: 0, img: "products/harlot-kit.jpg", orders: 2700, desc: "Minimalist strong design...", type: "Kit", specs: ["Spec 1", "Spec 2"] },
+            { name: "Not a Glock .22LR Kit", price: 400, discount: 0, img: "", orders: 4200, type: "Kit", 
+              desc: "99% printed pistol platform - only requires basic hardware springs. High-strength reinforced PLA+ kit featuring our proprietary metal-carbon composite for maximum durability.",
+              specs: ["99% printed - only basic hardware required", "High-strength PLA+ with metal-carbon composite", "Perfect fitment with standard components", "Reinforced rails and stress points", "Includes detailed assembly instructions"] },
+            { name: "HD22 Kit", price: 550, discount: 0, img: "", orders: 3800, type: "Kit",
+              desc: "Heavy-duty construction with 100% infill for ultimate reliability. The HD22 platform is engineered for professional use with reinforced stress points and precision-machined internal channels.",
+              specs: ["Heavy-duty 100% infill construction", "Reinforced stress points", "Enhanced magazine well", "Precision-machined internal channels", "Professional-grade performance"] },
+            { name: "Gambino Kit", price: 100, discount: 0, img: "", orders: 3100, type: "Kit",
+              desc: "Compact high-strength design offering the perfect balance between size and durability. The Gambino features carbon fiber reinforcement in critical stress areas.",
+              specs: ["Compact high-strength design", "Carbon fiber reinforcement", "Ergonomic finger grooves", "Enhanced grip texture", "Minimal non-printed components"] },
+            { name: "Cabfare Kit", price: 100, discount: 0, img: "", orders: 2900, type: "Kit",
+              desc: "Balanced performance and durability in a versatile platform. The Cabfare kit includes our signature smooth finish with reinforced front rails.",
+              specs: ["Balanced performance design", "Signature smooth finish", "Reinforced front rails", "Enhanced recoil spring channel", "Precision alignment features"] },
+            { name: "Harlot Kit", price: 150, discount: 0, img: "", orders: 2700, type: "Kit",
+              desc: "Minimalist yet extremely strong design optimized for reliability and simplicity. Metal particles in our composite add substantial weight for improved balance.",
+              specs: ["Minimalist strong design", "Metal particles for weight balance", "Integrated sight channel", "Reinforced breech face", "Streamlined profile for concealability"] },
             // COMPLETE ASSEMBLIES
-            { name: "HD22 Complete", price: 1000, discount: 0, img: "products/hd22-complete.jpg", orders: 2200, desc: "Fully assembled ready-to-use...", type: "Complete", specs: ["Spec 1", "Spec 2"] },
-            { name: "Not a Glock .22LR Complete", price: 700, discount: 0, img: "products/nag-complete.jpg", orders: 2500, desc: "Complete ready-to-use assembly...", type: "Complete", specs: ["Spec 1", "Spec 2"] },
-            { name: "Gambino Complete", price: 250, discount: 0, img: "products/gambino-complete.jpg", orders: 1800, desc: "Complete high-durability unit...", type: "Complete", specs: ["Spec 1", "Spec 2"] },
-            { name: "Cabfare Complete", price: 200, discount: 0, img: "products/cabfare-complete.jpg", orders: 1600, desc: "Balanced full assembly...", type: "Complete", specs: ["Spec 1", "Spec 2"] },
-            { name: "Harlot Complete", price: 250, discount: 0, img: "products/harlot-complete.jpg", orders: 1400, desc: "Compact complete solution...", type: "Complete", specs: ["Spec 1", "Spec 2"] },
+            { name: "HD22 Complete", price: 1000, discount: 0, img: "", orders: 2200, type: "Complete",
+              desc: "Fully assembled HD22 unit ready for immediate use. Every component is manufactured from our premium materials and hand-fitted for perfect operation.",
+              specs: ["Fully assembled ready-to-use", "Hand-fitted components", "Installed trigger assembly", "Polished feed ramp", "Factory-test fired"] },
+            { name: "Not a Glock .22LR Complete", price: 700, discount: 0, img: "", orders: 2500, type: "Complete",
+              desc: "Complete ready-to-use assembly with perfect fitment guaranteed through our precision calibration process. Features installed sights and enhanced trigger mechanism.",
+              specs: ["Complete ready-to-use assembly", "Perfect fitment guaranteed", "Installed sights", "Enhanced trigger mechanism", "50-round function tested"] },
+            { name: "Gambino Complete", price: 250, discount: 0, img: "", orders: 1800, type: "Complete",
+              desc: "Complete high-durability unit with every component made from our custom PLA+ composite. Features installed fire control group and professional-grade finish.",
+              specs: ["Complete high-durability unit", "Custom PLA+ composite construction", "Installed fire control group", "Enhanced slide rails", "Professional-grade finish"] },
+            { name: "Cabfare Complete", price: 200, discount: 0, img: "", orders: 1600, type: "Complete",
+              desc: "Balanced full assembly with exceptional surface finish and reinforced structure. Includes precision-machined barrel and installed trigger components.",
+              specs: ["Balanced full assembly", "Exceptional surface finish", "Reinforced structure", "Precision-machined barrel", "Installed trigger components"] },
+            { name: "Harlot Complete", price: 250, discount: 0, img: "", orders: 1400, type: "Complete",
+              desc: "Compact complete solution with professional-grade construction throughout. Features installed firing mechanism and reinforced breech block.",
+              specs: ["Compact complete solution", "Professional-grade construction", "Installed firing mechanism", "Reinforced breech block", "Precision-aligned components"] },
             // ACCESSORIES
-            { name: "Glock Switch", price: 60, discount: 0, img: "products/glock-switch.jpg", orders: 4800, desc: "Precision printed accessory...", type: "Accessory", specs: ["Spec 1", "Spec 2"] },
-            { name: "Knuckle Dusters (Single)", price: 5, discount: 0, img: "products/knuckle-dusters.jpg", orders: 6500, desc: "Reinforced PLA+ construction...", type: "Accessory", bulkPrice: 2, bulkThreshold: 10, specs: ["Spec 1", "Spec 2"] },
-            { name: "Invisible Switch", price: 80, discount: 0, img: "products/invisible-switch.jpg", orders: 3200, desc: "Discreet low-profile design...", type: "Accessory", specs: ["Spec 1", "Spec 2"] },
-            { name: "Glock 19 Gen 3 Frame (Gold)", price: 100, discount: 0, img: "products/glock19-gold.jpg", orders: 2800, desc: "Gold-colored finish...", type: "Frame", specs: ["Spec 1", "Spec 2"] },
-            { name: "Extended Magazine for Not A Glock .22LR", price: 30, discount: 0, img: "products/extended-mag-nag.jpg", orders: 4100, desc: "High-capacity extended magazine...", type: "Magazine", specs: ["Spec 1", "Spec 2"] },
-            { name: "Glock 26 Magazine 10 Round", price: 25, discount: 0, img: "products/glock26-mag.jpg", orders: 3900, desc: "10-round capacity...", type: "Magazine", specs: ["Spec 1", "Spec 2"] }
+            { name: "Glock Switch", price: 60, discount: 0, img: "", orders: 4800, type: "Accessory",
+              desc: "Precision printed accessory manufactured from reinforced materials for reliable performance. Features smooth actuation, positive detents, and durable construction.",
+              specs: ["Precision printed accessory", "Reinforced materials", "Smooth actuation", "Positive detents", "Durable construction"] },
+            { name: "Knuckle Dusters (Single)", price: 5, discount: 0, img: "", orders: 6500, type: "Accessory", 
+              bulkPrice: 2, bulkThreshold: 10,
+              desc: "Self-defense knuckle dusters made from reinforced PLA+ with metal particles adding substantial weight for improved impact. Ergonomic finger holes and smooth finish.",
+              specs: ["Reinforced PLA+ construction", "Metal particles for weight", "Ergonomic finger holes", "Reinforced stress points", "Smooth finish"] },
+            { name: "Invisible Switch", price: 80, discount: 0, img: "", orders: 3200, type: "Accessory",
+              desc: "Discreet and reliable invisible switch with carbon fiber reinforcement ensuring longevity. Features low-profile design and positive tactile feedback.",
+              specs: ["Discreet low-profile design", "Carbon fiber reinforcement", "Positive tactile feedback", "Durable construction", "Maximum concealment"] },
+            { name: "Glock 19 Gen 3 Frame (Gold)", price: 100, discount: 0, img: "", orders: 2800, type: "Frame",
+              desc: "Gold-colored Glock 19 Gen 3 frame printed with reinforced PLA+ composite for enhanced durability. Features precise rail dimensions and enhanced grip texture.",
+              specs: ["Gold-colored finish", "Reinforced PLA+ composite", "Precise rail dimensions", "Enhanced grip texture", "Perfect pin alignment"] },
+            { name: "Extended Magazine for Not A Glock .22LR", price: 30, discount: 0, img: "", orders: 4100, type: "Magazine",
+              desc: "High-capacity extended magazine with reinforced feed lips and body for reliable performance. Features anti-tilt follower and enhanced spring tension.",
+              specs: ["High-capacity extended magazine", "Reinforced feed lips", "Anti-tilt follower", "Enhanced spring tension", "Smooth feed angle"] },
+            { name: "Glock 26 Magazine 10 Round", price: 25, discount: 0, img: "", orders: 3900, type: "Magazine",
+              desc: "10-round magazine for Glock 26 printed with reinforced PLA+ for durability and smooth feeding. Features reinforced feed lips and anti-tilt follower design.",
+              specs: ["10-round capacity", "Reinforced PLA+ construction", "Reinforced feed lips", "Anti-tilt follower design", "Smooth body texture"] }
         ];
         // Calculate final prices
         products.forEach(p => { p.finalPrice = p.discount > 0 ? p.price * (1 - p.discount / 100) : p.price; });
@@ -811,11 +836,16 @@
                 const productEl = document.createElement('div'); productEl.className = 'product';
                 productEl.innerHTML = `
                     ${hasDiscount ? `<div class="sale-badge">${p.discount}% OFF <span class="discount-amount">SAVE $${(p.price - p.finalPrice).toFixed(0)}</span></div>` : ''}
-                    <img src="${p.img}" class="product-image" alt="${p.name}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"300\" height=\"220\"><rect width=\"100%\" height=\"100%\" fill=\"%231a1a1a\"/><text x=\"50%\" y=\"50%\" font-family=\"Inter\" font-size=\"14\" fill=\"%23fff\" text-anchor=\"middle\" dy=\".3em\">${p.name}</text></svg>'">
+                    <div class="product-image-container">
+                        <div class="image-placeholder">
+                            <i class="fas fa-cube"></i>
+                            <span>${p.name}</span>
+                        </div>
+                    </div>
                     <div class="product-content">
                         <div><h3>${p.name}</h3><div style="font-size: 12px; color: #4da6ff; margin-bottom: 8px; font-weight: 600;">${p.type}</div>
                         <div class="prices">${hasDiscount ? `<span class="original-price">$${p.price}</span>` : ''}<span class="${hasDiscount ? 'discounted-price' : 'regular-price'}">$${p.finalPrice.toFixed(0)}</span></div>
-                        ${p.bulkPrice ? `<div style="font-size: 12px; color: var(--text-light); margin-top: 5px;">Bulk: $${p.bulkPrice} ea. (10+)</div>` : ''}
+                        ${p.bulkPrice ? `<div style="font-size: 12px; color: var(--text-light); margin-top: 5px;">Bulk: $${p.bulkPrice} ea. (${p.bulkThreshold}+ units)</div>` : ''}
                         <div class="orders"><i class="fas fa-shopping-cart"></i> ${p.orders.toLocaleString()} orders</div></div>
                         <button onclick="event.stopPropagation();showProductModal(${i})"><i class="fas fa-eye"></i> View Details</button>
                     </div>`;
@@ -827,101 +857,250 @@
         function showProductModal(i) {
             activeProduct = products[i]; const hasDiscount = activeProduct.discount > 0;
             document.getElementById('modalTitle').textContent = activeProduct.name;
-            document.getElementById('modalImage').src = activeProduct.img;
             document.getElementById('modalDescription').textContent = activeProduct.desc;
+            document.getElementById('placeholderText').textContent = activeProduct.name;
+            
             const specsList = document.getElementById('modalSpecs'); specsList.innerHTML = '';
-            activeProduct.specs.forEach(s => { const li = document.createElement('li'); li.innerHTML = `<i class="fas fa-check" style="color:var(--ok);"></i> ${s}`; specsList.appendChild(li); });
-            const mOP = document.getElementById('modalOriginalPrice'); const mP = document.getElementById('modalPrice'); const mO = document.getElementById('modalOrders');
-            if (hasDiscount) { mOP.style.display = 'block'; mOP.textContent = `$${activeProduct.price}`; mP.textContent = `$${activeProduct.finalPrice.toFixed(0)}`; mP.style.color = 'var(--ok)'; }
-            else { mOP.style.display = 'none'; mP.textContent = `$${activeProduct.price}`; mP.style.color = 'var(--text)'; }
-            mO.textContent = `${activeProduct.orders.toLocaleString()} orders | ${activeProduct.type}`; mO.style.color = 'var(--ok)';
-            document.getElementById('productModal').style.display = 'flex'; document.body.style.overflow = 'hidden';
+            activeProduct.specs.forEach(s => { 
+                const li = document.createElement('li'); 
+                li.innerHTML = `<i class="fas fa-check" style="color:var(--ok);"></i> ${s}`; 
+                specsList.appendChild(li); 
+            });
+            
+            const mOP = document.getElementById('modalOriginalPrice'); 
+            const mP = document.getElementById('modalPrice'); 
+            const mO = document.getElementById('modalOrders');
+            
+            if (hasDiscount) { 
+                mOP.style.display = 'block'; 
+                mOP.textContent = `$${activeProduct.price}`; 
+                mP.textContent = `$${activeProduct.finalPrice.toFixed(0)}`; 
+                mP.style.color = 'var(--ok)'; 
+            } else { 
+                mOP.style.display = 'none'; 
+                mP.textContent = `$${activeProduct.price}`; 
+                mP.style.color = 'var(--text)'; 
+            }
+            
+            mO.textContent = `${activeProduct.orders.toLocaleString()} orders | ${activeProduct.type}`; 
+            mO.style.color = 'var(--ok)';
+            
+            // Show placeholder and hide image (since we don't have images)
+            document.getElementById('modalPlaceholder').style.display = 'flex';
+            document.getElementById('modalImage').style.display = 'none';
+            
+            document.getElementById('productModal').style.display = 'flex'; 
+            document.body.style.overflow = 'hidden';
         }
-        function hideModal() { document.getElementById('productModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        
+        function hideModal() { 
+            document.getElementById('productModal').style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
 
         // ==================== CART FUNCTIONS ====================
         function updateCartCounter() {
-            const count = cart.reduce((s, i) => s + i.quantity, 0); const c = document.getElementById('cartCounter');
-            c.textContent = count; c.style.display = count > 0 ? 'flex' : 'none';
+            const count = cart.reduce((s, i) => s + i.quantity, 0); 
+            const c = document.getElementById('cartCounter');
+            c.textContent = count; 
+            c.style.display = count > 0 ? 'flex' : 'none';
         }
+        
         function updateCart() {
-            const div = document.getElementById('cartItems'); div.innerHTML = ''; let total = 0;
-            if (cart.length === 0) { div.innerHTML = '<p style="text-align:center; color: var(--text-light); padding: 20px;">Your cart is empty.</p>'; }
-            else { cart.forEach((it, idx) => {
-                let itemTotal = it.finalPrice * it.quantity; total += itemTotal;
-                const ci = document.createElement('div'); ci.className = 'cart-item'; ci.innerHTML = `
-                    <div class="cart-item-name">${it.name}</div><div class="cart-item-price">$${itemTotal.toFixed(2)}</div>
-                    <div style="display:flex;align-items:center;gap:10px;">
-                        <button onclick="updateQuantity(${idx}, -1)" style="padding:5px 10px;font-size:14px; border-radius:5px; background:rgba(255,255,255,0.1); border:1px solid var(--border); color:white;">-</button>
-                        <span>${it.quantity}</span>
-                        <button onclick="updateQuantity(${idx}, 1)" style="padding:5px 10px;font-size:14px; border-radius:5px; background:rgba(255,255,255,0.1); border:1px solid var(--border); color:white;">+</button>
-                        <button class="remove-item" onclick="removeFromCart(${idx})" style="background:transparent; border:none; color:#ff6b6b; font-size:16px;"><i class="fas fa-trash"></i></button>
-                    </div>`;
-                div.appendChild(ci);
-            });}
+            const div = document.getElementById('cartItems'); div.innerHTML = ''; 
+            let total = 0;
+            
+            if (cart.length === 0) { 
+                div.innerHTML = '<p style="text-align:center; color: var(--text-light); padding: 20px;">Your cart is empty.</p>'; 
+            } else { 
+                cart.forEach((it, idx) => {
+                    let itemTotal = it.finalPrice * it.quantity; 
+                    total += itemTotal;
+                    
+                    const ci = document.createElement('div'); ci.className = 'cart-item'; 
+                    ci.innerHTML = `
+                        <div class="cart-item-name">${it.name}</div>
+                        <div class="cart-item-price">$${itemTotal.toFixed(2)}</div>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <button onclick="updateQuantity(${idx}, -1)" style="padding:5px 10px;font-size:14px; border-radius:5px; background:rgba(255,255,255,0.1); border:1px solid var(--border); color:white;">-</button>
+                            <span>${it.quantity}</span>
+                            <button onclick="updateQuantity(${idx}, 1)" style="padding:5px 10px;font-size:14px; border-radius:5px; background:rgba(255,255,255,0.1); border:1px solid var(--border); color:white;">+</button>
+                            <button class="remove-item" onclick="removeFromCart(${idx})" style="background:transparent; border:none; color:#ff6b6b; font-size:16px;"><i class="fas fa-trash"></i></button>
+                        </div>`;
+                    div.appendChild(ci);
+                });
+            }
+            
             document.getElementById('total').textContent = total.toFixed(2);
             document.getElementById('paymentTotal').textContent = total.toFixed(2);
-            updateBitcoinAmount(total); updateCartCounter();
+            updateBitcoinAmount(total); 
+            updateCartCounter();
         }
+        
         function addToCart(p) {
             const ex = cart.find(i => i.name === p.name);
-            if (ex) ex.quantity += 1; else cart.push({...p, quantity: 1});
-            updateCart(); showToast(`Added ${p.name} to cart`);
+            if (ex) ex.quantity += 1; 
+            else cart.push({...p, quantity: 1});
+            updateCart(); 
+            showToast(`Added ${p.name} to cart`);
         }
-        function addToCartFromModal() { if (activeProduct) { addToCart(activeProduct); hideModal(); } }
-        function updateQuantity(i, ch) { cart[i].quantity += ch; if (cart[i].quantity <= 0) cart.splice(i, 1); updateCart(); }
-        function removeFromCart(i) { const n = cart[i].name; cart.splice(i, 1); updateCart(); showToast(`Removed ${n} from cart`); }
+        
+        function addToCartFromModal() { 
+            if (activeProduct) { 
+                addToCart(activeProduct); 
+                hideModal(); 
+            } 
+        }
+        
+        function updateQuantity(i, ch) { 
+            cart[i].quantity += ch; 
+            if (cart[i].quantity <= 0) cart.splice(i, 1); 
+            updateCart(); 
+        }
+        
+        function removeFromCart(i) { 
+            const n = cart[i].name; 
+            cart.splice(i, 1); 
+            updateCart(); 
+            showToast(`Removed ${n} from cart`); 
+        }
 
         // ==================== PAYMENT FUNCTIONS ====================
         async function updateBitcoinPrice() {
             try {
                 const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-                const d = await r.json(); currentBitcoinPrice = d.bitcoin.usd;
+                const d = await r.json(); 
+                currentBitcoinPrice = d.bitcoin.usd;
                 document.getElementById('btcPrice').textContent = currentBitcoinPrice.toLocaleString();
-                const t = parseFloat(document.getElementById('paymentTotal').textContent); updateBitcoinAmount(t);
+                const t = parseFloat(document.getElementById('paymentTotal').textContent); 
+                updateBitcoinAmount(t);
                 showToast('Bitcoin exchange rate updated');
-            } catch(e) { console.error(e); document.getElementById('btcPrice').textContent = currentBitcoinPrice.toLocaleString(); showToast('Using default Bitcoin rate', 'warning'); }
+            } catch(e) { 
+                console.error(e); 
+                document.getElementById('btcPrice').textContent = currentBitcoinPrice.toLocaleString(); 
+                showToast('Using default Bitcoin rate', 'warning'); 
+            }
         }
+        
         function updateBitcoinAmount(t) {
-            if (t > 0 && currentBitcoinPrice > 0) document.getElementById('btcAmount').textContent = (t / currentBitcoinPrice).toFixed(8);
-            else document.getElementById('btcAmount').textContent = '0.000000';
+            if (t > 0 && currentBitcoinPrice > 0) 
+                document.getElementById('btcAmount').textContent = (t / currentBitcoinPrice).toFixed(8);
+            else 
+                document.getElementById('btcAmount').textContent = '0.000000';
         }
+        
         function showPaymentPopup() {
-            if (cart.length === 0) { showToast('Your cart is empty', 'warning'); return; }
-            closeCart(); document.getElementById('paymentPopup').style.display = 'flex'; document.body.style.overflow = 'hidden'; updateBitcoinPrice();
+            if (cart.length === 0) { 
+                showToast('Your cart is empty', 'warning'); 
+                return; 
+            }
+            closeCart(); 
+            document.getElementById('paymentPopup').style.display = 'flex'; 
+            document.body.style.overflow = 'hidden'; 
+            updateBitcoinPrice();
         }
-        function closePaymentPopup() { document.getElementById('paymentPopup').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        
+        function closePaymentPopup() { 
+            document.getElementById('paymentPopup').style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
+        
         function copyAddress() {
-            navigator.clipboard.writeText(document.getElementById('paymentAddress').textContent).then(() => { showToast('Bitcoin address copied to clipboard'); });
+            navigator.clipboard.writeText(document.getElementById('paymentAddress').textContent).then(() => { 
+                showToast('Bitcoin address copied to clipboard'); 
+            });
         }
 
         // ==================== UI HELPER FUNCTIONS ====================
-        function openMenu() { showToast('Menu functionality can be expanded'); } function closeMenu() { }
-        function scrollToShop() { document.getElementById('shop').scrollIntoView({ behavior: 'smooth' }); closeMenu(); }
-        function showCart() { closeMenu(); document.getElementById('cartPopup').style.display = 'block'; }
-        function closeCart() { document.getElementById('cartPopup').style.display = 'none'; }
-        function showContact() { closeMenu(); document.getElementById('contactPopup').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function closeContact() { document.getElementById('contactPopup').style.display = 'none'; document.body.style.overflow = 'auto'; }
-        function showShippingInfo() { closeMenu(); document.getElementById('shippingPopup').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function closeShippingInfo() { document.getElementById('shippingPopup').style.display = 'none'; document.body.style.overflow = 'auto'; }
-        function showMaterials() { closeMenu(); document.querySelector('.materials').scrollIntoView({ behavior: 'smooth' }); }
-        function copyEmail() { navigator.clipboard.writeText('cojacob230@gmail.com').then(() => { showToast('Email address copied to clipboard'); }); }
+        function openMenu() { 
+            showToast('Menu functionality can be expanded'); 
+        } 
+        
+        function closeMenu() { }
+        
+        function scrollToShop() { 
+            document.getElementById('shop').scrollIntoView({ behavior: 'smooth' }); 
+            closeMenu(); 
+        }
+        
+        function showCart() { 
+            closeMenu(); 
+            document.getElementById('cartPopup').style.display = 'block'; 
+        }
+        
+        function closeCart() { 
+            document.getElementById('cartPopup').style.display = 'none'; 
+        }
+        
+        function showContact() { 
+            closeMenu(); 
+            document.getElementById('contactPopup').style.display = 'flex'; 
+            document.body.style.overflow = 'hidden'; 
+        }
+        
+        function closeContact() { 
+            document.getElementById('contactPopup').style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
+        
+        function showShippingInfo() { 
+            closeMenu(); 
+            document.getElementById('shippingPopup').style.display = 'flex'; 
+            document.body.style.overflow = 'hidden'; 
+        }
+        
+        function closeShippingInfo() { 
+            document.getElementById('shippingPopup').style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
+        
+        function showMaterials() { 
+            closeMenu(); 
+            document.querySelector('.materials').scrollIntoView({ behavior: 'smooth' }); 
+        }
+        
+        function copyEmail() { 
+            navigator.clipboard.writeText('cojacob230@gmail.com').then(() => { 
+                showToast('Email address copied to clipboard'); 
+            }); 
+        }
+        
         function showToast(msg, typ = 'success') {
             const t = document.getElementById('toast'); t.textContent = msg; t.className = 'toast';
-            if (typ === 'success') { t.style.background = 'var(--ok)'; t.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`; }
-            else if (typ === 'warning') { t.style.background = 'var(--warning)'; t.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${msg}`; }
-            t.classList.add('show'); setTimeout(() => { t.classList.remove('show'); }, 3000);
+            if (typ === 'success') { 
+                t.style.background = 'var(--ok)'; 
+                t.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`; 
+            } else if (typ === 'warning') { 
+                t.style.background = 'var(--warning)'; 
+                t.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${msg}`; 
+            }
+            t.classList.add('show'); 
+            setTimeout(() => { t.classList.remove('show'); }, 3000);
         }
+        
         // Close modals on ESC and outside click
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideModal(); closeCart(); closePaymentPopup(); closeContact(); closeShippingInfo(); } });
+        document.addEventListener('keydown', (e) => { 
+            if (e.key === 'Escape') { 
+                hideModal(); 
+                closeCart(); 
+                closePaymentPopup(); 
+                closeContact(); 
+                closeShippingInfo(); 
+            } 
+        });
+        
         window.addEventListener('click', (e) => {
             if (e.target.classList.contains('modal')) hideModal();
             if (e.target.id === 'paymentPopup') closePaymentPopup();
             if (e.target.id === 'contactPopup') closeContact();
             if (e.target.id === 'shippingPopup') closeShippingInfo();
         });
-        // Auto-refresh Bitcoin price
+        
+        // Auto-refresh Bitcoin price every 2 minutes
         setInterval(updateBitcoinPrice, 120000);
+        
+        // Initialize Bitcoin price on load
+        updateBitcoinPrice();
     </script>
 </body>
 </html>
