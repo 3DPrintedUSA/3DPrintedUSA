@@ -1,1106 +1,1977 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3DPrintedUSA – Premium 3D Printed Products</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg: #0a0a0a;
-            --panel: #1a1a1a;
-            --border: #333;
-            --accent: #1f8cff;
-            --danger: #c92a2a;
-            --ok: #2ecc71;
-            --warning: #f39c12;
-            --shadow: rgba(0, 0, 0, 0.7);
-            --text: #ffffff;
-            --text-light: #cccccc;
-            --text-muted: #888;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
-        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3DPrintedUSA – Premium 3D Printed Products</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --bg: #0a0a0a;
+    --panel: #1a1a1a;
+    --panel-light: #222;
+    --border: #333;
+    --accent: #1f8cff;
+    --accent-dark: #0f6ac3;
+    --accent-light: #4da6ff;
+    --danger: #c92a2a;
+    --ok: #2ecc71;
+    --warning: #f39c12;
+    --shadow: rgba(0, 0, 0, 0.7);
+    --text: #ffffff;
+    --text-light: #cccccc;
+    --text-muted: #888;
+}
 
-        /* ==================== SECURITY & SHIPPING BANNER ==================== */
-        .security-banner {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 48px;
-            background: linear-gradient(90deg, var(--danger), #e74c3c);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 1000;
-            overflow: hidden;
-            border-bottom: 1px solid rgba(0,0,0,0.2);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        .banner-message-container { width: 100%; height: 100%; position: relative; }
-        .banner-message {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center; gap: 15px;
-            padding: 0 20px;
-            font-weight: 700; font-size: 14px; white-space: nowrap;
-            opacity: 0; transform: translateY(-100%);
-            transition: all 0.5s ease;
-        }
-        .banner-message.active { opacity: 1; transform: translateY(0); }
-        .banner-icon { font-size: 16px; }
-        @media (max-width: 768px) {
-            .security-banner { height: auto; min-height: 48px; padding: 8px 5px; }
-            .banner-message { flex-wrap: wrap; gap: 5px; font-size: 12px; white-space: normal; text-align: center; }
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        /* ==================== HEADER ==================== */
-        .main-header {
-            position: sticky; top: 48px;
-            background: rgba(10, 10, 10, 0.97); backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border); z-index: 900;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-        .header-inner {
-            display: flex; align-items: center; justify-content: space-between;
-            height: 80px;
-        }
-        .logo-container {
-            display: flex; align-items: center; gap: 15px;
-        }
-        .logo-text {
-            font-size: 28px; font-weight: 800; letter-spacing: -0.5px;
-            color: var(--text);
-            display: flex; flex-direction: column; line-height: 1.1;
-        }
-        .logo-text .accent { color: var(--accent); }
-        .logo-subtitle {
-            font-size: 11px; font-weight: 500; color: var(--text-muted);
-            letter-spacing: 0.5px; margin-top: 3px;
-        }
-        .header-right { display: flex; align-items: center; gap: 20px; }
-        .cart-btn, .hamburger {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            color: var(--text); cursor: pointer; padding: 10px;
-            display: flex; align-items: center; justify-content: center;
-            width: 50px; height: 50px; border-radius: 12px;
-            transition: all 0.3s ease; font-size: 20px;
-        }
-        .cart-btn:hover, .hamburger:hover {
-            background: var(--accent); transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(31, 140, 255, 0.2);
-        }
-        .cart-count {
-            position: absolute; top: -5px; right: -5px;
-            background: var(--danger); color: #fff; font-size: 12px;
-            width: 22px; height: 22px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 800; border: 2px solid var(--bg);
-        }
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-        /* ==================== HERO SECTION ==================== */
-        .hero {
-            min-height: 100vh;
-            display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            padding: 148px 20px 80px;
-            position: relative; overflow: hidden;
-        }
-        .hero::before {
-            content: ''; position: absolute; top:0; left:0; right:0; bottom:0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(31,140,255,0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(46,204,113,0.05) 0%, transparent 50%),
-                linear-gradient(45deg, rgba(0,0,0,0.7) 0%, transparent 100%);
-            pointer-events: none;
-        }
-        .hero-box {
-            background: rgba(26,26,26,0.85); backdrop-filter: blur(12px);
-            padding: 60px 50px; border-radius: 28px; max-width: 1000px;
-            text-align: center; box-shadow: 0 30px 60px var(--shadow);
-            border: 1px solid rgba(255,255,255,0.08); position: relative; z-index: 1;
-        }
-        .hero h1 {
-            font-size: 52px; margin-bottom: 15px;
-            background: linear-gradient(90deg, #fff, #4da6ff);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .hero-subtitle {
-            font-size: 22px; color: var(--text-light); margin-bottom: 40px;
-            max-width: 800px; margin-left: auto; margin-right: auto;
-        }
-        .hero-tagline {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;
-            margin: 40px 0;
-        }
-        .tagline-item {
-            background: rgba(31,140,255,0.07); padding: 14px 28px;
-            border-radius: 50px; display: flex; align-items: center; gap: 12px;
-            font-weight: 600; border: 1px solid rgba(31,140,255,0.15);
-            backdrop-filter: blur(5px); transition: all 0.3s ease;
-        }
-        .tagline-item:hover {
-            transform: translateY(-5px); background: rgba(31,140,255,0.15);
-            box-shadow: 0 10px 20px rgba(31,140,255,0.1); border-color: var(--accent);
-        }
-        .tagline-icon { font-size: 22px; color: var(--accent); }
-        .rating {
-            display: flex; align-items: center; justify-content: center;
-            gap: 10px; margin: 30px 0; color: #f5c542; font-size: 22px;
-        }
-        .rating-text { color: var(--text-light); font-size: 17px; margin-left: 10px; }
-        .hero-buttons {
-            display: flex; gap: 25px; justify-content: center;
-            margin-top: 50px; flex-wrap: wrap;
-        }
-        button {
-            background: linear-gradient(90deg, var(--accent), #4da6ff);
-            border: none; color: #fff; padding: 16px 32px; border-radius: 30px;
-            font-weight: 700; cursor: pointer; transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-        }
-        button:hover {
-            transform: translateY(-4px); box-shadow: 0 12px 25px rgba(31, 140, 255, 0.3);
-        }
-        .secondary-btn {
-            background: transparent; border: 2px solid var(--accent);
-            color: var(--accent);
-        }
-        .secondary-btn:hover { background: var(--accent); color: #000; }
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
 
-        /* ==================== MATERIALS SECTION ==================== */
-        .materials {
-            padding: 120px 20px; text-align: center; position: relative;
-            background: linear-gradient(135deg, #0a0a0a 0%, #111 100%);
-        }
-        .materials::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                radial-gradient(circle at 70% 20%, rgba(31,140,255,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 30% 80%, rgba(46,204,113,0.03) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .section-header {
-            font-size: 44px; margin-bottom: 25px; position: relative;
-            display: inline-block;
-        }
-        .section-header::after {
-            content: ''; position: absolute; bottom: -15px; left: 50%;
-            transform: translateX(-50%); width: 120px; height: 4px;
-            background: var(--accent); border-radius: 2px;
-        }
-        .materials-content {
-            max-width: 1000px; margin: 0 auto;
-            background: rgba(26,26,26,0.75); backdrop-filter: blur(15px);
-            padding: 50px; border-radius: 24px; border: 1px solid var(--border);
-            text-align: left; position: relative; z-index: 1;
-        }
-        .materials p {
-            margin-bottom: 30px; font-size: 18px; line-height: 1.9;
-            color: var(--text-light);
-        }
-        .feature-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px; margin-top: 40px;
-        }
-        .feature-item {
-            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2));
-            padding: 25px; border-radius: 16px; border-left: 4px solid var(--accent);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.3s ease;
-        }
-        .feature-item:hover { transform: translateY(-8px); }
-        .feature-item i { color: var(--accent); font-size: 28px; margin-bottom: 15px; }
-        .feature-item h3 { font-size: 20px; margin-bottom: 12px; color: var(--text); }
-        .feature-item p { font-size: 15px; color: var(--text-light); margin-bottom: 0; }
+/* ==================== ENHANCED SECURITY BANNER ==================== */
+.security-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 48px;
+    background: linear-gradient(90deg, var(--danger), #e74c3c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
 
-        /* ==================== WHY BITCOIN SECTION ==================== */
-        .why-bitcoin { padding: 100px 20px; background: var(--panel); text-align: center; }
-        .why-bitcoin-content { max-width: 900px; margin: 0 auto; }
-        .why-bitcoin h2 { font-size: 42px; margin-bottom: 20px; color: #4da6ff; }
-        .why-bitcoin-subtitle {
-            font-size: 18px; color: var(--text-light); margin-bottom: 50px;
-            max-width: 700px; margin-left: auto; margin-right: auto;
-        }
-        .bitcoin-reasons {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px; text-align: left;
-        }
-        .reason {
-            background: rgba(255,255,255,0.03); padding: 30px; border-radius: 16px;
-            border: 1px solid rgba(31,140,255,0.1);
-        }
-        .reason-icon { font-size: 40px; color: var(--accent); margin-bottom: 20px; }
-        .reason h3 { font-size: 22px; margin-bottom: 15px; color: var(--text); }
-        .reason p { color: var(--text-light); line-height: 1.7; }
+.banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 0 20px;
+    width: 100%;
+    flex-wrap: wrap;
+}
 
-        /* ==================== PRODUCTS SECTION ==================== */
-        .section { padding: 120px 0; background: var(--bg); }
-        .section h2 {
-            text-align: center; font-size: 44px; margin-bottom: 60px;
-            position: relative;
-        }
-        .section h2::after {
-            content: ''; position: absolute; bottom: -20px; left: 50%;
-            transform: translateX(-50%); width: 120px; height: 4px;
-            background: var(--accent); border-radius: 2px;
-        }
-        .products {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 35px;
-        }
-        .product {
-            background: var(--panel); border: 1px solid var(--border);
-            border-radius: 22px; padding: 25px; text-align: center;
-            transition: all 0.4s ease; cursor: pointer;
-            display: flex; flex-direction: column; position: relative; overflow: hidden;
-        }
-        .product::before {
-            content: ''; position: absolute; top:0; left:0; right:0; height: 4px;
-            background: linear-gradient(90deg, var(--accent), #4da6ff);
-            transform: translateX(-100%); transition: transform 0.4s ease;
-        }
-        .product:hover::before { transform: translateX(0); }
-        .product:hover {
-            transform: translateY(-12px); box-shadow: 0 25px 50px var(--shadow);
-            border-color: var(--accent);
-        }
-        .product-image-container {
-            width: 100%; height: 220px; margin-bottom: 20px;
-            border-radius: 14px; overflow: hidden;
-            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(0,0,0,0.3));
-            display: flex; align-items: center; justify-content: center;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .product-image {
-            width: 100%; height: 100%;
-            object-fit: contain; padding: 15px;
-        }
-        .image-placeholder {
-            width: 100%; height: 100%;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            color: var(--text-light);
-        }
-        .image-placeholder i { font-size: 48px; margin-bottom: 15px; color: var(--accent); opacity: 0.5; }
-        .image-placeholder span { font-size: 14px; text-align: center; max-width: 80%; }
-        .orders {
-            color: var(--ok); font-size: 14px; margin-bottom: 12px;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-        .product h3 {
-            margin-bottom: 20px; font-size: 20px; min-height: 60px;
-            display: flex; align-items: center; justify-content: center; color: var(--text);
-        }
-        .prices {
-            display: flex; justify-content: center; align-items: baseline;
-            gap: 15px; margin: 20px 0; flex-direction: row;
-        }
-        .original-price { text-decoration: line-through; color: var(--text-muted); font-size: 17px; }
-        .discounted-price { color: var(--ok); font-size: 32px; font-weight: 800; }
-        .regular-price { color: var(--text); font-size: 32px; font-weight: 800; }
-        .sale-badge {
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53); color: #fff;
-            padding: 7px 18px; border-radius: 20px; font-size: 14px; font-weight: 800;
-            margin-bottom: 15px; display: inline-block; position: absolute;
-            top: 20px; right: 20px; z-index: 2;
-            box-shadow: 0 6px 15px rgba(255,107,107,0.3);
-        }
-        .product-content { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.banner-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+}
 
-        /* ==================== FOOTER ==================== */
-        footer {
-            border-top: 1px solid var(--border); padding: 80px 20px 50px;
-            text-align: center; background: var(--panel);
-        }
-        .footer-content { max-width: 1200px; margin: 0 auto; }
-        .footer-brand { margin-bottom: 40px; }
-        .footer-logo-text {
-            font-size: 32px; font-weight: 800; color: var(--text);
-            margin-bottom: 10px;
-        }
-        .footer-logo-text .accent { color: var(--accent); }
-        .footer-text { color: var(--text-light); font-size: 16px; margin-bottom: 10px; }
+.banner-item i {
+    font-size: 16px;
+}
 
-        /* SHIPPING CARRIERS - NU MET ICONEN IN PLAATS VAN LOGO'S */
-        .shipping-carriers {
-            display: flex; justify-content: center; align-items: center;
-            gap: 40px; margin: 50px 0; flex-wrap: wrap;
-        }
-        .carrier-item {
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
-            transition: all 0.3s ease;
-        }
-        .carrier-item:hover { transform: translateY(-5px); }
-        .carrier-icon {
-            font-size: 32px; color: var(--accent);
-            width: 60px; height: 60px;
-            display: flex; align-items: center; justify-content: center;
-            background: rgba(255,255,255,0.03);
-            border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
-        }
-        .carrier-name { font-size: 14px; color: var(--text-light); font-weight: 600; letter-spacing: 0.5px; }
+@media (max-width: 768px) {
+    .security-banner {
+        height: auto;
+        padding: 8px 5px;
+    }
+    
+    .banner-content {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .banner-item {
+        font-size: 12px;
+    }
+}
 
-        /* SOCIAL & INFO LINKS */
-        .footer-links {
-            display: flex; justify-content: center; gap: 30px;
-            margin: 40px 0; flex-wrap: wrap;
-        }
-        .footer-link-item {
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
-            color: var(--text-light); text-decoration: none; transition: color 0.3s ease;
-        }
-        .footer-link-item:hover { color: var(--accent); }
-        .footer-link-icon { font-size: 28px; }
-        .footer-link-text { font-size: 14px; font-weight: 600; }
-        .social-buttons {
-            margin-top: 40px; display: flex; justify-content: center;
-            gap: 20px; flex-wrap: wrap;
-        }
-        .social-buttons a {
-            color: var(--text); text-decoration: none; font-weight: 700;
-            padding: 14px 28px; border: 1px solid var(--border); border-radius: 12px;
-            transition: all 0.3s ease; display: flex; align-items: center; gap: 12px;
-            background: rgba(255,255,255,0.05);
-        }
-        .social-buttons a:hover {
-            background: var(--accent); color: #000; transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(31, 140, 255, 0.2);
-        }
-        .footer-bottom {
-            margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--border);
-            color: var(--text-muted); font-size: 14px; line-height: 1.7;
-        }
+/* ==================== HEADER ==================== */
+header {
+    position: sticky;
+    top: 48px;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    z-index: 900;
+    transition: transform 0.4s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
 
-        /* ==================== DISCLAIMER ==================== */
-        .disclaimer {
-            background: linear-gradient(135deg, #c92a2a 0%, #e74c3c 100%);
-            border-radius: 0; padding: 100px 20px; margin: 0;
-            position: relative; overflow: hidden;
-        }
-        .disclaimer::before {
-            content: ''; position: absolute; top:0; left:0; right:0; bottom:0;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
-            opacity: 0.3; pointer-events: none;
-        }
-        .disclaimer h2 {
-            text-align: center; margin-bottom: 50px; color: #fff;
-            position: relative; display: inline-block; left: 50%;
-            transform: translateX(-50%);
-        }
-        .disclaimer h2::after {
-            content: ''; position: absolute; bottom: -20px; left: 50%;
-            transform: translateX(-50%); width: 150px; height: 4px;
-            background: #fff; border-radius: 2px;
-        }
-        .disclaimer-content {
-            max-width: 1100px; margin: 0 auto;
-            background: rgba(255,255,255,0.1); backdrop-filter: blur(15px);
-            padding: 50px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.25);
-        }
-        .disclaimer p {
-            margin-bottom: 30px; opacity: 0.95; text-align: left;
-            color: #fff; line-height: 1.9; font-size: 17px;
-        }
-        .disclaimer-address {
-            background: rgba(0,0,0,0.4); padding: 25px; border-radius: 16px;
-            margin: 30px 0; border: 1px solid rgba(255,255,255,0.3);
-            font-family: 'Courier New', monospace; font-size: 18px;
-            word-break: break-all; text-align: center;
-        }
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+}
 
-        /* ==================== CART & PAYMENT POPUPS ==================== */
-        #cartPopup {
-            display: none; position: fixed; right: 20px; top: 120px;
-            width: 380px; max-height: 80vh; background: var(--panel); padding: 25px;
-            border-radius: 20px; z-index: 1000; box-shadow: 0 25px 60px var(--shadow);
-            border: 1px solid var(--border); overflow-y: auto;
-        }
-        .close {
-            position: absolute; top: 15px; right: 15px; font-size: 24px;
-            background: rgba(255,255,255,0.1); border: none; color: var(--text);
-            width: 40px; height: 40px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.3s ease;
-        }
-        .close:hover { background: var(--danger); transform: rotate(90deg); }
-        #cartItems { margin: 20px 0; max-height: 300px; overflow-y: auto; }
-        .cart-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 0; border-bottom: 1px solid var(--border);
-        }
-        .cart-item:last-child { border-bottom: none; }
-        .cart-item-name { flex: 1; text-align: left; }
-        .cart-item-price { font-weight: 600; color: var(--ok); }
-        .remove-item {
-            background: var(--danger); border: none; color: white;
-            width: 30px; height: 30px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; margin-left: 10px; font-size: 14px;
-        }
-        .remove-item:hover { background: #ff3333; }
-        .cart-total {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 0; border-top: 1px solid var(--border);
-            font-size: 24px; font-weight: 800;
-        }
-        .cart-total-amount { color: var(--ok); }
+.logo {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--accent-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-        .payment-popup {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.98); backdrop-filter: blur(5px); z-index: 2000;
-            align-items: center; justify-content: center; animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .payment-container {
-            background: linear-gradient(135deg, #0a1929 0%, #111 100%); border-radius: 25px;
-            padding: 0; max-width: 500px; width: 90%; max-height: 85vh;
-            overflow-y: auto; border: 1px solid rgba(31,140,255,0.3);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5); position: relative;
-        }
-        .payment-header {
-            background: linear-gradient(90deg, #0f6ac3 0%, #1f8cff 100%); padding: 25px;
-            text-align: center; position: sticky; top: 0; z-index: 1;
-            border-radius: 25px 25px 0 0;
-        }
-        .payment-header h2 { color: #fff; font-size: 24px; margin: 0; }
-        .payment-body { padding: 30px; }
+.logo-icon {
+    font-size: 28px;
+    color: var(--accent);
+}
 
-        /* ==================== RESPONSIVE DESIGN ==================== */
-        @media (max-width: 768px) {
-            .hero { padding: 100px 20px 60px; min-height: auto; }
-            .hero-box { padding: 40px 25px; }
-            .hero h1 { font-size: 36px; } .hero-subtitle { font-size: 18px; }
-            .hero-tagline { flex-direction: column; align-items: center; gap: 12px; }
-            .tagline-item { width: 100%; max-width: 320px; justify-content: center; padding: 12px 20px; }
-            .hero-buttons { flex-direction: column; align-items: center; }
-            .hero-buttons button { width: 100%; max-width: 320px; }
-            .materials, .section, .why-bitcoin { padding: 80px 20px; }
-            .section-header, .section h2 { font-size: 32px; }
-            .materials-content, .disclaimer-content { padding: 30px; }
-            .products { grid-template-columns: 1fr; gap: 25px; }
-            .shipping-carriers { gap: 25px; } .carrier-icon { font-size: 28px; width: 50px; height: 50px; }
-            #cartPopup { width: 90%; right: 5%; left: 5%; top: 100px; }
-            .logo-text { font-size: 24px; }
-        }
-        @media (max-width: 480px) {
-            .header-inner { height: 70px; }
-            .logo-text { font-size: 22px; } .hero h1 { font-size: 30px; }
-            .hero-subtitle { font-size: 16px; } .section-header, .section h2 { font-size: 28px; }
-            .materials-content, .disclaimer-content { padding: 20px; }
-            .shipping-carriers { gap: 15px; }
-        }
-    </style>
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cart-btn, .hamburger {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.cart-btn:hover, .hamburger:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(31, 140, 255, 0.2);
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--danger);
+    color: #fff;
+    font-size: 12px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    border: 2px solid var(--bg);
+}
+
+/* ==================== HERO SECTION ==================== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(26, 26, 26, 0.9)), url("background.png") center/cover no-repeat;
+    padding: 120px 20px 60px;
+    position: relative;
+}
+
+.hero-box {
+    background: rgba(26, 26, 26, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 50px 40px;
+    border-radius: 24px;
+    max-width: 1000px;
+    text-align: center;
+    box-shadow: 0 25px 50px var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.hero h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, var(--accent-light), #4da6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    color: var(--text-light);
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-tagline {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.tagline-item {
+    background: rgba(31, 140, 255, 0.1);
+    padding: 12px 24px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    border: 1px solid rgba(31, 140, 255, 0.2);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.tagline-item:hover {
+    transform: translateY(-3px);
+    background: rgba(31, 140, 255, 0.2);
+    box-shadow: 0 5px 15px rgba(31, 140, 255, 0.1);
+}
+
+.tagline-icon {
+    font-size: 20px;
+    color: var(--accent);
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 25px 0;
+    color: #f5c542;
+    font-size: 20px;
+}
+
+.rating-text {
+    color: var(--text-light);
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+/* ==================== WHY BITCOIN SECTION ==================== */
+.why-bitcoin {
+    padding: 80px 20px;
+    background: var(--panel);
+    text-align: center;
+}
+
+.why-bitcoin-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.why-bitcoin h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: var(--accent);
+}
+
+.why-bitcoin-subtitle {
+    font-size: 18px;
+    color: var(--text-light);
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bitcoin-reasons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    text-align: left;
+}
+
+.reason {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid rgba(31, 140, 255, 0.1);
+}
+
+.reason-icon {
+    font-size: 32px;
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+.reason h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: var(--text);
+}
+
+.reason p {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* ==================== PRODUCTS SECTION ==================== */
+.section {
+    padding: 80px 0;
+}
+
+.section h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.product {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.product::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.product:hover::before {
+    transform: translateX(0);
+}
+
+.product:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px var(--shadow);
+    border-color: var(--accent);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+}
+
+.orders {
+    color: var(--ok);
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.product h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+}
+
+.prices {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+    flex-direction: column;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: var(--text-muted);
+    font-size: 16px;
+}
+
+.discounted-price {
+    color: var(--ok);
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.regular-price {
+    color: var(--text);
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.sale-badge {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+    color: #fff;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    display: inline-block;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.discount-amount {
+    background: var(--danger);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    margin-left: 5px;
+}
+
+.product-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* ==================== BUTTONS ==================== */
+button {
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    border: none;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(31, 140, 255, 0.3);
+    background: linear-gradient(90deg, var(--accent-dark), var(--accent));
+}
+
+.secondary-btn {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+}
+
+.secondary-btn:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+/* ==================== CART & MODALS ==================== */
+#cartPopup {
+    display: none;
+    position: fixed;
+    right: 20px;
+    top: 120px;
+    width: 380px;
+    max-height: 80vh;
+    background: var(--panel);
+    padding: 25px;
+    border-radius: 20px;
+    z-index: 1000;
+    box-shadow: 0 25px 60px var(--shadow);
+    border: 1px solid var(--border);
+    overflow-y: auto;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close:hover {
+    background: var(--danger);
+    transform: rotate(90deg);
+}
+
+#cartItems {
+    margin: 20px 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item-name {
+    flex: 1;
+    text-align: left;
+}
+
+.cart-item-price {
+    font-weight: 600;
+    color: var(--ok);
+}
+
+.remove-item {
+    background: var(--danger);
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.remove-item:hover {
+    background: #ff3333;
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.cart-total-amount {
+    color: var(--ok);
+}
+
+/* ==================== PAYMENT POPUP ==================== */
+.payment-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.payment-container {
+    background: linear-gradient(135deg, #0a1929 0%, #111 100%);
+    border-radius: 25px;
+    padding: 0;
+    max-width: 500px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    border: 1px solid rgba(31, 140, 255, 0.3);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.payment-header {
+    background: linear-gradient(90deg, #0f6ac3 0%, #1f8cff 100%);
+    padding: 25px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-radius: 25px 25px 0 0;
+}
+
+.payment-header h2 {
+    color: #fff;
+    font-size: 24px;
+    margin: 0;
+}
+
+.payment-body {
+    padding: 30px;
+}
+
+.amount-display {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.amount-display::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--ok), #4CAF50);
+}
+
+.amount-label {
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.amount {
+    color: var(--ok);
+    font-size: 42px;
+    font-weight: 800;
+    margin: 10px 0;
+}
+
+.btc-amount {
+    color: #999;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.important-note {
+    background: rgba(255, 193, 7, 0.15);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.important-note p {
+    color: #ffd54f;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.btc-address-container {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 25px 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btc-label {
+    color: #999;
+    font-size: 12px;
+    margin-bottom: 8px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btc-address {
+    word-break: break-all;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copy-btn {
+    background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);
+    color: #fff;
+    font-weight: 800;
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.copy-btn:hover {
+    background: linear-gradient(90deg, #45a049 0%, #4CAF50 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+}
+
+/* ==================== DISCLAIMER ==================== */
+.disclaimer {
+    background: linear-gradient(135deg, #c92a2a 0%, #e74c3c 100%);
+    border-radius: 0;
+    padding: 80px 20px;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.disclaimer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.disclaimer h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.disclaimer h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: #fff;
+    border-radius: 2px;
+}
+
+.disclaimer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.disclaimer p {
+    margin-bottom: 25px;
+    opacity: 0.95;
+    text-align: left;
+    color: #fff;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+.disclaimer-address {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    word-break: break-all;
+}
+
+/* ==================== FOOTER ==================== */
+footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 20px;
+    text-align: center;
+    background: var(--panel);
+}
+
+.shipping-carriers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.carrier-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.carrier-item:hover {
+    transform: translateY(-5px);
+}
+
+.carrier-icon {
+    font-size: 32px;
+    color: var(--accent);
+    opacity: 0.9;
+}
+
+.carrier-name {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.social-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.social-buttons a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 24px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.social-buttons a:hover {
+    background: var(--accent);
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(31, 140, 255, 0.2);
+}
+
+.footer-bottom {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 768px) {
+    .hero {
+        padding: 100px 20px 40px;
+        min-height: auto;
+    }
+    
+    .hero h2 {
+        font-size: 32px;
+    }
+    
+    .hero-subtitle {
+        font-size: 16px;
+    }
+    
+    .section {
+        padding: 60px 0;
+    }
+    
+    .section h2 {
+        font-size: 32px;
+    }
+    
+    .products {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .hero-buttons button {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .payment-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-tagline {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .tagline-item {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    .shipping-carriers {
+        gap: 20px;
+    }
+    
+    .carrier-icon {
+        font-size: 28px;
+    }
+    
+    .product h3 {
+        min-height: auto;
+        font-size: 16px;
+    }
+    
+    #cartPopup {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+        top: 100px;
+    }
+    
+    .payment-container {
+        max-height: 90vh;
+        width: 95%;
+    }
+    
+    .disclaimer {
+        padding: 60px 20px;
+    }
+    
+    .disclaimer-content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-inner {
+        height: 70px;
+    }
+    
+    .logo {
+        font-size: 20px;
+    }
+    
+    .hero h2 {
+        font-size: 28px;
+    }
+    
+    .hero-box {
+        padding: 30px 20px;
+    }
+    
+    .products {
+        grid-template-columns: 1fr;
+    }
+    
+    .payment-body {
+        padding: 20px;
+    }
+    
+    .amount {
+        font-size: 36px;
+    }
+}
+</style>
 </head>
 <body>
-    <!-- ==================== SECURITY & SHIPPING BANNER ==================== -->
-    <div class="security-banner">
-        <div class="banner-message-container">
-            <div class="banner-message active" id="bannerMessage1">
-                <span class="banner-icon">🌍</span>
-                <strong>Worldwide Shipping</strong> | International 1–2 weeks | USA 5–7 days
-                <span class="banner-icon">📦</span>
-                <strong>Discreet & Secure Packaging</strong> | All packages delivered safely & privately
+
+<!-- Enhanced Security Banner -->
+<div class="security-banner">
+    <div class="banner-content">
+        <div class="banner-item">
+            <i class="fas fa-globe"></i>
+            <span>Worldwide Shipping</span>
+        </div>
+        <div class="banner-item">
+            <i class="fas fa-plane"></i>
+            <span>International 1–2 weeks</span>
+        </div>
+        <div class="banner-item">
+            <i class="fas fa-home"></i>
+            <span>USA 5–7 days</span>
+        </div>
+        <div class="banner-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>Secure & Discreet Packaging</span>
+        </div>
+    </div>
+</div>
+
+<header>
+    <div class="container header-inner">
+        <div class="logo">
+            <i class="fas fa-cube logo-icon"></i>
+            3DPrintedUSA
+        </div>
+        <div class="header-right">
+            <button class="cart-btn" onclick="showCart()" aria-label="Shopping Cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cartCounter" class="cart-count" style="display:none">0</span>
+            </button>
+            <button class="hamburger" onclick="openMenu()" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div id="navOverlay" class="overlay">
+    <button class="close-overlay" onclick="closeMenu()" aria-label="Close Menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <div class="overlay-content">
+        <a href="#shop" onclick="closeMenu()">
+            <i class="fas fa-shopping-cart"></i>
+            Shop Products
+        </a>
+        <a href="#" onclick="closeMenu();showContact();">
+            <i class="fas fa-envelope"></i>
+            Contact Support
+        </a>
+        <a href="#disclaimer" onclick="closeMenu()">
+            <i class="fas fa-scale-balanced"></i>
+            Legal Disclaimer
+        </a>
+        <a href="#" onclick="closeMenu();scrollToWhyBitcoin()">
+            <i class="fab fa-bitcoin"></i>
+            Why Bitcoin?
+        </a>
+    </div>
+</div>
+
+<section class="hero">
+    <div class="hero-box">
+        <h2>Premium 3D Printed Products</h2>
+        <div class="hero-subtitle">
+            High-strength, precision-engineered components with Bitcoin-only checkout for maximum privacy
+        </div>
+        
+        <div class="hero-tagline">
+            <div class="tagline-item">
+                <span class="tagline-icon">
+                    <i class="fab fa-bitcoin"></i>
+                </span>
+                Bitcoin-only checkout
             </div>
-            <div class="banner-message" id="bannerMessage2">
-                <span class="banner-icon">🔒</span>
-                <strong>Hosted on GitHub for Ultimate Security & Privacy</strong> | Bitcoin-only for anonymity
-                <span class="banner-icon">⚠️</span>
-                <strong>You are responsible for your local laws.</strong> We do not support illegal activities.
+            <div class="tagline-item">
+                <span class="tagline-icon">
+                    <i class="fas fa-user-secret"></i>
+                </span>
+                Fully anonymous
+            </div>
+            <div class="tagline-item">
+                <span class="tagline-icon">
+                    <i class="fas fa-box"></i>
+                </span>
+                Discreet worldwide shipping
+            </div>
+        </div>
+        
+        <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+            <span class="rating-text">4.8 / 5.0 from 2,500+ reviews</span>
+        </div>
+        
+        <div class="hero-buttons">
+            <button onclick="scrollToShop()">
+                <i class="fas fa-shopping-cart"></i>
+                Shop Now
+            </button>
+            <button class="secondary-btn" onclick="showContact()">
+                <i class="fas fa-envelope"></i>
+                Contact Support
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="materials">
+    <h2>Our Materials & Process</h2>
+    <div class="materials-content">
+        <p>At 3DPrintedUSA, we've developed our own proprietary PLA+ composite, blending high-grade PLA with stainless steel particles and carbon fiber strands. This fusion creates a material with exceptional strength, a smooth surface finish, heat resistance, and precise dimensional accuracy (±0.05mm tolerance).</p>
+        <p>Each product is printed at 100% infill, stress-tested for 24 hours, manually inspected, and discreetly packaged. Bitcoin-only payments ensure privacy and eliminate chargebacks.</p>
+        
+        <div class="feature-grid">
+            <div class="feature-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Maximum Strength</h3>
+                <p>Reinforced with stainless steel and carbon fiber for exceptional durability</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-ruler-combined"></i>
+                <h3>Precision Engineering</h3>
+                <p>±0.05mm tolerance for perfect fit and function</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-fire"></i>
+                <h3>Heat Resistant</h3>
+                <p>Enhanced thermal properties for reliable performance</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <h3>Quality Tested</h3>
+                <p>24-hour stress testing and manual inspection</p>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- ==================== HEADER ==================== -->
-    <header class="main-header">
-        <div class="container header-inner">
-            <div class="logo-container">
-                <div class="logo-text">
-                    <span class="accent">3D</span>PrintedUSA
-                    <span class="logo-subtitle">PREMIUM 3D PRINTED PRODUCTS</span>
+<!-- New Why Bitcoin Section -->
+<section class="why-bitcoin" id="why-bitcoin">
+    <div class="why-bitcoin-content">
+        <h2>Why We Only Accept Bitcoin</h2>
+        <p class="why-bitcoin-subtitle">A deliberate choice for security, privacy, and operational integrity</p>
+        
+        <div class="bitcoin-reasons">
+            <div class="reason">
+                <div class="reason-icon">
+                    <i class="fas fa-user-secret"></i>
+                </div>
+                <h3>Maximum Anonymity</h3>
+                <p>Bitcoin transactions don't require personal identification or banking details, protecting both buyer and seller privacy far beyond traditional payment systems.</p>
+            </div>
+            <div class="reason">
+                <div class="reason-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Enhanced Security</h3>
+                <p>The decentralized nature of Bitcoin eliminates chargeback fraud, unauthorized reversals, and sensitive financial data breaches associated with traditional payments.</p>
+            </div>
+            <div class="reason">
+                <div class="reason-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3>Borderless & Final</h3>
+                <p>Payments are global, fast, and irreversible once confirmed. No currency conversion issues or arbitrary payment holds from intermediaries.</p>
+            </div>
+            <div class="reason">
+                <div class="reason-icon">
+                    <i class="fas fa-code-branch"></i>
+                </div>
+                <h3>System Integrity</h3>
+                <p>Hosting our storefront on GitHub provides transparency and security. Customers can verify the site's functionality, ensuring no hidden trackers or payment skimming occurs.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section container" id="shop">
+    <h2>Shop Products</h2>
+    <div class="products" id="products"></div>
+</section>
+
+<section class="disclaimer" id="disclaimer">
+    <h2>Legal & Payment Disclaimer</h2>
+    <div class="disclaimer-content">
+        <p>By accessing this website and purchasing any product offered by 3DPrintedUSA, you acknowledge and agree that you are solely responsible for understanding and complying with all applicable local, state, federal, and international laws, regulations, and restrictions that may apply to the possession, use, importation, or resale of any product purchased from this site.</p>
+        
+        <p><strong>We do not support, condone, or facilitate illegal activities.</strong> Any product sold is intended for legal purposes as determined by the end user in their jurisdiction. All risks associated with the use or possession of any product, including the risk of violating any law, are solely borne by the purchaser.</p>
+        
+        <p>All sales are final. Payments are processed exclusively via Bitcoin. Due to the immutable nature of blockchain transactions, no refunds, cancellations, or chargebacks are possible under any circumstances once payment is broadcast to the network.</p>
+        
+        <div class="disclaimer-address">
+            <strong>Official Bitcoin Payment Address (BTC Network Only):</strong><br>
+            bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy
+        </div>
+        
+        <p>This website is hosted via <strong>GitHub Pages</strong> to ensure operational transparency, security, and privacy for both the supplier and the customer. The source code is publicly verifiable, eliminating hidden backend threats.</p>
+        
+        <p>By completing a purchase, you confirm you are at least 18 years of age (or the age of majority in your jurisdiction) and have read, understood, and agreed to all terms stated here.</p>
+    </div>
+</section>
+
+<footer>
+    <div class="container footer-content">
+        <div>© 2025 3DPrintedUSA · Worldwide Shipping</div>
+        
+        <div class="shipping-carriers">
+            <div class="carrier-item">
+                <div class="carrier-icon">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <div class="carrier-name">USPS</div>
+            </div>
+            <div class="carrier-item">
+                <div class="carrier-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="carrier-name">UPS</div>
+            </div>
+            <div class="carrier-item">
+                <div class="carrier-icon">
+                    <i class="fas fa-plane"></i>
+                </div>
+                <div class="carrier-name">DHL</div>
+            </div>
+            <div class="carrier-item">
+                <div class="carrier-icon">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="carrier-name">FedEx</div>
+            </div>
+            <div class="carrier-item">
+                <div class="carrier-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="carrier-name">Amazon Logistics</div>
+            </div>
+        </div>
+        
+        <div class="social-buttons">
+            <a href="https://www.youtube.com/@3DPrintedUSA" target="_blank">
+                <i class="fab fa-youtube"></i>
+                YouTube
+            </a>
+            <a href="https://instagram.com/3dprintedusa" target="_blank">
+                <i class="fab fa-instagram"></i>
+                Instagram
+            </a>
+            <a href="#" onclick="showContact()">
+                <i class="fas fa-envelope"></i>
+                Email Support
+            </a>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>All payments are processed in Bitcoin (BTC) only. No refunds or chargebacks.</p>
+            <p>You are responsible for your local laws. We do not support illegal activities.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Cart Popup -->
+<div id="cartPopup">
+    <button class="close" onclick="closeCart()" aria-label="Close Cart">
+        <i class="fas fa-times"></i>
+    </button>
+    <h3 class="icon">
+        <i class="fas fa-shopping-cart"></i>
+        Shopping Cart
+    </h3>
+    <div id="cartItems"></div>
+    <div class="cart-total">
+        <span>Total:</span>
+        <span class="cart-total-amount">$<span id="total">0.00</span></span>
+    </div>
+    <button onclick="showPaymentPopup()" style="width:100%">
+        <i class="fas fa-lock"></i>
+        Proceed to Secure Payment
+    </button>
+</div>
+
+<!-- Payment Popup -->
+<div id="paymentPopup" class="payment-popup">
+    <div class="payment-container">
+        <div class="payment-header">
+            <h2 class="icon">
+                <i class="fab fa-bitcoin"></i>
+                Secure Bitcoin Payment
+            </h2>
+        </div>
+        <div class="payment-body">
+            <div class="amount-display">
+                <div class="amount-label">TOTAL AMOUNT DUE</div>
+                <div class="amount">$<span id="paymentTotal">0.00</span></div>
+                <div class="btc-amount">≈ <span id="btcAmount">0.000000</span> BTC</div>
+            </div>
+
+            <div class="important-note">
+                <p>⚠️ IMPORTANT: Include your FULL NAME & SHIPPING ADDRESS in the Bitcoin transaction description/memo field so we can match your order!</p>
+            </div>
+
+            <div class="btc-address-container">
+                <div class="btc-label">BITCOIN ADDRESS (BTC Network)</div>
+                <div class="btc-address" id="paymentAddress">bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy</div>
+                <button class="copy-btn" onclick="copyAddress()">
+                    <i class="far fa-copy"></i>
+                    COPY BITCOIN ADDRESS
+                </button>
+            </div>
+
+            <div class="payment-options">
+                <div class="payment-option" onclick="window.open('https://cash.app/bitcoin', '_blank')">
+                    <div class="payment-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="option-name">CashApp</div>
+                    <div class="option-sub">Buy BTC Instantly</div>
+                </div>
+                <div class="payment-option" onclick="window.open('https://www.binance.com/en/buy-bitcoin', '_blank')">
+                    <div class="payment-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="option-name">Binance</div>
+                    <div class="option-sub">Trade & Buy</div>
+                </div>
+                <div class="payment-option" onclick="window.open('https://www.coinbase.com/buy-bitcoin', '_blank')">
+                    <div class="payment-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="option-name">Coinbase</div>
+                    <div class="option-sub">Easy Purchase</div>
+                </div>
+                <div class="payment-option" onclick="window.open('https://kraken.com/buy-bitcoin', '_blank')">
+                    <div class="payment-icon">
+                        <i class="fas fa-anchor"></i>
+                    </div>
+                    <div class="option-name">Kraken</div>
+                    <div class="option-sub">Secure Exchange</div>
                 </div>
             </div>
-            <div class="header-right">
-                <button class="cart-btn" onclick="showCart()" aria-label="Shopping Cart">
+        </div>
+        <div class="payment-footer">
+            <div class="status-indicator">
+                <div style="width:12px;height:12px;background:var(--ok);border-radius:50%"></div>
+                <div>Payment detected automatically after 2 confirmations</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Popup -->
+<div id="contactPopup" class="payment-popup">
+    <div class="payment-container">
+        <div class="payment-header">
+            <h2 class="icon">
+                <i class="fas fa-envelope"></i>
+                Contact Support
+            </h2>
+        </div>
+        <div class="payment-body" style="text-align:center">
+            <p>For order inquiries, support, or questions:</p>
+            <div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:15px;margin:20px 0;font-family:monospace;font-size:18px;word-break:break-all">
+                cojacob230@gmail.com
+            </div>
+            <button class="copy-btn" onclick="copyEmail()">
+                <i class="far fa-copy"></i>
+                COPY EMAIL ADDRESS
+            </button>
+            <p style="margin-top:20px;opacity:0.9;">
+                <i class="fas fa-clock"></i>
+                Response time: 12-24 hours
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+// Updated product data with new prices and removed FGC-9
+const products = [
+    // KITS
+    {
+        name: "Not a Glock .22LR Kit",
+        price: 400,
+        discount: 0,
+        img: "NAG2.jpg",
+        orders: Math.floor(Math.random() * (5000 - 800 + 1)) + 800,
+        desc: "99% printed pistol platform - only requires basic hardware springs. High-strength reinforced PLA+ kit featuring our proprietary metal-carbon composite for maximum durability."
+    },
+    {
+        name: "HD22 Kit",
+        price: 550,
+        discount: 0,
+        img: "hs222.jpg",
+        orders: Math.floor(Math.random() * (4200 - 600 + 1)) + 600,
+        desc: "99% printed pistol - heavy-duty construction with 100% infill for ultimate reliability. The HD22 platform is engineered for professional use with reinforced stress points."
+    },
+    {
+        name: "Gambino Kit",
+        price: 100,
+        discount: 0,
+        img: "gambino2.jpg",
+        orders: Math.floor(Math.random() * (3800 - 500 + 1)) + 500,
+        desc: "99% printed pistol platform - compact high-strength design offering the perfect balance between size and durability. The Gambino features carbon fiber reinforcement."
+    },
+    {
+        name: "Cabfare Kit",
+        price: 100,
+        discount: 0,
+        img: "cabfare2.jpg",
+        orders: Math.floor(Math.random() * (3500 - 400 + 1)) + 400,
+        desc: "99% printed pistol - balanced performance and durability in a versatile platform. The Cabfare kit includes our signature smooth finish with reinforced front rails."
+    },
+    {
+        name: "Harlot Kit",
+        price: 150,
+        discount: 0,
+        img: "harlot2.jpg",
+        orders: Math.floor(Math.random() * (3200 - 300 + 1)) + 300,
+        desc: "99% printed pistol - minimalist yet extremely strong design optimized for reliability and simplicity. Metal particles in our composite add substantial weight for improved balance."
+    },
+    
+    // COMPLETE ASSEMBLIES
+    {
+        name: "HD22 Complete",
+        price: 1000,
+        discount: 0,
+        img: "hs22.jpg",
+        orders: Math.floor(Math.random() * (2800 - 200 + 1)) + 200,
+        desc: "Fully assembled HD22 unit ready for immediate use. Every component is manufactured from our premium materials and hand-fitted for perfect operation."
+    },
+    {
+        name: "Not a Glock .22LR Complete",
+        price: 700,
+        discount: 0,
+        img: "NAG.jpg",
+        orders: Math.floor(Math.random() * (3100 - 250 + 1)) + 250,
+        desc: "Complete ready-to-use assembly with perfect fitment guaranteed through our precision calibration process. Features installed sights and enhanced trigger mechanism."
+    },
+    {
+        name: "Gambino Complete",
+        price: 250,
+        discount: 0,
+        img: "gambino.jpg",
+        orders: Math.floor(Math.random() * (2600 - 180 + 1)) + 180,
+        desc: "Complete high-durability unit with every component made from our custom PLA+ composite. Features installed fire control group and professional-grade finish."
+    },
+    {
+        name: "Cabfare Complete",
+        price: 200,
+        discount: 0,
+        img: "cabfare.jpg",
+        orders: Math.floor(Math.random() * (2400 - 150 + 1)) + 150,
+        desc: "Balanced full assembly with exceptional surface finish and reinforced structure. Includes precision-machined barrel and installed trigger components."
+    },
+    {
+        name: "Harlot Complete",
+        price: 250,
+        discount: 0,
+        img: "harlot.jpg",
+        orders: Math.floor(Math.random() * (2200 - 120 + 1)) + 120,
+        desc: "Compact complete solution with professional-grade construction throughout. Features installed firing mechanism and reinforced breech block."
+    },
+    
+    // ACCESSORIES
+    {
+        name: "Glock Switch",
+        price: 60,
+        discount: 0,
+        img: "switch.jpg",
+        orders: Math.floor(Math.random() * (5500 - 1000 + 1)) + 1000,
+        desc: "Precision printed accessory manufactured from reinforced materials for reliable performance. Features smooth actuation, positive detents, and durable construction."
+    },
+    {
+        name: "Knuckle Dusters (Single)",
+        price: 5,
+        discount: 0,
+        img: "knuckle.jpg",
+        orders: Math.floor(Math.random() * (8000 - 1500 + 1)) + 1500,
+        desc: "Self-defense knuckle dusters made from reinforced PLA+ with metal particles adding substantial weight for improved impact. Bulk pricing available for 10+ units."
+    },
+    {
+        name: "Knuckle Dusters (10 Pack)",
+        price: 20,
+        discount: 0,
+        img: "knuckle.jpg",
+        orders: Math.floor(Math.random() * (4000 - 800 + 1)) + 800,
+        desc: "10-pack of knuckle dusters for maximum value. Perfect for groups or multiple users. Each unit made from reinforced PLA+ with metal particles."
+    },
+    {
+        name: "Invisible Switch",
+        price: 80,
+        discount: 0,
+        img: "invisible_switch.jpg",
+        orders: Math.floor(Math.random() * (4800 - 800 + 1)) + 800,
+        desc: "Discreet and reliable invisible switch with carbon fiber reinforcement ensuring longevity. Features low-profile design and positive tactile feedback."
+    },
+    {
+        name: "Glock 19 Gen 3 Frame (Gold)",
+        price: 100,
+        discount: 0,
+        img: "glock19_gold.jpg",
+        orders: Math.floor(Math.random() * (3600 - 600 + 1)) + 600,
+        desc: "Gold-colored Glock 19 Gen 3 frame printed with reinforced PLA+ composite for enhanced durability. Features precise rail dimensions and enhanced grip texture."
+    },
+    {
+        name: "Extended Magazine for Not A Glock .22lr",
+        price: 30,
+        discount: 0,
+        img: "extended_mag.jpg",
+        orders: Math.floor(Math.random() * (5200 - 900 + 1)) + 900,
+        desc: "High-capacity extended magazine with reinforced feed lips and body for reliable performance. Features anti-tilt follower and enhanced spring tension."
+    },
+    {
+        name: "Glock 26 Magazine 10 Round",
+        price: 25,
+        discount: 0,
+        img: "glock26_mag.jpg",
+        orders: Math.floor(Math.random() * (5800 - 1100 + 1)) + 1100,
+        desc: "10-round magazine for Glock 26 printed with reinforced PLA+ for durability and smooth feeding. Features reinforced feed lips and anti-tilt follower design."
+    }
+];
+
+// Calculate final prices
+products.forEach(product => {
+    product.finalPrice = product.discount > 0 ? product.price * (1 - product.discount / 100) : product.price;
+});
+
+// State management
+let cart = [];
+let activeProduct = null;
+let currentBitcoinPrice = 65000;
+
+// DOM elements
+const productsDiv = document.getElementById('products');
+const cartCounter = document.getElementById('cartCounter');
+const cartItems = document.getElementById('cartItems');
+const totalElement = document.getElementById('total');
+const paymentTotal = document.getElementById('paymentTotal');
+const btcAmount = document.getElementById('btcAmount');
+const btcPriceElement = document.getElementById('btcPrice');
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    renderProducts();
+    updateBitcoinPrice();
+});
+
+// Navigation functions
+function openMenu() {
+    document.getElementById('navOverlay').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeMenu() {
+    document.getElementById('navOverlay').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function scrollToShop() {
+    document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
+    closeMenu();
+}
+
+function scrollToWhyBitcoin() {
+    document.getElementById('why-bitcoin').scrollIntoView({ behavior: 'smooth' });
+    closeMenu();
+}
+
+// Cart functions
+function updateCartCounter() {
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCounter.textContent = count;
+    cartCounter.style.display = count > 0 ? 'flex' : 'none';
+}
+
+function updateCart() {
+    cartItems.innerHTML = '';
+    let total = 0;
+    
+    cart.forEach((item, index) => {
+        total += item.finalPrice * item.quantity;
+        
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">$${(item.finalPrice * item.quantity).toFixed(2)}</div>
+            <div style="display:flex;align-items:center;gap:10px;">
+                <button onclick="updateQuantity(${index}, -1)" style="padding:5px 10px;font-size:14px;border-radius:5px;background:rgba(255,255,255,0.1);border:1px solid var(--border);color:white;">-</button>
+                <span>${item.quantity}</span>
+                <button onclick="updateQuantity(${index}, 1)" style="padding:5px 10px;font-size:14px;border-radius:5px;background:rgba(255,255,255,0.1);border:1px solid var(--border);color:white;">+</button>
+                <button class="remove-item" onclick="removeFromCart(${index})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+        cartItems.appendChild(cartItem);
+    });
+    
+    totalElement.textContent = total.toFixed(2);
+    paymentTotal.textContent = total.toFixed(2);
+    updateBitcoinAmount(total);
+    updateCartCounter();
+}
+
+function updateQuantity(index, change) {
+    cart[index].quantity += change;
+    if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+    }
+    updateCart();
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
+    showToast('Item removed from cart');
+}
+
+function addToCart(product) {
+    const existingItem = cart.find(item => item.name === product.name);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            ...product,
+            quantity: 1
+        });
+    }
+    
+    updateCart();
+    showToast('Added to cart');
+}
+
+// Product display
+function renderProducts() {
+    productsDiv.innerHTML = '';
+    
+    products.forEach((product, index) => {
+        const hasDiscount = product.discount > 0;
+        const discountAmount = product.price - product.finalPrice;
+        
+        const productElement = document.createElement('div');
+        productElement.className = 'product';
+        productElement.innerHTML = `
+            ${hasDiscount ? `
+                <div class="sale-badge">
+                    ${product.discount}% OFF 
+                    <span class="discount-amount">SAVE $${discountAmount.toFixed(0)}</span>
+                </div>
+            ` : ''}
+            
+            <img src="${product.img}" class="product-image" alt="${product.name}" 
+                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"260\" height=\"200\"><rect width=\"100%\" height=\"100%\" fill=\"%231a1a1a\"/><text x=\"50%\" y=\"50%\" font-family=\"Inter\" font-size=\"14\" fill=\"%23fff\" text-anchor=\"middle\" dy=\".3em\">${product.name}</text></svg>'">
+            
+            <div class="product-content">
+                <div>
+                    <h3>${product.name}</h3>
+                    <div class="prices">
+                        ${hasDiscount ? `
+                            <span class="original-price">$${product.price}</span>
+                        ` : ''}
+                        <span class="${hasDiscount ? 'discounted-price' : 'regular-price'}">
+                            $${product.finalPrice.toFixed(0)}
+                        </span>
+                    </div>
+                    <div class="orders">
+                        <i class="fas fa-shopping-cart"></i>
+                        ${product.orders.toLocaleString()} orders
+                    </div>
+                </div>
+                <button onclick="event.stopPropagation();showProductModal(${index})">
+                    <i class="fas fa-eye"></i>
+                    View Details
+                </button>
+            </div>
+        `;
+        
+        productElement.addEventListener('click', () => showProductModal(index));
+        productsDiv.appendChild(productElement);
+    });
+}
+
+// Modal functions
+let modal = document.createElement('div');
+let toastEl = document.createElement('div');
+
+function showProductModal(index) {
+    activeProduct = products[index];
+    const hasDiscount = activeProduct.discount > 0;
+    const discountAmount = activeProduct.price - activeProduct.finalPrice;
+    
+    if (!document.getElementById('modal')) {
+        modal.id = 'modal';
+        modal.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);align-items:center;justify-content:center;z-index:600;backdrop-filter:blur(5px);';
+        modal.innerHTML = `
+            <div class='modal-box' style='background:var(--panel);border-radius:22px;padding:30px;text-align:center;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;border:1px solid var(--border);box-shadow:0 25px 50px var(--shadow);position:relative;'>
+                <button class='close' onclick='hideModal()' style='position:absolute;top:15px;right:15px;'><i class="fas fa-times"></i></button>
+                ${hasDiscount ? `
+                    <div class="sale-badge" style="margin-bottom:15px;background:linear-gradient(45deg, #ff6b6b, #ff8e53);">
+                        ${activeProduct.discount}% OFF 
+                        <span class="discount-amount">SAVE $${discountAmount.toFixed(0)}</span>
+                    </div>
+                ` : ''}
+                
+                <img id='mImg' style='width:100%;height:250px;object-fit:contain;border-radius:16px;margin-bottom:20px;background:rgba(255,255,255,0.05);padding:15px;' 
+                     onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"500\" height=\"250\"><rect width=\"100%\" height=\"100%\" fill=\"%231a1a1a\"/><text x=\"50%\" y=\"50%\" font-family=\"Inter\" font-size=\"16\" fill=\"%23fff\" text-anchor=\"middle\" dy=\".3em\">${activeProduct.name}</text></svg>'">
+                
+                <h3 id='mName' style='margin-bottom:15px;font-size:22px;'></h3>
+                <p id='mDesc' style='text-align:left;font-size:15px;line-height:1.6;margin:15px 0;color:var(--text-light);'></p>
+                
+                <div style="margin:20px 0;">
+                    ${hasDiscount ? `
+                        <span style="text-decoration:line-through;color:var(--text-muted);margin-right:10px;font-size:18px;">$${activeProduct.price}</span>
+                    ` : ''}
+                    <span style="color:${hasDiscount ? 'var(--ok)' : 'var(--text)'};font-size:32px;font-weight:800;">
+                        $${activeProduct.finalPrice.toFixed(0)}
+                    </span>
+                </div>
+                
+                <p class='orders' style='color:var(--ok);margin-bottom:20px;'>
                     <i class="fas fa-shopping-cart"></i>
-                    <span id="cartCounter" class="cart-count" style="display:none">0</span>
+                    <span id='mOrders'></span> orders
+                </p>
+                
+                <button onclick='addFromModal()' style='width:100%;padding:16px;font-size:16px;'>
+                    <i class="fas fa-cart-plus"></i>
+                    Add to Cart
                 </button>
-                <button class="hamburger" onclick="openMenu()" aria-label="Menu">
-                    <i class="fas fa-bars"></i>
-                </button>
             </div>
-        </div>
-    </header>
+        `;
+        document.body.appendChild(modal);
+    }
+    
+    document.getElementById('mImg').src = activeProduct.img;
+    document.getElementById('mName').innerText = activeProduct.name;
+    document.getElementById('mDesc').innerText = activeProduct.desc;
+    document.getElementById('mOrders').innerText = activeProduct.orders.toLocaleString() + ' orders';
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
 
-    <!-- ==================== HERO SECTION ==================== -->
-    <section class="hero">
-        <div class="hero-box">
-            <h1>Engineered for Performance</h1>
-            <div class="hero-subtitle">
-                Professionally manufactured 3D-printed components using proprietary high-strength composites.
-                Bitcoin-only checkout ensures complete privacy and security for every transaction.
-            </div>
-            <div class="hero-tagline">
-                <div class="tagline-item"><span class="tagline-icon"><i class="fab fa-bitcoin"></i></span> Bitcoin-Only. Fully Anonymous.</div>
-                <div class="tagline-item"><span class="tagline-icon"><i class="fas fa-shield-alt"></i></span> Discreet & Secure Worldwide Shipping</div>
-                <div class="tagline-item"><span class="tagline-icon"><i class="fas fa-cube"></i></span> Proprietary PLA+ Metal-Carbon Composite</div>
-            </div>
-            <div class="rating">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                <span class="rating-text">Rated 4.8/5.0 by 2,500+ Clients</span>
-            </div>
-            <div class="hero-buttons">
-                <button onclick="scrollToShop()"><i class="fas fa-shopping-cart"></i> View Product Catalog</button>
-                <button class="secondary-btn" onclick="showContact()"><i class="fas fa-envelope"></i> Contact Support</button>
-            </div>
-        </div>
-    </section>
+function hideModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
 
-    <!-- ==================== MATERIALS & PROCESS SECTION ==================== -->
-    <section class="materials">
-        <h2 class="section-header">Our Materials & Manufacturing Process</h2>
-        <div class="materials-content">
-            <p>At 3DPrintedUSA, we engineer reliability. Our proprietary <strong>PLA+ composite</strong> is reinforced with stainless steel microparticles and interwoven carbon fiber strands, resulting in a material that surpasses standard polymers in tensile strength, thermal resistance, and dimensional stability (±0.05mm tolerance).</p>
-            <p>Every component is printed at <strong>100% infill</strong> on calibrated industrial printers, undergoes a mandatory <strong>24-hour stress simulation</strong>, is hand-inspected under magnification, and is then packaged discreetly for shipment. Our Bitcoin-only payment protocol eliminates financial privacy concerns and chargeback fraud.</p>
-            <div class="feature-grid">
-                <div class="feature-item"><i class="fas fa-atom"></i><h3>Advanced Composite</h3><p>PLA+ enhanced with steel & carbon fiber for exceptional durability and weight.</p></div>
-                <div class="feature-item"><i class="fas fa-tachometer-alt"></i><h3>Precision Tolerance</h3><p>±0.05mm accuracy ensures perfect fit and function with all standard hardware.</p></div>
-                <div class="feature-item"><i class="fas fa-fire-alt"></i><h3>Stress Tested</h3><p>Each batch undergoes rigorous 24-hour testing to validate performance.</p></div>
-                <div class="feature-item"><i class="fas fa-clipboard-check"></i><h3>Quality Assured</h3><p>Manual inspection and final approval before any product leaves our facility.</p></div>
-            </div>
-        </div>
-    </section>
+function addFromModal() {
+    if (activeProduct) {
+        addToCart(activeProduct);
+        hideModal();
+    }
+}
 
-    <!-- ==================== WHY BITCOIN SECTION ==================== -->
-    <section class="why-bitcoin">
-        <div class="why-bitcoin-content">
-            <h2>Why We Only Accept Bitcoin</h2>
-            <p class="why-bitcoin-subtitle">A deliberate choice for security, privacy, and operational integrity.</p>
-            <div class="bitcoin-reasons">
-                <div class="reason">
-                    <div class="reason-icon"><i class="fas fa-user-secret"></i></div>
-                    <h3>Maximum Anonymity</h3>
-                    <p>Bitcoin transactions, when handled correctly, do not require personal banking details or identification, protecting both buyer and seller privacy far beyond traditional payment systems.</p>
-                </div>
-                <div class="reason">
-                    <div class="reason-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Enhanced Security</h3>
-                    <p>The decentralized and cryptographically-secured nature of Bitcoin eliminates the risks of chargeback fraud, unauthorized reversals, and sensitive financial data breaches associated with cards or PayPal.</p>
-                </div>
-                <div class="reason">
-                    <div class="reason-icon"><i class="fas fa-globe"></i></div>
-                    <h3>Borderless & Final</h3>
-                    <p>Payments are global, fast, and irreversible once confirmed. This allows for seamless international business without intermediaries, currency conversion issues, or arbitrary payment holds.</p>
-                </div>
-                <div class="reason">
-                    <div class="reason-icon"><i class="fas fa-code-branch"></i></div>
-                    <h3>System Integrity</h3>
-                    <p>Hosting our storefront code on <strong>GitHub</strong> provides transparency and security. Customers can verify the site's functionality, ensuring no hidden trackers or payment skimming occurs.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+// Toast notification
+function showToast(message) {
+    if (!document.getElementById('toast')) {
+        toastEl.id = 'toast';
+        toastEl.className = 'toast';
+        toastEl.style.cssText = 'position:fixed;bottom:30px;right:30px;background:var(--ok);color:#000;padding:15px 25px;border-radius:12px;font-weight:700;z-index:3000;box-shadow:0 10px 25px rgba(46, 204, 113, 0.3);display:flex;align-items:center;gap:10px;transform:translateY(100px);opacity:0;transition:all 0.3s ease;';
+        toastEl.innerHTML = '<i class="fas fa-check-circle"></i> ' + message;
+        document.body.appendChild(toastEl);
+    } else {
+        toastEl.innerHTML = '<i class="fas fa-check-circle"></i> ' + message;
+    }
+    
+    toastEl.style.transform = 'translateY(0)';
+    toastEl.style.opacity = '1';
+    
+    setTimeout(() => {
+        toastEl.style.transform = 'translateY(100px)';
+        toastEl.style.opacity = '0';
+    }, 3000);
+}
 
-    <!-- ==================== PRODUCTS CATALOG ==================== -->
-    <section class="section container" id="shop">
-        <h2>Product Catalog</h2>
-        <div class="products" id="products"></div>
-    </section>
+// Bitcoin functions
+async function updateBitcoinPrice() {
+    try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        const data = await response.json();
+        currentBitcoinPrice = data.bitcoin.usd;
+        btcPriceElement.textContent = currentBitcoinPrice.toLocaleString();
+        
+        const total = parseFloat(paymentTotal.textContent);
+        updateBitcoinAmount(total);
+        
+        showToast('Bitcoin price updated');
+    } catch (error) {
+        console.error('Error fetching Bitcoin price:', error);
+        btcPriceElement.textContent = currentBitcoinPrice.toLocaleString();
+        showToast('Using cached Bitcoin price');
+    }
+}
 
-    <!-- ==================== LEGAL DISCLAIMER ==================== -->
-    <section class="disclaimer" id="disclaimer">
-        <h2>Legal Disclaimer & Terms of Sale</h2>
-        <div class="disclaimer-content">
-            <p><strong>By accessing this website or purchasing any product, you acknowledge and agree to the following terms in full:</strong></p>
-            <p>You are solely and entirely responsible for understanding and complying with all laws, regulations, and restrictions applicable to the possession, use, importation, or resale of any product in your specific city, state, country, or jurisdiction. 3DPrintedUSA does not provide legal advice. It is your obligation to consult with qualified legal counsel regarding legality.</p>
-            <p><strong>We do not support, condone, or facilitate illegal activities.</strong> Any product sold is intended for legal purposes as determined by the end user in their jurisdiction. All risks associated with the use or possession of any product, including the risk of violating any law, are solely borne by the purchaser.</p>
-            <p>All sales are final. Payments are processed exclusively via Bitcoin. Due to the immutable nature of blockchain transactions, no refunds, cancellations, or chargebacks are possible under any circumstances once payment is broadcast to the network.</p>
-            <div class="disclaimer-address">
-                <strong>Official Bitcoin Payment Address (BTC Network Only):</strong><br>
-                bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy
-            </div>
-            <p>This website is hosted via <strong>GitHub Pages</strong> to ensure operational transparency, security, and privacy for both the supplier and the customer. The source code is publicly verifiable, eliminating hidden backend threats.</p>
-            <p>By completing a purchase, you confirm you are at least 18 years of age (or the age of majority in your jurisdiction) and have read, understood, and agreed to all terms stated here.</p>
-        </div>
-    </section>
+function updateBitcoinAmount(total) {
+    if (total > 0 && currentBitcoinPrice > 0) {
+        const btcValue = total / currentBitcoinPrice;
+        btcAmount.textContent = btcValue.toFixed(8);
+    } else {
+        btcAmount.textContent = '0.000000';
+    }
+}
 
-    <!-- ==================== FOOTER ==================== -->
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-brand">
-                <div class="footer-logo-text">
-                    <span class="accent">3D</span>PrintedUSA
-                </div>
-                <p class="footer-text">Premium 3D Printed Components | Worldwide Shipping</p>
-                <p class="footer-text">© 2025 3DPrintedUSA. All transactions are final.</p>
-            </div>
-            <div class="shipping-carriers">
-                <div class="carrier-item"><div class="carrier-icon"><i class="fas fa-shipping-fast"></i></div><div class="carrier-name">USPS</div></div>
-                <div class="carrier-item"><div class="carrier-icon"><i class="fas fa-truck"></i></div><div class="carrier-name">UPS</div></div>
-                <div class="carrier-item"><div class="carrier-icon"><i class="fas fa-plane"></i></div><div class="carrier-name">DHL</div></div>
-                <div class="carrier-item"><div class="carrier-icon"><i class="fas fa-box"></i></div><div class="carrier-name">FedEx</div></div>
-                <div class="carrier-item"><div class="carrier-icon"><i class="fas fa-store"></i></div><div class="carrier-name">Amazon</div></div>
-            </div>
-            <div class="footer-links">
-                <a href="#" onclick="showShippingInfo()" class="footer-link-item"><i class="fas fa-truck-fast footer-link-icon"></i><span class="footer-link-text">Shipping Info</span></a>
-                <a href="#" onclick="showContact()" class="footer-link-item"><i class="fas fa-envelope footer-link-icon"></i><span class="footer-link-text">Contact Support</span></a>
-                <a href="#disclaimer" class="footer-link-item"><i class="fas fa-scale-balanced footer-link-icon"></i><span class="footer-link-text">Legal Terms</span></a>
-                <a href="#" onclick="showMaterials()" class="footer-link-item"><i class="fas fa-cogs footer-link-icon"></i><span class="footer-link-text">Our Materials</span></a>
-            </div>
-            <div class="social-buttons">
-                <a href="https://www.youtube.com/@3DPrintedUSA" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-                <a href="https://instagram.com/3dprintedusa" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="#" onclick="showContact()"><i class="fas fa-envelope"></i> Email: cojacob230@gmail.com</a>
-            </div>
-            <div class="footer-bottom">
-                <p>This site is securely hosted on GitHub. All payments are final and processed via Bitcoin (BTC) for privacy and security.</p>
-                <p style="margin-top: 10px; font-size: 13px;">You are responsible for your local laws. We do not support illegal activities.</p>
-            </div>
-        </div>
-    </footer>
+// Cart popup functions
+function showCart() {
+    closeMenu();
+    document.getElementById('cartPopup').style.display = 'block';
+}
 
-    <!-- ==================== CART POPUP ==================== -->
-    <div id="cartPopup">
-        <button class="close" onclick="closeCart()" aria-label="Close Cart"><i class="fas fa-times"></i></button>
-        <h3 class="icon"><i class="fas fa-shopping-cart"></i> Your Cart</h3>
-        <div id="cartItems"></div>
-        <div class="cart-total"><span>Total Amount:</span><span class="cart-total-amount">$<span id="total">0.00</span></span></div>
-        <button onclick="showPaymentPopup()" style="width:100%"><i class="fas fa-lock"></i> Proceed to Bitcoin Checkout</button>
-    </div>
+function closeCart() {
+    document.getElementById('cartPopup').style.display = 'none';
+}
 
-    <!-- ==================== PAYMENT POPUP ==================== -->
-    <div id="paymentPopup" class="payment-popup">
-        <div class="payment-container">
-            <div class="payment-header"><h2 class="icon"><i class="fab fa-bitcoin"></i> Secure Bitcoin Checkout</h2></div>
-            <div class="payment-body">
-                <div class="amount-display"><div class="amount-label">TOTAL AMOUNT DUE</div><div class="amount">$<span id="paymentTotal">0.00</span></div><div class="btc-amount">≈ <span id="btcAmount">0.000000</span> BTC</div></div>
-                <div class="important-note"><p>⚠️ <strong>CRITICAL:</strong> You MUST include your <strong>FULL NAME & COMPLETE SHIPPING ADDRESS</strong> in the Bitcoin transaction memo/description field. This is the only way we can link your payment to your order.</p></div>
-                <div class="btc-address-container">
-                    <div class="btc-label">SEND EXACT PAYMENT TO THIS BITCOIN ADDRESS (BTC NETWORK)</div>
-                    <div class="btc-address" id="paymentAddress">bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy</div>
-                    <button class="copy-btn" onclick="copyAddress()"><i class="far fa-copy"></i> COPY BITCOIN ADDRESS</button>
-                </div>
-            </div>
-            <div class="payment-footer">
-                <div class="status-indicator">
-                    <div style="width:12px;height:12px;background:var(--ok);border-radius:50%"></div>
-                    <div>Payment is automatically verified after 2 blockchain confirmations. You will receive an email confirmation.</div>
-                </div>
-            </div>
-        </div>
-    </div>
+// Payment popup functions
+function showPaymentPopup() {
+    if (cart.length === 0) {
+        showToast('Cart is empty');
+        return;
+    }
+    
+    closeCart();
+    document.getElementById('paymentPopup').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
 
-    <!-- ==================== CONTACT POPUP ==================== -->
-    <div id="contactPopup" class="payment-popup">
-        <div class="payment-container">
-            <div class="payment-header"><h2 class="icon"><i class="fas fa-envelope"></i> Contact & Support</h2></div>
-            <div class="payment-body" style="text-align:center">
-                <p>For order inquiries, tracking, or technical support:</p>
-                <div style="background:rgba(0,0,0,0.3);padding:20px;border-radius:15px;margin:25px 0;font-family:monospace;font-size:20px;word-break:break-all">cojacob230@gmail.com</div>
-                <button class="copy-btn" onclick="copyEmail()"><i class="far fa-copy"></i> COPY EMAIL ADDRESS</button>
-                <p style="margin-top:25px;opacity:0.9;"><i class="fas fa-clock"></i> Typical response time: 12-24 hours</p>
-            </div>
-        </div>
-    </div>
+function closePaymentPopup() {
+    document.getElementById('paymentPopup').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
 
-    <!-- ==================== SHIPPING INFO POPUP ==================== -->
-    <div id="shippingPopup" class="payment-popup">
-        <div class="payment-container">
-            <div class="payment-header"><h2 class="icon"><i class="fas fa-truck-fast"></i> Shipping & Delivery Information</h2></div>
-            <div class="payment-body">
-                <div class="feature-item" style="margin-bottom:25px; background: rgba(255,255,255,0.03);">
-                    <i class="fas fa-box"></i><h3>Discreet & Secure Packaging</h3><p>All items are shipped in plain, unmarked boxes or padded mailers with no external indication of the contents. Your privacy is paramount.</p>
-                </div>
-                <div class="feature-item" style="margin-bottom:25px; background: rgba(255,255,255,0.03);">
-                    <i class="fas fa-globe-americas"></i><h3>Worldwide Delivery Network</h3><p>We ship internationally via trusted carriers like USPS, UPS, DHL, FedEx, and Amazon Logistics. Delivery times vary by destination and carrier selection.</p>
-                </div>
-                <div class="feature-item" style="margin-bottom:25px; background: rgba(255,255,255,0.03);">
-                    <i class="fas fa-clock"></i><h3>Estimated Delivery Windows</h3><p><strong>United States:</strong> 5-7 business days (standard).<br><strong>International:</strong> 1-2 weeks (standard).<br>Expedited options may be available upon request.</p>
-                </div>
-                <div class="feature-item" style="margin-bottom:25px; background: rgba(255,255,255,0.03);">
-                    <i class="fas fa-map-marker-alt"></i><h3>Tracking & Support</h3><p>A tracking number will be provided via email once your order ships. For any delivery issues, contact our support team.</p>
-                </div>
-                <button class="copy-btn" onclick="closeShippingInfo()" style="margin-top:10px; width:100%;"><i class="fas fa-check"></i> Understood</button>
-            </div>
-        </div>
-    </div>
+function copyAddress() {
+    const address = document.getElementById('paymentAddress').textContent;
+    navigator.clipboard.writeText(address).then(() => {
+        showToast('Bitcoin address copied to clipboard');
+    });
+}
 
-    <!-- ==================== PRODUCT DETAIL MODAL ==================== -->
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle"></h3>
-                <button class="close" onclick="hideModal()" aria-label="Close Modal"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <div class="product-image-container">
-                    <img id="modalImage" class="product-image" alt="Product Image" src="" onerror="this.style.display='none'; document.getElementById('modalPlaceholder').style.display='flex';">
-                    <div id="modalPlaceholder" class="image-placeholder" style="display:none;">
-                        <i class="fas fa-cube"></i>
-                        <span id="placeholderText"></span>
-                    </div>
-                </div>
-                <div id="modalDescription" class="modal-description"></div>
-                <div class="modal-specs"><h4>Product Specifications</h4><ul id="modalSpecs"></ul></div>
-                <div class="prices" style="flex-direction:row;justify-content:space-between;align-items:center;margin:25px 0;">
-                    <div><div id="modalOriginalPrice" class="original-price" style="display:none;"></div><div id="modalPrice" class="discounted-price" style="font-size:36px;"></div></div>
-                    <div class="orders" id="modalOrders"></div>
-                </div>
-                <button onclick="addToCartFromModal()" style="width:100%;padding:20px; font-size:18px;"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-            </div>
-        </div>
-    </div>
+function copyEmail() {
+    const email = 'cojacob230@gmail.com';
+    navigator.clipboard.writeText(email).then(() => {
+        showToast('Email address copied to clipboard');
+    });
+}
 
-    <!-- ==================== TOAST NOTIFICATION ==================== -->
-    <div id="toast" class="toast"></div>
+// Contact functions
+function showContact() {
+    closeMenu();
+    document.getElementById('contactPopup').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
 
-    <script>
-        // ==================== CONFIGURATION & DATA ====================
-        // Updated product list with your specified prices and NO image dependency
-        const products = [
-            // KITS
-            { name: "Not a Glock .22LR Kit", price: 400, discount: 0, img: "", orders: 4200, type: "Kit", 
-              desc: "99% printed pistol platform - only requires basic hardware springs. High-strength reinforced PLA+ kit featuring our proprietary metal-carbon composite for maximum durability.",
-              specs: ["99% printed - only basic hardware required", "High-strength PLA+ with metal-carbon composite", "Perfect fitment with standard components", "Reinforced rails and stress points", "Includes detailed assembly instructions"] },
-            { name: "HD22 Kit", price: 550, discount: 0, img: "", orders: 3800, type: "Kit",
-              desc: "Heavy-duty construction with 100% infill for ultimate reliability. The HD22 platform is engineered for professional use with reinforced stress points and precision-machined internal channels.",
-              specs: ["Heavy-duty 100% infill construction", "Reinforced stress points", "Enhanced magazine well", "Precision-machined internal channels", "Professional-grade performance"] },
-            { name: "Gambino Kit", price: 100, discount: 0, img: "", orders: 3100, type: "Kit",
-              desc: "Compact high-strength design offering the perfect balance between size and durability. The Gambino features carbon fiber reinforcement in critical stress areas.",
-              specs: ["Compact high-strength design", "Carbon fiber reinforcement", "Ergonomic finger grooves", "Enhanced grip texture", "Minimal non-printed components"] },
-            { name: "Cabfare Kit", price: 100, discount: 0, img: "", orders: 2900, type: "Kit",
-              desc: "Balanced performance and durability in a versatile platform. The Cabfare kit includes our signature smooth finish with reinforced front rails.",
-              specs: ["Balanced performance design", "Signature smooth finish", "Reinforced front rails", "Enhanced recoil spring channel", "Precision alignment features"] },
-            { name: "Harlot Kit", price: 150, discount: 0, img: "", orders: 2700, type: "Kit",
-              desc: "Minimalist yet extremely strong design optimized for reliability and simplicity. Metal particles in our composite add substantial weight for improved balance.",
-              specs: ["Minimalist strong design", "Metal particles for weight balance", "Integrated sight channel", "Reinforced breech face", "Streamlined profile for concealability"] },
-            // COMPLETE ASSEMBLIES
-            { name: "HD22 Complete", price: 1000, discount: 0, img: "", orders: 2200, type: "Complete",
-              desc: "Fully assembled HD22 unit ready for immediate use. Every component is manufactured from our premium materials and hand-fitted for perfect operation.",
-              specs: ["Fully assembled ready-to-use", "Hand-fitted components", "Installed trigger assembly", "Polished feed ramp", "Factory-test fired"] },
-            { name: "Not a Glock .22LR Complete", price: 700, discount: 0, img: "", orders: 2500, type: "Complete",
-              desc: "Complete ready-to-use assembly with perfect fitment guaranteed through our precision calibration process. Features installed sights and enhanced trigger mechanism.",
-              specs: ["Complete ready-to-use assembly", "Perfect fitment guaranteed", "Installed sights", "Enhanced trigger mechanism", "50-round function tested"] },
-            { name: "Gambino Complete", price: 250, discount: 0, img: "", orders: 1800, type: "Complete",
-              desc: "Complete high-durability unit with every component made from our custom PLA+ composite. Features installed fire control group and professional-grade finish.",
-              specs: ["Complete high-durability unit", "Custom PLA+ composite construction", "Installed fire control group", "Enhanced slide rails", "Professional-grade finish"] },
-            { name: "Cabfare Complete", price: 200, discount: 0, img: "", orders: 1600, type: "Complete",
-              desc: "Balanced full assembly with exceptional surface finish and reinforced structure. Includes precision-machined barrel and installed trigger components.",
-              specs: ["Balanced full assembly", "Exceptional surface finish", "Reinforced structure", "Precision-machined barrel", "Installed trigger components"] },
-            { name: "Harlot Complete", price: 250, discount: 0, img: "", orders: 1400, type: "Complete",
-              desc: "Compact complete solution with professional-grade construction throughout. Features installed firing mechanism and reinforced breech block.",
-              specs: ["Compact complete solution", "Professional-grade construction", "Installed firing mechanism", "Reinforced breech block", "Precision-aligned components"] },
-            // ACCESSORIES
-            { name: "Glock Switch", price: 60, discount: 0, img: "", orders: 4800, type: "Accessory",
-              desc: "Precision printed accessory manufactured from reinforced materials for reliable performance. Features smooth actuation, positive detents, and durable construction.",
-              specs: ["Precision printed accessory", "Reinforced materials", "Smooth actuation", "Positive detents", "Durable construction"] },
-            { name: "Knuckle Dusters (Single)", price: 5, discount: 0, img: "", orders: 6500, type: "Accessory", 
-              bulkPrice: 2, bulkThreshold: 10,
-              desc: "Self-defense knuckle dusters made from reinforced PLA+ with metal particles adding substantial weight for improved impact. Ergonomic finger holes and smooth finish.",
-              specs: ["Reinforced PLA+ construction", "Metal particles for weight", "Ergonomic finger holes", "Reinforced stress points", "Smooth finish"] },
-            { name: "Invisible Switch", price: 80, discount: 0, img: "", orders: 3200, type: "Accessory",
-              desc: "Discreet and reliable invisible switch with carbon fiber reinforcement ensuring longevity. Features low-profile design and positive tactile feedback.",
-              specs: ["Discreet low-profile design", "Carbon fiber reinforcement", "Positive tactile feedback", "Durable construction", "Maximum concealment"] },
-            { name: "Glock 19 Gen 3 Frame (Gold)", price: 100, discount: 0, img: "", orders: 2800, type: "Frame",
-              desc: "Gold-colored Glock 19 Gen 3 frame printed with reinforced PLA+ composite for enhanced durability. Features precise rail dimensions and enhanced grip texture.",
-              specs: ["Gold-colored finish", "Reinforced PLA+ composite", "Precise rail dimensions", "Enhanced grip texture", "Perfect pin alignment"] },
-            { name: "Extended Magazine for Not A Glock .22LR", price: 30, discount: 0, img: "", orders: 4100, type: "Magazine",
-              desc: "High-capacity extended magazine with reinforced feed lips and body for reliable performance. Features anti-tilt follower and enhanced spring tension.",
-              specs: ["High-capacity extended magazine", "Reinforced feed lips", "Anti-tilt follower", "Enhanced spring tension", "Smooth feed angle"] },
-            { name: "Glock 26 Magazine 10 Round", price: 25, discount: 0, img: "", orders: 3900, type: "Magazine",
-              desc: "10-round magazine for Glock 26 printed with reinforced PLA+ for durability and smooth feeding. Features reinforced feed lips and anti-tilt follower design.",
-              specs: ["10-round capacity", "Reinforced PLA+ construction", "Reinforced feed lips", "Anti-tilt follower design", "Smooth body texture"] }
-        ];
-        // Calculate final prices
-        products.forEach(p => { p.finalPrice = p.discount > 0 ? p.price * (1 - p.discount / 100) : p.price; });
+function closeContact() {
+    document.getElementById('contactPopup').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
 
-        // ==================== GLOBAL STATE ====================
-        let cart = []; let activeProduct = null; let currentBitcoinPrice = 65000;
+// Close modals on outside click
+window.onclick = function(event) {
+    if (event.target == modal) hideModal();
+    if (event.target == document.getElementById('navOverlay')) closeMenu();
+    if (event.target == document.getElementById('paymentPopup')) closePaymentPopup();
+    if (event.target == document.getElementById('contactPopup')) closeContact();
+}
 
-        // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', () => { renderProducts(); setupBannerAnimation(); });
-        function setupBannerAnimation() {
-            const m1 = document.getElementById('bannerMessage1'); const m2 = document.getElementById('bannerMessage2');
-            let active = 1; setInterval(() => {
-                if (active === 1) { m1.classList.remove('active'); m2.classList.add('active'); active = 2; }
-                else { m2.classList.remove('active'); m1.classList.add('active'); active = 1; }
-            }, 6000);
-        }
+// Close on ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        hideModal();
+        closeMenu();
+        closeCart();
+        closePaymentPopup();
+        closeContact();
+    }
+});
 
-        // ==================== RENDER PRODUCTS TO PAGE ====================
-        function renderProducts() {
-            const div = document.getElementById('products'); div.innerHTML = '';
-            products.forEach((p, i) => {
-                const hasDiscount = p.discount > 0;
-                const productEl = document.createElement('div'); productEl.className = 'product';
-                productEl.innerHTML = `
-                    ${hasDiscount ? `<div class="sale-badge">${p.discount}% OFF <span class="discount-amount">SAVE $${(p.price - p.finalPrice).toFixed(0)}</span></div>` : ''}
-                    <div class="product-image-container">
-                        <div class="image-placeholder">
-                            <i class="fas fa-cube"></i>
-                            <span>${p.name}</span>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <div><h3>${p.name}</h3><div style="font-size: 12px; color: #4da6ff; margin-bottom: 8px; font-weight: 600;">${p.type}</div>
-                        <div class="prices">${hasDiscount ? `<span class="original-price">$${p.price}</span>` : ''}<span class="${hasDiscount ? 'discounted-price' : 'regular-price'}">$${p.finalPrice.toFixed(0)}</span></div>
-                        ${p.bulkPrice ? `<div style="font-size: 12px; color: var(--text-light); margin-top: 5px;">Bulk: $${p.bulkPrice} ea. (${p.bulkThreshold}+ units)</div>` : ''}
-                        <div class="orders"><i class="fas fa-shopping-cart"></i> ${p.orders.toLocaleString()} orders</div></div>
-                        <button onclick="event.stopPropagation();showProductModal(${i})"><i class="fas fa-eye"></i> View Details</button>
-                    </div>`;
-                productEl.addEventListener('click', () => showProductModal(i)); div.appendChild(productEl);
-            });
-        }
+// Header scroll effect
+let lastScrollTop = 0;
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    const header = document.querySelector('header');
+    const securityBanner = document.querySelector('.security-banner');
+    
+    if (currentScroll > lastScrollTop && currentScroll > 100) {
+        header.style.transform = 'translateY(-100%)';
+        securityBanner.style.transform = 'translateY(-100%)';
+    } else {
+        header.style.transform = 'translateY(0)';
+        securityBanner.style.transform = 'translateY(0)';
+    }
+    
+    lastScrollTop = currentScroll;
+});
 
-        // ==================== PRODUCT MODAL FUNCTIONS ====================
-        function showProductModal(i) {
-            activeProduct = products[i]; const hasDiscount = activeProduct.discount > 0;
-            document.getElementById('modalTitle').textContent = activeProduct.name;
-            document.getElementById('modalDescription').textContent = activeProduct.desc;
-            document.getElementById('placeholderText').textContent = activeProduct.name;
-            
-            const specsList = document.getElementById('modalSpecs'); specsList.innerHTML = '';
-            activeProduct.specs.forEach(s => { 
-                const li = document.createElement('li'); 
-                li.innerHTML = `<i class="fas fa-check" style="color:var(--ok);"></i> ${s}`; 
-                specsList.appendChild(li); 
-            });
-            
-            const mOP = document.getElementById('modalOriginalPrice'); 
-            const mP = document.getElementById('modalPrice'); 
-            const mO = document.getElementById('modalOrders');
-            
-            if (hasDiscount) { 
-                mOP.style.display = 'block'; 
-                mOP.textContent = `$${activeProduct.price}`; 
-                mP.textContent = `$${activeProduct.finalPrice.toFixed(0)}`; 
-                mP.style.color = 'var(--ok)'; 
-            } else { 
-                mOP.style.display = 'none'; 
-                mP.textContent = `$${activeProduct.price}`; 
-                mP.style.color = 'var(--text)'; 
-            }
-            
-            mO.textContent = `${activeProduct.orders.toLocaleString()} orders | ${activeProduct.type}`; 
-            mO.style.color = 'var(--ok)';
-            
-            // Show placeholder and hide image (since we don't have images)
-            document.getElementById('modalPlaceholder').style.display = 'flex';
-            document.getElementById('modalImage').style.display = 'none';
-            
-            document.getElementById('productModal').style.display = 'flex'; 
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function hideModal() { 
-            document.getElementById('productModal').style.display = 'none'; 
-            document.body.style.overflow = 'auto'; 
-        }
+// Initialize Bitcoin price
+updateBitcoinPrice();
 
-        // ==================== CART FUNCTIONS ====================
-        function updateCartCounter() {
-            const count = cart.reduce((s, i) => s + i.quantity, 0); 
-            const c = document.getElementById('cartCounter');
-            c.textContent = count; 
-            c.style.display = count > 0 ? 'flex' : 'none';
-        }
-        
-        function updateCart() {
-            const div = document.getElementById('cartItems'); div.innerHTML = ''; 
-            let total = 0;
-            
-            if (cart.length === 0) { 
-                div.innerHTML = '<p style="text-align:center; color: var(--text-light); padding: 20px;">Your cart is empty.</p>'; 
-            } else { 
-                cart.forEach((it, idx) => {
-                    let itemTotal = it.finalPrice * it.quantity; 
-                    total += itemTotal;
-                    
-                    const ci = document.createElement('div'); ci.className = 'cart-item'; 
-                    ci.innerHTML = `
-                        <div class="cart-item-name">${it.name}</div>
-                        <div class="cart-item-price">$${itemTotal.toFixed(2)}</div>
-                        <div style="display:flex;align-items:center;gap:10px;">
-                            <button onclick="updateQuantity(${idx}, -1)" style="padding:5px 10px;font-size:14px; border-radius:5px; background:rgba(255,255,255,0.1); border:1px solid var(--border); color:white;">-</button>
-                            <span>${it.quantity}</span>
-                            <button onclick="updateQuantity(${idx}, 1)" style="padding:5px 10px;font-size:14px; border-radius:5px; background:rgba(255,255,255,0.1); border:1px solid var(--border); color:white;">+</button>
-                            <button class="remove-item" onclick="removeFromCart(${idx})" style="background:transparent; border:none; color:#ff6b6b; font-size:16px;"><i class="fas fa-trash"></i></button>
-                        </div>`;
-                    div.appendChild(ci);
-                });
-            }
-            
-            document.getElementById('total').textContent = total.toFixed(2);
-            document.getElementById('paymentTotal').textContent = total.toFixed(2);
-            updateBitcoinAmount(total); 
-            updateCartCounter();
-        }
-        
-        function addToCart(p) {
-            const ex = cart.find(i => i.name === p.name);
-            if (ex) ex.quantity += 1; 
-            else cart.push({...p, quantity: 1});
-            updateCart(); 
-            showToast(`Added ${p.name} to cart`);
-        }
-        
-        function addToCartFromModal() { 
-            if (activeProduct) { 
-                addToCart(activeProduct); 
-                hideModal(); 
-            } 
-        }
-        
-        function updateQuantity(i, ch) { 
-            cart[i].quantity += ch; 
-            if (cart[i].quantity <= 0) cart.splice(i, 1); 
-            updateCart(); 
-        }
-        
-        function removeFromCart(i) { 
-            const n = cart[i].name; 
-            cart.splice(i, 1); 
-            updateCart(); 
-            showToast(`Removed ${n} from cart`); 
-        }
+// Auto-refresh Bitcoin price every 60 seconds
+setInterval(updateBitcoinPrice, 60000);
 
-        // ==================== PAYMENT FUNCTIONS ====================
-        async function updateBitcoinPrice() {
-            try {
-                const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-                const d = await r.json(); 
-                currentBitcoinPrice = d.bitcoin.usd;
-                document.getElementById('btcPrice').textContent = currentBitcoinPrice.toLocaleString();
-                const t = parseFloat(document.getElementById('paymentTotal').textContent); 
-                updateBitcoinAmount(t);
-                showToast('Bitcoin exchange rate updated');
-            } catch(e) { 
-                console.error(e); 
-                document.getElementById('btcPrice').textContent = currentBitcoinPrice.toLocaleString(); 
-                showToast('Using default Bitcoin rate', 'warning'); 
-            }
-        }
-        
-        function updateBitcoinAmount(t) {
-            if (t > 0 && currentBitcoinPrice > 0) 
-                document.getElementById('btcAmount').textContent = (t / currentBitcoinPrice).toFixed(8);
-            else 
-                document.getElementById('btcAmount').textContent = '0.000000';
-        }
-        
-        function showPaymentPopup() {
-            if (cart.length === 0) { 
-                showToast('Your cart is empty', 'warning'); 
-                return; 
-            }
-            closeCart(); 
-            document.getElementById('paymentPopup').style.display = 'flex'; 
-            document.body.style.overflow = 'hidden'; 
-            updateBitcoinPrice();
-        }
-        
-        function closePaymentPopup() { 
-            document.getElementById('paymentPopup').style.display = 'none'; 
-            document.body.style.overflow = 'auto'; 
-        }
-        
-        function copyAddress() {
-            navigator.clipboard.writeText(document.getElementById('paymentAddress').textContent).then(() => { 
-                showToast('Bitcoin address copied to clipboard'); 
-            });
-        }
-
-        // ==================== UI HELPER FUNCTIONS ====================
-        function openMenu() { 
-            showToast('Menu functionality can be expanded'); 
-        } 
-        
-        function closeMenu() { }
-        
-        function scrollToShop() { 
-            document.getElementById('shop').scrollIntoView({ behavior: 'smooth' }); 
-            closeMenu(); 
-        }
-        
-        function showCart() { 
-            closeMenu(); 
-            document.getElementById('cartPopup').style.display = 'block'; 
-        }
-        
-        function closeCart() { 
-            document.getElementById('cartPopup').style.display = 'none'; 
-        }
-        
-        function showContact() { 
-            closeMenu(); 
-            document.getElementById('contactPopup').style.display = 'flex'; 
-            document.body.style.overflow = 'hidden'; 
-        }
-        
-        function closeContact() { 
-            document.getElementById('contactPopup').style.display = 'none'; 
-            document.body.style.overflow = 'auto'; 
-        }
-        
-        function showShippingInfo() { 
-            closeMenu(); 
-            document.getElementById('shippingPopup').style.display = 'flex'; 
-            document.body.style.overflow = 'hidden'; 
-        }
-        
-        function closeShippingInfo() { 
-            document.getElementById('shippingPopup').style.display = 'none'; 
-            document.body.style.overflow = 'auto'; 
-        }
-        
-        function showMaterials() { 
-            closeMenu(); 
-            document.querySelector('.materials').scrollIntoView({ behavior: 'smooth' }); 
-        }
-        
-        function copyEmail() { 
-            navigator.clipboard.writeText('cojacob230@gmail.com').then(() => { 
-                showToast('Email address copied to clipboard'); 
-            }); 
-        }
-        
-        function showToast(msg, typ = 'success') {
-            const t = document.getElementById('toast'); t.textContent = msg; t.className = 'toast';
-            if (typ === 'success') { 
-                t.style.background = 'var(--ok)'; 
-                t.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`; 
-            } else if (typ === 'warning') { 
-                t.style.background = 'var(--warning)'; 
-                t.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${msg}`; 
-            }
-            t.classList.add('show'); 
-            setTimeout(() => { t.classList.remove('show'); }, 3000);
-        }
-        
-        // Close modals on ESC and outside click
-        document.addEventListener('keydown', (e) => { 
-            if (e.key === 'Escape') { 
-                hideModal(); 
-                closeCart(); 
-                closePaymentPopup(); 
-                closeContact(); 
-                closeShippingInfo(); 
-            } 
-        });
-        
-        window.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal')) hideModal();
-            if (e.target.id === 'paymentPopup') closePaymentPopup();
-            if (e.target.id === 'contactPopup') closeContact();
-            if (e.target.id === 'shippingPopup') closeShippingInfo();
-        });
-        
-        // Auto-refresh Bitcoin price every 2 minutes
-        setInterval(updateBitcoinPrice, 120000);
-        
-        // Initialize Bitcoin price on load
-        updateBitcoinPrice();
-    </script>
+// Initial render
+renderProducts();
+</script>
 </body>
 </html>
