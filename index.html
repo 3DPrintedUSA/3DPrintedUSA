@@ -933,7 +933,7 @@ button:hover {
 
 .secondary-btn:hover {
     background: var(--accent);
-    color: #000;
+    color: #fff;
 }
 
 /* ==================== CART & MODALS ==================== */
@@ -941,7 +941,7 @@ button:hover {
     display: none;
     position: fixed;
     right: 24px;
-    top: 100px;
+    top: 120px;
     width: 400px;
     max-height: 80vh;
     background: var(--panel);
@@ -1342,6 +1342,31 @@ footer {
     line-height: 1.8;
 }
 
+/* ==================== TOAST NOTIFICATION ==================== */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--ok);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 3000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
 /* ==================== RESPONSIVE DESIGN ==================== */
 @media (max-width: 768px) {
     .container {
@@ -1415,7 +1440,7 @@ footer {
         width: 90%;
         right: 5%;
         left: 5%;
-        top: 90px;
+        top: 100px;
     }
     
     .payment-container {
@@ -1425,19 +1450,6 @@ footer {
     
     .disclaimer-content {
         padding: 24px;
-    }
-    
-    .overlay-content a {
-        width: 250px;
-        font-size: 20px;
-        padding: 12px 20px;
-    }
-    
-    .close-overlay {
-        top: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
     }
 }
 
@@ -1540,7 +1552,7 @@ footer {
         <div class="header-right">
             <button class="cart-btn" onclick="showCart()" aria-label="Shopping Cart">
                 <i class="fas fa-shopping-cart"></i>
-                <span id="cartCounter" class="cart-count" style="display:none">0</span>
+                <span id="cartCounter" class="cart-count">0</span>
             </button>
             <button class="hamburger" onclick="openMenu()" aria-label="Menu">
                 <i class="fas fa-bars"></i>
@@ -1548,6 +1560,17 @@ footer {
         </div>
     </div>
 </header>
+
+<!-- Navigation Overlay -->
+<div id="navOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;">
+    <button class="close" onclick="closeMenu()" style="position:absolute;top:40px;right:40px;width:60px;height:60px;">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="#shop" onclick="closeMenu();scrollToShop()" style="color:white;font-size:28px;text-decoration:none;padding:15px 30px;border:2px solid var(--accent);border-radius:30px;transition:all 0.3s;">Shop</a>
+    <a href="#why-bitcoin" onclick="closeMenu();scrollToWhyBitcoin()" style="color:white;font-size:28px;text-decoration:none;padding:15px 30px;border:2px solid var(--accent);border-radius:30px;transition:all 0.3s;">Why Bitcoin</a>
+    <a href="#faq" onclick="closeMenu();document.getElementById('faq').scrollIntoView({behavior:'smooth'})" style="color:white;font-size:28px;text-decoration:none;padding:15px 30px;border:2px solid var(--accent);border-radius:30px;transition:all 0.3s;">FAQ</a>
+    <a href="#disclaimer" onclick="closeMenu();document.getElementById('disclaimer').scrollIntoView({behavior:'smooth'})" style="color:white;font-size:28px;text-decoration:none;padding:15px 30px;border:2px solid var(--accent);border-radius:30px;transition:all 0.3s;">Legal Info</a>
+</div>
 
 <!-- Shop Preview Section -->
 <section class="shop-preview" id="shop-preview">
@@ -1993,8 +2016,11 @@ footer {
     </div>
 </div>
 
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
 <script>
-// Clean product data - fixed all product names
+// Clean product data
 const products = [
     // KITS
     {
@@ -2163,6 +2189,7 @@ let currentBitcoinPrice = 65000;
 let currentBannerIndex = 0;
 const bannerItems = document.querySelectorAll('.banner-item');
 let faqStates = Array(8).fill(false); // 8 FAQ items
+let securityRemoved = {};
 
 // DOM elements
 const previewProductsDiv = document.getElementById('previewProducts');
@@ -2172,6 +2199,7 @@ const cartItems = document.getElementById('cartItems');
 const totalElement = document.getElementById('total');
 const paymentTotal = document.getElementById('paymentTotal');
 const btcAmount = document.getElementById('btcAmount');
+const toast = document.getElementById('toast');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -2190,11 +2218,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 80,
+                    top: targetElement.offsetTop - 120,
                     behavior: 'smooth'
                 });
             }
         });
+    });
+    
+    // Close cart when clicking outside
+    document.addEventListener('click', (e) => {
+        const cartPopup = document.getElementById('cartPopup');
+        if (cartPopup.style.display === 'block' && 
+            !cartPopup.contains(e.target) && 
+            !e.target.closest('.cart-btn')) {
+            closeCart();
+        }
     });
 });
 
@@ -2319,13 +2357,17 @@ function updateQuantity(index, change) {
 }
 
 function removeFromCart(index) {
+    const item = cart[index];
+    if (item.isSecurityPackage && item.linkedProduct) {
+        securityRemoved[item.linkedProduct] = true;
+    }
     cart.splice(index, 1);
     updateCart();
     showToast('Item removed from cart');
 }
 
-function addToCart(product) {
-    const existingItem = cart.find(item => item.name === product.name);
+function addToCart(product, addSecurity = true) {
+    const existingItem = cart.find(item => item.name === product.name && !item.isSecurityPackage);
     
     if (existingItem) {
         existingItem.quantity += 1;
@@ -2336,14 +2378,19 @@ function addToCart(product) {
         });
     }
     
-    // Add security package automatically
-    const hasSecurityPackage = cart.some(item => item.isSecurityPackage);
-    if (!hasSecurityPackage && !product.isSecurityPackage) {
-        cart.push({
-            ...securityPackage,
-            quantity: 1,
-            linkedProduct: product.name
-        });
+    // Add security package if not removed for this product
+    if (addSecurity && !product.isSecurityPackage && !securityRemoved[product.name]) {
+        const hasSecurityPackage = cart.some(item => 
+            item.isSecurityPackage && item.linkedProduct === product.name
+        );
+        
+        if (!hasSecurityPackage) {
+            cart.push({
+                ...securityPackage,
+                quantity: 1,
+                linkedProduct: product.name
+            });
+        }
     }
     
     updateCart();
@@ -2356,8 +2403,6 @@ function renderPreviewProducts() {
     
     // Show first 4 products as preview
     products.slice(0, 4).forEach((product, index) => {
-        const hasDiscount = product.discount > 0;
-        
         const productElement = document.createElement('div');
         productElement.className = 'preview-product';
         productElement.innerHTML = `
@@ -2387,6 +2432,7 @@ function renderProducts() {
     products.forEach((product, index) => {
         const hasDiscount = product.discount > 0;
         const discountAmount = product.price - product.finalPrice;
+        const hasSecurityRemoved = securityRemoved[product.name];
         
         const productElement = document.createElement('div');
         productElement.className = 'product';
@@ -2416,19 +2462,21 @@ function renderProducts() {
                         <i class="fas fa-shopping-cart"></i>
                         ${product.orders.toLocaleString()} orders
                     </div>
-                    <div class="security-package">
+                    ${!hasSecurityRemoved ? `
+                    <div class="security-package" id="security-${index}">
                         <div class="security-package-header">
                             <h4><i class="fas fa-shield-alt"></i> Security Package</h4>
-                            <button class="remove-security" onclick="event.stopPropagation();removeSecurityPackage(this)">
+                            <button class="remove-security" onclick="event.stopPropagation();removeSecurityPackage('${product.name}', ${index})">
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>
                         <p>100% insurance against theft, loss, or damage. $50 provides complete peace of mind with immediate replacement if anything happens.</p>
                     </div>
+                    ` : ''}
                 </div>
-                <button onclick="event.stopPropagation();addToCartFromProduct(${index})">
+                <button onclick="event.stopPropagation();addToCartFromProduct(${index}, ${!hasSecurityRemoved})">
                     <i class="fas fa-cart-plus"></i>
-                    Add to Cart (+$50 Security)
+                    Add to Cart${!hasSecurityRemoved ? ' (+$50 Security)' : ''}
                 </button>
             </div>
         `;
@@ -2438,25 +2486,38 @@ function renderProducts() {
     });
 }
 
-function addToCartFromProduct(index) {
-    addToCart(products[index]);
+function addToCartFromProduct(index, addSecurity = true) {
+    addToCart(products[index], addSecurity);
 }
 
-function removeSecurityPackage(button) {
-    const productCard = button.closest('.product');
-    const securityPackage = productCard.querySelector('.security-package');
-    securityPackage.style.display = 'none';
-    showToast('Security package removed from this product');
+function removeSecurityPackage(productName, index) {
+    event.stopPropagation();
+    securityRemoved[productName] = true;
+    const securityElement = document.getElementById(`security-${index}`);
+    if (securityElement) {
+        securityElement.style.display = 'none';
+    }
+    
+    // Remove existing security package from cart for this product
+    const cartIndex = cart.findIndex(item => 
+        item.isSecurityPackage && item.linkedProduct === productName
+    );
+    if (cartIndex !== -1) {
+        cart.splice(cartIndex, 1);
+        updateCart();
+    }
+    
+    showToast('Security package removed');
 }
 
 // Modal functions
 let modal = null;
-let toastEl = null;
 
 function showProductModal(index) {
     activeProduct = products[index];
     const hasDiscount = activeProduct.discount > 0;
     const discountAmount = activeProduct.price - activeProduct.finalPrice;
+    const hasSecurityRemoved = securityRemoved[activeProduct.name];
     
     if (document.getElementById('modal')) {
         document.getElementById('modal').remove();
@@ -2491,19 +2552,21 @@ function showProductModal(index) {
                 </span>
             </div>
             
+            ${!hasSecurityRemoved ? `
             <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:12px;padding:16px;margin:20px 0;text-align:left;">
                 <h4 style="color:var(--ok);margin-bottom:8px;display:flex;align-items:center;gap:8px;"><i class="fas fa-shield-alt"></i> Includes Security Package</h4>
                 <p style="color:var(--text-light);font-size:14px;margin-bottom:8px;">+$50 for 100% insurance against theft, loss, or damage. You can remove this during checkout if preferred.</p>
             </div>
+            ` : ''}
             
             <p class='orders' style='color:var(--ok);margin-bottom:20px;'>
                 <i class="fas fa-shopping-cart"></i>
                 <span id='mOrders'>${activeProduct.orders.toLocaleString()}</span> orders
             </p>
             
-            <button onclick='addFromModal()' style='width:100%;padding:16px;font-size:16px;'>
+            <button onclick='addFromModal(${!hasSecurityRemoved})' style='width:100%;padding:16px;font-size:16px;'>
                 <i class="fas fa-cart-plus"></i>
-                Add to Cart (+$50 Security)
+                Add to Cart${!hasSecurityRemoved ? ' (+$50 Security)' : ''}
             </button>
         </div>
     `;
@@ -2519,28 +2582,20 @@ function hideModal() {
     document.body.style.overflow = 'auto';
 }
 
-function addFromModal() {
+function addFromModal(addSecurity = true) {
     if (activeProduct) {
-        addToCart(activeProduct);
+        addToCart(activeProduct, addSecurity);
         hideModal();
     }
 }
 
 // Toast notification
 function showToast(message) {
-    if (!toastEl) {
-        toastEl = document.createElement('div');
-        toastEl.className = 'toast';
-        document.body.appendChild(toastEl);
-    }
-    
-    toastEl.innerHTML = '<i class="fas fa-check-circle"></i> ' + message;
-    toastEl.style.transform = 'translateY(0)';
-    toastEl.style.opacity = '1';
+    toast.innerHTML = '<i class="fas fa-check-circle"></i> ' + message;
+    toast.classList.add('show');
     
     setTimeout(() => {
-        toastEl.style.transform = 'translateY(100px)';
-        toastEl.style.opacity = '0';
+        toast.classList.remove('show');
     }, 3000);
 }
 
