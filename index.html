@@ -196,6 +196,67 @@ header {
     border: 2px solid var(--bg);
 }
 
+/* ==================== NAVIGATION OVERLAY ==================== */
+.nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.nav-overlay.active {
+    display: flex;
+}
+
+.nav-overlay .close {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-overlay .close:hover {
+    background: var(--accent);
+    transform: rotate(90deg);
+}
+
+.nav-overlay a {
+    color: white;
+    font-size: 28px;
+    text-decoration: none;
+    padding: 15px 30px;
+    border: 2px solid var(--accent);
+    border-radius: 30px;
+    transition: all 0.3s;
+    width: 300px;
+    text-align: center;
+}
+
+.nav-overlay a:hover {
+    background: var(--accent);
+    color: #000;
+    transform: translateY(-3px);
+}
+
 /* ==================== HOT ITEMS / SHOP PREVIEW ==================== */
 .shop-preview {
     padding: 100px 0 60px;
@@ -712,51 +773,6 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-.security-package {
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: 12px;
-    padding: 16px;
-    margin: 16px 0;
-    text-align: left;
-    position: relative;
-}
-
-.security-package-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.security-package h4 {
-    color: var(--ok);
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.remove-security {
-    background: var(--danger);
-    border: none;
-    color: white;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.security-package p {
-    color: var(--text-light);
-    font-size: 14px;
-    line-height: 1.5;
 }
 
 /* ==================== FAQ SECTION ==================== */
@@ -1451,6 +1467,19 @@ footer {
     .disclaimer-content {
         padding: 24px;
     }
+    
+    .nav-overlay a {
+        font-size: 24px;
+        width: 250px;
+        padding: 12px 20px;
+    }
+    
+    .nav-overlay .close {
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1562,14 +1591,14 @@ footer {
 </header>
 
 <!-- Navigation Overlay -->
-<div id="navOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;">
-    <button class="close" onclick="closeMenu()" style="position:absolute;top:40px;right:40px;width:60px;height:60px;">
+<div id="navOverlay" class="nav-overlay">
+    <button class="close" onclick="closeMenu()" aria-label="Close menu">
         <i class="fas fa-times"></i>
     </button>
-    <a href="#shop" onclick="closeMenu();scrollToShop()" style="color:white;font-size:28px;text-decoration:none;padding:15px 30px;border:2px solid var(--accent);border-radius:30px;transition:all 0.3s;">Shop</a>
-    <a href="#why-bitcoin" onclick="closeMenu();scrollToWhyBitcoin()" style="color:white;font-size:28px;text-decoration:none;padding:15px 30px;border:2px solid var(--accent);border-radius:30px;transition:all 0.3s;">Why Bitcoin</a>
-    <a href="#faq" onclick="closeMenu();document.getElementById('faq').scrollIntoView({behavior:'smooth'})" style="color:white;font-size:28px;text-decoration:none;padding:15px 30px;border:2px solid var(--accent);border-radius:30px;transition:all 0.3s;">FAQ</a>
-    <a href="#disclaimer" onclick="closeMenu();document.getElementById('disclaimer').scrollIntoView({behavior:'smooth'})" style="color:white;font-size:28px;text-decoration:none;padding:15px 30px;border:2px solid var(--accent);border-radius:30px;transition:all 0.3s;">Legal Info</a>
+    <a href="#shop" onclick="closeMenu();scrollToShop()">Shop</a>
+    <a href="#why-bitcoin" onclick="closeMenu();scrollToWhyBitcoin()">Why Bitcoin</a>
+    <a href="#faq" onclick="closeMenu();scrollToSection('faq')">FAQ</a>
+    <a href="#disclaimer" onclick="closeMenu();scrollToSection('disclaimer')">Legal Info</a>
 </div>
 
 <!-- Shop Preview Section -->
@@ -2020,7 +2049,7 @@ footer {
 <div class="toast" id="toast"></div>
 
 <script>
-// Clean product data
+// Clean product data - CORRECTED: geen rare tekens
 const products = [
     // KITS
     {
@@ -2189,7 +2218,6 @@ let currentBitcoinPrice = 65000;
 let currentBannerIndex = 0;
 const bannerItems = document.querySelectorAll('.banner-item');
 let faqStates = Array(8).fill(false); // 8 FAQ items
-let securityRemoved = {};
 
 // DOM elements
 const previewProductsDiv = document.getElementById('previewProducts');
@@ -2200,6 +2228,7 @@ const totalElement = document.getElementById('total');
 const paymentTotal = document.getElementById('paymentTotal');
 const btcAmount = document.getElementById('btcAmount');
 const toast = document.getElementById('toast');
+const navOverlay = document.getElementById('navOverlay');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -2208,6 +2237,9 @@ document.addEventListener('DOMContentLoaded', () => {
     updateBitcoinPrice();
     updateCartCounter();
     startBannerAnimation();
+    
+    // Ensure menu is closed on page load
+    closeMenu();
     
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2272,12 +2304,12 @@ function toggleFAQ(index) {
 
 // Navigation functions
 function openMenu() {
-    document.getElementById('navOverlay').style.display = 'flex';
+    navOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
 function closeMenu() {
-    document.getElementById('navOverlay').style.display = 'none';
+    navOverlay.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
 
@@ -2288,6 +2320,11 @@ function scrollToShop() {
 
 function scrollToWhyBitcoin() {
     document.getElementById('why-bitcoin').scrollIntoView({ behavior: 'smooth' });
+    closeMenu();
+}
+
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
     closeMenu();
 }
 
@@ -2357,10 +2394,6 @@ function updateQuantity(index, change) {
 }
 
 function removeFromCart(index) {
-    const item = cart[index];
-    if (item.isSecurityPackage && item.linkedProduct) {
-        securityRemoved[item.linkedProduct] = true;
-    }
     cart.splice(index, 1);
     updateCart();
     showToast('Item removed from cart');
@@ -2378,8 +2411,8 @@ function addToCart(product, addSecurity = true) {
         });
     }
     
-    // Add security package if not removed for this product
-    if (addSecurity && !product.isSecurityPackage && !securityRemoved[product.name]) {
+    // Add security package automatically (nu gewoon standaard toevoegen)
+    if (!product.isSecurityPackage && addSecurity) {
         const hasSecurityPackage = cart.some(item => 
             item.isSecurityPackage && item.linkedProduct === product.name
         );
@@ -2397,7 +2430,7 @@ function addToCart(product, addSecurity = true) {
     showToast('Added to cart');
 }
 
-// Product rendering
+// Product rendering - GECORRIGEERD: geen rare tekens
 function renderPreviewProducts() {
     previewProductsDiv.innerHTML = '';
     
@@ -2407,7 +2440,7 @@ function renderPreviewProducts() {
         productElement.className = 'preview-product';
         productElement.innerHTML = `
             <img src="${product.img}" class="preview-product-image" alt="${product.name}" 
-                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"260\" height=\"180\"><rect width=\"100%\" height=\"100%\" fill=\"%231e293b\"/><text x=\"50%\" y=\"50%\" font-family=\"Inter\" font-size=\"14\" fill=\"%23f8fafc\" text-anchor=\"middle\" dy=\".3em\">${product.name}</text></svg>'">
+                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"260\" height=\"180\"><rect width=\"100%\" height=\"100%\" fill=\"%231e293b\"/></svg>'">
             
             <h3>${product.name}</h3>
             <div class="preview-price">$${product.finalPrice.toFixed(2)}</div>
@@ -2432,7 +2465,6 @@ function renderProducts() {
     products.forEach((product, index) => {
         const hasDiscount = product.discount > 0;
         const discountAmount = product.price - product.finalPrice;
-        const hasSecurityRemoved = securityRemoved[product.name];
         
         const productElement = document.createElement('div');
         productElement.className = 'product';
@@ -2445,7 +2477,7 @@ function renderProducts() {
             ` : ''}
             
             <img src="${product.img}" class="product-image" alt="${product.name}" 
-                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"300\" height=\"200\"><rect width=\"100%\" height=\"100%\" fill=\"%231e293b\"/><text x=\"50%\" y=\"50%\" font-family=\"Inter\" font-size=\"14\" fill=\"%23f8fafc\" text-anchor=\"middle\" dy=\".3em\">${product.name}</text></svg>'">
+                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"300\" height=\"200\"><rect width=\"100%\" height=\"100%\" fill=\"%231e293b\"/></svg>'">
             
             <div class="product-content">
                 <div>
@@ -2462,21 +2494,10 @@ function renderProducts() {
                         <i class="fas fa-shopping-cart"></i>
                         ${product.orders.toLocaleString()} orders
                     </div>
-                    ${!hasSecurityRemoved ? `
-                    <div class="security-package" id="security-${index}">
-                        <div class="security-package-header">
-                            <h4><i class="fas fa-shield-alt"></i> Security Package</h4>
-                            <button class="remove-security" onclick="event.stopPropagation();removeSecurityPackage('${product.name}', ${index})">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <p>100% insurance against theft, loss, or damage. $50 provides complete peace of mind with immediate replacement if anything happens.</p>
-                    </div>
-                    ` : ''}
                 </div>
-                <button onclick="event.stopPropagation();addToCartFromProduct(${index}, ${!hasSecurityRemoved})">
+                <button onclick="event.stopPropagation();addToCartFromProduct(${index})">
                     <i class="fas fa-cart-plus"></i>
-                    Add to Cart${!hasSecurityRemoved ? ' (+$50 Security)' : ''}
+                    Add to Cart
                 </button>
             </div>
         `;
@@ -2486,28 +2507,8 @@ function renderProducts() {
     });
 }
 
-function addToCartFromProduct(index, addSecurity = true) {
-    addToCart(products[index], addSecurity);
-}
-
-function removeSecurityPackage(productName, index) {
-    event.stopPropagation();
-    securityRemoved[productName] = true;
-    const securityElement = document.getElementById(`security-${index}`);
-    if (securityElement) {
-        securityElement.style.display = 'none';
-    }
-    
-    // Remove existing security package from cart for this product
-    const cartIndex = cart.findIndex(item => 
-        item.isSecurityPackage && item.linkedProduct === productName
-    );
-    if (cartIndex !== -1) {
-        cart.splice(cartIndex, 1);
-        updateCart();
-    }
-    
-    showToast('Security package removed');
+function addToCartFromProduct(index) {
+    addToCart(products[index], true); // Security package wordt automatisch toegevoegd
 }
 
 // Modal functions
@@ -2517,7 +2518,6 @@ function showProductModal(index) {
     activeProduct = products[index];
     const hasDiscount = activeProduct.discount > 0;
     const discountAmount = activeProduct.price - activeProduct.finalPrice;
-    const hasSecurityRemoved = securityRemoved[activeProduct.name];
     
     if (document.getElementById('modal')) {
         document.getElementById('modal').remove();
@@ -2538,7 +2538,7 @@ function showProductModal(index) {
             
             <img id='mImg' style='width:100%;height:250px;object-fit:contain;border-radius:16px;margin-bottom:20px;background:rgba(255,255,255,0.05);padding:15px;' 
                  src="${activeProduct.img}" 
-                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"500\" height=\"250\"><rect width=\"100%\" height=\"100%\" fill=\"%231e293b\"/><text x=\"50%\" y=\"50%\" font-family=\"Inter\" font-size=\"16\" fill=\"%23f8fafc\" text-anchor=\"middle\" dy=\".3em\">${activeProduct.name}</text></svg>'">
+                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"500\" height=\"250\"><rect width=\"100%\" height=\"100%\" fill=\"%231e293b\"/></svg>'">
             
             <h3 id='mName' style='margin-bottom:15px;font-size:22px;'>${activeProduct.name}</h3>
             <p id='mDesc' style='text-align:left;font-size:15px;line-height:1.6;margin:15px 0;color:var(--text-light);'>${activeProduct.desc}</p>
@@ -2552,21 +2552,14 @@ function showProductModal(index) {
                 </span>
             </div>
             
-            ${!hasSecurityRemoved ? `
-            <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:12px;padding:16px;margin:20px 0;text-align:left;">
-                <h4 style="color:var(--ok);margin-bottom:8px;display:flex;align-items:center;gap:8px;"><i class="fas fa-shield-alt"></i> Includes Security Package</h4>
-                <p style="color:var(--text-light);font-size:14px;margin-bottom:8px;">+$50 for 100% insurance against theft, loss, or damage. You can remove this during checkout if preferred.</p>
-            </div>
-            ` : ''}
-            
             <p class='orders' style='color:var(--ok);margin-bottom:20px;'>
                 <i class="fas fa-shopping-cart"></i>
                 <span id='mOrders'>${activeProduct.orders.toLocaleString()}</span> orders
             </p>
             
-            <button onclick='addFromModal(${!hasSecurityRemoved})' style='width:100%;padding:16px;font-size:16px;'>
+            <button onclick='addFromModal()' style='width:100%;padding:16px;font-size:16px;'>
                 <i class="fas fa-cart-plus"></i>
-                Add to Cart${!hasSecurityRemoved ? ' (+$50 Security)' : ''}
+                Add to Cart
             </button>
         </div>
     `;
@@ -2582,9 +2575,9 @@ function hideModal() {
     document.body.style.overflow = 'auto';
 }
 
-function addFromModal(addSecurity = true) {
+function addFromModal() {
     if (activeProduct) {
-        addToCart(activeProduct, addSecurity);
+        addToCart(activeProduct, true); // Security package wordt automatisch toegevoegd
         hideModal();
     }
 }
@@ -2695,7 +2688,6 @@ function closeContact() {
 // Close modals on outside click
 window.onclick = function(event) {
     if (modal && event.target == modal) hideModal();
-    if (event.target == document.getElementById('navOverlay')) closeMenu();
     if (event.target == document.getElementById('paymentPopup')) closePaymentPopup();
     if (event.target == document.getElementById('contactPopup')) closeContact();
 }
