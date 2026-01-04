@@ -1,2612 +1,2228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3DPrintedUSA – Premium 3D Printed Products</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root {
-    --bg: #0a0a0a;
-    --panel: #151515;
-    --panel-light: #1e1e1e;
-    --border: #2a2a2a;
-    --accent: #6366f1;
-    --accent-dark: #4f46e5;
-    --accent-light: #818cf8;
-    --gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
-    --danger: #ef4444;
-    --success: #10b981;
-    --warning: #f59e0b;
-    --shadow: rgba(0, 0, 0, 0.5);
-    --text: #ffffff;
-    --text-light: #d1d5db;
-    --text-muted: #9ca3af;
-    --glass: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 24px;
-    width: 100%;
-}
-
-/* ==================== CUSTOM SCROLLBAR ==================== */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--panel);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--accent);
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-light);
-}
-
-/* ==================== SECURITY BANNER ==================== */
-.security-banner {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 48px;
-    background: linear-gradient(90deg, #1e1b4b, #312e81, #4f46e5);
-    z-index: 1000;
-    overflow: hidden;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-}
-
-.banner-track {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.banner-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    font-weight: 600;
-    font-size: 15px;
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: all 0.5s ease;
-    background: linear-gradient(90deg, #1e1b4b, #312e81);
-}
-
-.banner-item.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.banner-item i {
-    font-size: 18px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-/* ==================== HEADER ==================== */
-header {
-    position: sticky;
-    top: 48px;
-    background: rgba(15, 15, 15, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    z-index: 900;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 90px;
-    padding: 0 32px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    text-decoration: none;
-}
-
-.logo-icon {
-    width: 48px;
-    height: 48px;
-    background: var(--gradient);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: white;
-}
-
-.logo-text {
-    font-size: 28px;
-    font-weight: 800;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.5px;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.cart-btn, .menu-btn {
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    color: var(--text);
-    font-size: 22px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-}
-
-.cart-btn:hover, .menu-btn:hover {
-    background: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
-    border-color: var(--accent);
-}
-
-.cart-count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: linear-gradient(135deg, var(--danger), #ef4444);
-    color: white;
-    font-size: 13px;
-    font-weight: 800;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--bg);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-}
-
-/* ==================== NAVIGATION OVERLAY ==================== */
-.nav-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 1003;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    backdrop-filter: blur(10px);
-}
-
-.nav-overlay.active {
-    display: flex;
-}
-
-.nav-close {
-    position: absolute;
-    top: 40px;
-    right: 40px;
-    width: 60px;
-    height: 60px;
-    font-size: 28px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--border);
-    color: var(--text);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.nav-close:hover {
-    background: var(--accent);
-    transform: rotate(90deg);
-}
-
-.nav-overlay a {
-    color: white;
-    font-size: 28px;
-    text-decoration: none;
-    padding: 20px 40px;
-    border: 2px solid var(--accent);
-    border-radius: 30px;
-    transition: all 0.3s;
-    width: 350px;
-    text-align: center;
-    font-weight: 600;
-}
-
-.nav-overlay a:hover {
-    background: var(--accent);
-    color: #000;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-}
-
-/* ==================== HERO SECTION ==================== */
-.hero {
-    padding: 160px 0 120px;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-}
-
-.hero-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 32px;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-}
-
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(99, 102, 241, 0.1);
-    border: 1px solid rgba(99, 102, 241, 0.2);
-    padding: 12px 24px;
-    border-radius: 50px;
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 40px;
-    backdrop-filter: blur(10px);
-}
-
-.hero-badge i {
-    color: var(--accent);
-    font-size: 18px;
-}
-
-.hero h1 {
-    font-size: 72px;
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 24px;
-    background: linear-gradient(to right, #ffffff, #a5b4fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -1px;
-}
-
-.hero-subtitle {
-    font-size: 22px;
-    color: var(--text-light);
-    max-width: 800px;
-    margin: 0 auto 48px;
-    line-height: 1.6;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    max-width: 800px;
-    margin: 0 auto 60px;
-}
-
-.stat-item {
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 32px 24px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-}
-
-.stat-item:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent);
-    box-shadow: 0 16px 32px rgba(99, 102, 241, 0.1);
-}
-
-.stat-number {
-    font-size: 48px;
-    font-weight: 800;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
-}
-
-.stat-label {
-    color: var(--text-light);
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-/* ==================== PRODUCTS SECTION ==================== */
-.products-section {
-    padding: 100px 0;
-    position: relative;
-}
-
-.section-header {
-    text-align: center;
-    max-width: 1200px;
-    margin: 0 auto 60px;
-    padding: 0 32px;
-}
-
-.section-badge {
-    display: inline-block;
-    background: rgba(99, 102, 241, 0.1);
-    color: var(--accent);
-    font-size: 14px;
-    font-weight: 700;
-    padding: 8px 20px;
-    border-radius: 50px;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-.section-header h2 {
-    font-size: 56px;
-    font-weight: 800;
-    margin-bottom: 20px;
-    background: linear-gradient(to right, #ffffff, #a5b4fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.section-header p {
-    font-size: 20px;
-    color: var(--text-light);
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-}
-
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    gap: 32px;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 32px;
-}
-
-.product-card {
-    background: var(--panel);
-    border-radius: 24px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.product-card:hover {
-    transform: translateY(-12px);
-    border-color: var(--accent);
-    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.3);
-}
-
-.product-badge {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    color: white;
-    padding: 8px 20px;
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 800;
-    z-index: 2;
-    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.product-image {
-    width: 100%;
-    height: 280px;
-    object-fit: contain;
-    background: linear-gradient(45deg, #151515, #1a1a1a);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-}
-
-.product-image img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-}
-
-.product-card:hover .product-image img {
-    transform: scale(1.05);
-}
-
-.product-content {
-    padding: 32px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.product-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-}
-
-.product-title {
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.3;
-    color: var(--text);
-    flex: 1;
-    margin-right: 16px;
-}
-
-.product-price {
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--success);
-    background: linear-gradient(135deg, var(--success), #10b981);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    white-space: nowrap;
-}
-
-.product-description {
-    color: var(--text-light);
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 24px;
-    flex: 1;
-}
-
-.product-meta {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 24px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--border);
-}
-
-.product-orders {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-muted);
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.product-orders i {
-    color: var(--accent);
-}
-
-.product-rating {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    color: #fbbf24;
-}
-
-.security-badge {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 24px;
-}
-
-.security-badge i {
-    color: var(--success);
-    font-size: 20px;
-}
-
-.security-badge span {
-    color: var(--text-light);
-    font-size: 14px;
-    font-weight: 500;
-    flex: 1;
-}
-
-.security-badge strong {
-    color: var(--success);
-    font-weight: 700;
-}
-
-.product-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: auto;
-}
-
-.btn-primary, .btn-secondary {
-    flex: 1;
-    padding: 20px 24px;
-    border-radius: 16px;
-    font-size: 16px;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    min-height: 60px;
-}
-
-.btn-primary {
-    background: var(--gradient);
-    color: white;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.6s;
-}
-
-.btn-primary:hover::before {
-    left: 100%;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 32px rgba(99, 102, 241, 0.3);
-}
-
-.btn-secondary {
-    background: transparent;
-    border: 2px solid var(--accent);
-    color: var(--accent);
-}
-
-.btn-secondary:hover {
-    background: var(--accent);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
-}
-
-/* ==================== FEATURES SECTION ==================== */
-.features-section {
-    padding: 120px 0;
-    background: var(--panel);
-    position: relative;
-    overflow: hidden;
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 32px;
-}
-
-.feature-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 48px 32px;
-    text-align: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
-}
-
-.feature-card:hover {
-    transform: translateY(-8px);
-    border-color: var(--accent);
-    box-shadow: 0 24px 48px rgba(99, 102, 241, 0.15);
-}
-
-.feature-icon {
-    width: 80px;
-    height: 80px;
-    background: var(--gradient);
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 32px;
-    font-size: 32px;
-    color: white;
-}
-
-.feature-card h3 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    color: var(--text);
-}
-
-.feature-card p {
-    color: var(--text-light);
-    font-size: 17px;
-    line-height: 1.6;
-}
-
-/* ==================== FAQ SECTION ==================== */
-.faq-section {
-    padding: 120px 0;
-    background: var(--bg);
-    position: relative;
-}
-
-.faq-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 32px;
-}
-
-.faq-item {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    margin-bottom: 16px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.faq-item:hover {
-    border-color: var(--accent);
-}
-
-.faq-question {
-    padding: 24px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
-    font-size: 18px;
-    color: var(--text);
-    transition: background 0.3s ease;
-}
-
-.faq-question:hover {
-    background: rgba(255, 255, 255, 0.02);
-}
-
-.faq-answer {
-    padding: 0 24px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-    color: var(--text-light);
-    line-height: 1.6;
-}
-
-.faq-answer.active {
-    padding: 0 24px 24px;
-    max-height: 500px;
-}
-
-.faq-icon {
-    transition: transform 0.3s ease;
-    color: var(--accent);
-}
-
-.faq-icon.active {
-    transform: rotate(45deg);
-}
-
-/* ==================== PAYMENT SECTION ==================== */
-.payment-section {
-    padding: 120px 0;
-    position: relative;
-}
-
-.bitcoin-card {
-    max-width: 800px;
-    margin: 0 auto;
-    background: linear-gradient(135deg, #151515, #1a1a1a);
-    border: 1px solid var(--border);
-    border-radius: 32px;
-    padding: 60px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.bitcoin-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient);
-}
-
-.bitcoin-icon {
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(135deg, #f59e0b, #fbbf24);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 32px;
-    font-size: 48px;
-    color: white;
-}
-
-.bitcoin-card h3 {
-    font-size: 40px;
-    font-weight: 800;
-    margin-bottom: 20px;
-    background: linear-gradient(to right, #f59e0b, #fbbf24);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.bitcoin-card p {
-    font-size: 18px;
-    color: var(--text-light);
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 0 auto 40px;
-}
-
-.payment-features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 24px;
-    margin-top: 48px;
-}
-
-.payment-feature {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 16px;
-    border: 1px solid var(--glass-border);
-}
-
-.payment-feature i {
-    color: var(--accent);
-    font-size: 24px;
-}
-
-.payment-feature span {
-    color: var(--text-light);
-    font-size: 16px;
-    font-weight: 500;
-}
-
-/* ==================== CART MODAL ==================== */
-.cart-modal {
-    position: fixed;
-    top: 0;
-    right: -400px;
-    width: 400px;
-    height: 100%;
-    background: var(--panel);
-    z-index: 1001;
-    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-left: 1px solid var(--border);
-    box-shadow: -20px 0 40px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-}
-
-.cart-modal.active {
-    right: 0;
-}
-
-.cart-header {
-    padding: 32px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.cart-header h3 {
-    font-size: 24px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.cart-close {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    color: var(--text);
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.cart-close:hover {
-    background: var(--danger);
-    border-color: var(--danger);
-    transform: rotate(90deg);
-}
-
-.cart-items {
-    flex: 1;
-    overflow-y: auto;
-    padding: 32px;
-}
-
-.cart-item {
-    display: flex;
-    gap: 16px;
-    padding: 20px;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    margin-bottom: 16px;
-}
-
-.cart-item-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 12px;
-    background: var(--panel-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
-    flex-shrink: 0;
-}
-
-.cart-item-image img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
-
-.cart-item-content {
-    flex: 1;
-    min-width: 0;
-}
-
-.cart-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 8px;
-}
-
-.cart-item-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    flex: 1;
-    margin-right: 12px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.cart-item-price {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--success);
-    flex-shrink: 0;
-}
-
-.cart-item-quantity {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 12px;
-}
-
-.quantity-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    color: var(--text);
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-}
-
-.quantity-btn:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-}
-
-.quantity-display {
-    min-width: 40px;
-    text-align: center;
-    font-weight: 600;
-}
-
-.remove-item {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    color: var(--danger);
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-}
-
-.remove-item:hover {
-    background: var(--danger);
-    color: white;
-}
-
-.cart-footer {
-    padding: 32px;
-    border-top: 1px solid var(--border);
-    background: var(--panel);
-}
-
-.cart-total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--border);
-}
-
-.cart-total-label {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text-light);
-}
-
-.cart-total-amount {
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--success);
-}
-
-.checkout-btn {
-    width: 100%;
-    padding: 24px;
-    background: var(--gradient);
-    border: none;
-    border-radius: 16px;
-    color: white;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    transition: all 0.3s ease;
-}
-
-.checkout-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 32px rgba(99, 102, 241, 0.3);
-}
-
-/* ==================== PAYMENT MODAL ==================== */
-.payment-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 1002;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-}
-
-.payment-modal.active {
-    display: flex;
-}
-
-.payment-container {
-    width: 100%;
-    max-width: 500px;
-    background: var(--panel);
-    border-radius: 32px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5);
-}
-
-.payment-header {
-    padding: 40px;
-    background: var(--gradient);
-    text-align: center;
-}
-
-.payment-header h3 {
-    font-size: 28px;
-    font-weight: 800;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-}
-
-.payment-body {
-    padding: 40px;
-}
-
-.amount-display {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.amount-label {
-    color: var(--text-muted);
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-}
-
-.amount {
-    font-size: 56px;
-    font-weight: 900;
-    color: var(--success);
-    margin-bottom: 8px;
-}
-
-.btc-amount {
-    color: var(--text-light);
-    font-size: 18px;
-}
-
-.address-container {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 32px;
-    margin-bottom: 32px;
-}
-
-.address-label {
-    color: var(--text-muted);
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-}
-
-.address-display {
-    font-family: 'Courier New', monospace;
-    font-size: 16px;
-    color: var(--text);
-    word-break: break-all;
-    line-height: 1.6;
-    margin-bottom: 24px;
-    padding: 16px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-    border: 1px solid var(--glass-border);
-}
-
-.copy-btn {
-    width: 100%;
-    padding: 20px;
-    background: linear-gradient(135deg, var(--success), #10b981);
-    border: none;
-    border-radius: 16px;
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    transition: all 0.3s ease;
-}
-
-.copy-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 32px rgba(16, 185, 129, 0.3);
-}
-
-.payment-notice {
-    background: rgba(245, 158, 11, 0.1);
-    border: 1px solid rgba(245, 158, 11, 0.2);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 32px;
-    text-align: center;
-}
-
-.payment-notice i {
-    color: #f59e0b;
-    font-size: 24px;
-}
-
-.payment-notice p {
-    color: #fbbf24;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.6;
-}
-
-/* ==================== TOAST ==================== */
-.toast {
-    position: fixed;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: var(--success);
-    color: white;
-    padding: 20px 32px;
-    border-radius: 16px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    z-index: 1000;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.toast.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-}
-
-/* ==================== FOOTER ==================== */
-footer {
-    padding: 80px 0 40px;
-    background: var(--panel);
-    border-top: 1px solid var(--border);
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 32px;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 48px;
-    margin-bottom: 60px;
-}
-
-.footer-column h4 {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 24px;
-    color: var(--text);
-}
-
-.footer-links {
-    list-style: none;
-}
-
-.footer-links li {
-    margin-bottom: 16px;
-}
-
-.footer-links a {
-    color: var(--text-light);
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.footer-links a:hover {
-    color: var(--accent);
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 40px;
-    border-top: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 14px;
-    line-height: 1.8;
-}
-
-.footer-bottom p {
-    margin-bottom: 8px;
-}
-
-/* ==================== OVERLAY BACKGROUND ==================== */
-.overlay-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    z-index: 999;
-    display: none;
-}
-
-.overlay-bg.active {
-    display: block;
-}
-
-/* ==================== RESPONSIVE DESIGN ==================== */
-@media (max-width: 1200px) {
-    .hero h1 {
-        font-size: 60px;
-    }
-    
-    .products-grid {
-        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    }
-    
-    .section-header h2 {
-        font-size: 48px;
-    }
-}
-
-@media (max-width: 992px) {
-    .hero h1 {
-        font-size: 48px;
-    }
-    
-    .section-header h2 {
-        font-size: 42px;
-    }
-    
-    .stats-grid {
-        grid-template-columns: 1fr;
-        max-width: 400px;
-    }
-    
-    .features-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
-    
-    .nav-overlay a {
-        font-size: 24px;
-        width: 300px;
-        padding: 16px 32px;
-    }
-}
-
-@media (max-width: 768px) {
-    .header-inner {
-        padding: 0 24px;
-        height: 80px;
-    }
-    
-    .logo-text {
-        font-size: 24px;
-    }
-    
-    .hero {
-        padding: 120px 0 80px;
-    }
-    
-    .hero h1 {
-        font-size: 40px;
-    }
-    
-    .hero-subtitle {
-        font-size: 18px;
-        padding: 0 20px;
-    }
-    
-    .section-header {
-        padding: 0 24px;
-        margin-bottom: 40px;
-    }
-    
-    .section-header h2 {
-        font-size: 36px;
-    }
-    
-    .section-header p {
-        font-size: 18px;
-    }
-    
-    .products-grid {
-        grid-template-columns: 1fr;
-        padding: 0 24px;
-        gap: 24px;
-    }
-    
-    .product-card {
-        max-width: 400px;
-        margin: 0 auto;
-        width: 100%;
-    }
-    
-    .product-title {
-        font-size: 20px;
-    }
-    
-    .product-price {
-        font-size: 28px;
-    }
-    
-    .features-grid {
-        grid-template-columns: 1fr;
-        padding: 0 24px;
-        gap: 24px;
-    }
-    
-    .feature-card {
-        padding: 32px 24px;
-    }
-    
-    .bitcoin-card {
-        padding: 40px 24px;
-        margin: 0 24px;
-    }
-    
-    .bitcoin-card h3 {
-        font-size: 32px;
-    }
-    
-    .cart-modal {
-        width: 100%;
-        right: -100%;
-    }
-    
-    .payment-modal {
-        padding: 20px;
-    }
-    
-    .payment-container {
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-    
-    .payment-body {
-        padding: 24px;
-    }
-    
-    .amount {
-        font-size: 42px;
-    }
-    
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .btn-primary, .btn-secondary {
-        width: 100%;
-        max-width: 300px;
-    }
-    
-    .product-actions {
-        flex-direction: column;
-    }
-    
-    .payment-features {
-        grid-template-columns: 1fr;
-    }
-    
-    .nav-overlay {
-        gap: 16px;
-    }
-    
-    .nav-overlay a {
-        font-size: 20px;
-        width: 250px;
-        padding: 12px 24px;
-    }
-    
-    .nav-close {
-        top: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-    }
-}
-
-@media (max-width: 480px) {
-    .header-inner {
-        padding: 0 20px;
-        height: 72px;
-    }
-    
-    .logo-text {
-        font-size: 20px;
-    }
-    
-    .logo-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-    
-    .cart-btn, .menu-btn {
-        width: 48px;
-        height: 48px;
-        font-size: 20px;
-    }
-    
-    .hero h1 {
-        font-size: 32px;
-    }
-    
-    .hero-subtitle {
-        font-size: 16px;
-    }
-    
-    .section-header h2 {
-        font-size: 28px;
-    }
-    
-    .section-header p {
-        font-size: 16px;
-    }
-    
-    .product-title {
-        font-size: 18px;
-    }
-    
-    .product-price {
-        font-size: 24px;
-    }
-    
-    .product-description {
-        font-size: 14px;
-    }
-    
-    .btn-primary, .btn-secondary {
-        padding: 16px 20px;
-        font-size: 14px;
-        min-height: 52px;
-    }
-    
-    .security-badge {
-        padding: 12px;
-        font-size: 12px;
-    }
-    
-    .footer-content {
-        padding: 0 20px;
-    }
-    
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-    }
-    
-    .address-display {
-        font-size: 14px;
-        padding: 12px;
-    }
-    
-    .toast {
-        padding: 16px 24px;
-        font-size: 14px;
-        left: 20px;
-        right: 20px;
-        transform: translateY(100px);
-        width: calc(100% - 40px);
-    }
-    
-    .toast.show {
-        transform: translateY(0);
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3DPrintedUSA – Premium 3D Printed Products</title>
+    <meta name="description" content="Professional 3D printed components with guaranteed delivery via LLC partnerships. Secure Bitcoin payments only.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --panel: #151515;
+            --panel-light: #1e1e1e;
+            --border: #2a2a2a;
+            --accent: #6366f1;
+            --accent-dark: #4f46e5;
+            --accent-light: #818cf8;
+            --gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --shadow: rgba(0, 0, 0, 0.5);
+            --text: #ffffff;
+            --text-light: #d1d5db;
+            --text-muted: #9ca3af;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .security-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 48px;
+            background: linear-gradient(90deg, #1e1b4b, #312e81, #4f46e5);
+            z-index: 1000;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .banner-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .banner-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            font-weight: 600;
+            font-size: 15px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s ease;
+        }
+
+        .banner-item.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .banner-item i {
+            font-size: 18px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        header {
+            position: sticky;
+            top: 48px;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 900;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 90px;
+            padding: 0 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-btn, .menu-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text);
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .cart-btn:hover, .menu-btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: white;
+            font-size: 13px;
+            font-weight: 800;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg);
+        }
+
+        /* Navigation */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1003;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-overlay.active {
+            display: flex;
+        }
+
+        .nav-close {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            font-size: 28px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-close:hover {
+            background: var(--accent);
+            transform: rotate(90deg);
+        }
+
+        .nav-overlay a {
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+            padding: 20px 40px;
+            border: 2px solid var(--accent);
+            border-radius: 30px;
+            transition: all 0.3s;
+            width: 350px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .nav-overlay a:hover {
+            background: var(--accent);
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 160px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge i {
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(to right, #ffffff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 48px;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .stat-item {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px 24px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 16px 32px rgba(99, 102, 241, 0.1);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 20px 32px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-width: 200px;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Products */
+        .products-section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 32px;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .section-header h2 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            font-size: 20px;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .product-card {
+            background: var(--panel);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.4s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--accent);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 800;
+            z-index: 2;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+            text-transform: uppercase;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(45deg, #151515, #1a1a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-content {
+            padding: 32px;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .product-title {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--text);
+            flex: 1;
+            margin-right: 16px;
+        }
+
+        .product-price {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--success);
+            white-space: nowrap;
+        }
+
+        .product-description {
+            color: var(--text-light);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .product-orders {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .product-orders i {
+            color: var(--accent);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #fbbf24;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .security-badge i {
+            color: var(--success);
+            font-size: 20px;
+        }
+
+        .security-badge span {
+            color: var(--text-light);
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .security-badge strong {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Features */
+        .features-section {
+            padding: 120px 0;
+            background: var(--panel);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 48px 32px;
+            text-align: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 24px 48px rgba(99, 102, 241, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            font-size: 32px;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        /* FAQ */
+        .faq-section {
+            padding: 120px 0;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .faq-item {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+        }
+
+        .faq-question {
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text);
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .faq-answer {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .faq-answer.active {
+            padding: 0 24px 24px;
+            max-height: 500px;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+            color: var(--accent);
+        }
+
+        .faq-icon.active {
+            transform: rotate(45deg);
+        }
+
+        /* Payment */
+        .payment-section {
+            padding: 120px 0;
+        }
+
+        .bitcoin-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #151515, #1a1a1a);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bitcoin-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .bitcoin-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            font-size: 48px;
+            color: white;
+        }
+
+        .bitcoin-card h3 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #f59e0b, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bitcoin-card p {
+            font-size: 18px;
+            color: var(--text-light);
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .payment-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .payment-feature {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .payment-feature i {
+            color: var(--accent);
+            font-size: 24px;
+        }
+
+        .payment-feature span {
+            color: var(--text-light);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 0 40px;
+            background: var(--panel);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 48px;
+            margin-bottom: 60px;
+        }
+
+        .footer-column h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 16px;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 8px;
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: var(--panel);
+            z-index: 1001;
+            transition: right 0.4s;
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-modal.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cart-close {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .cart-close:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            transform: rotate(90deg);
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            background: var(--panel-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            flex-shrink: 0;
+        }
+
+        .cart-item-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .cart-item-content {
+            flex: 1;
+        }
+
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+            margin-right: 12px;
+        }
+
+        .cart-item-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .quantity-display {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .remove-item {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remove-item:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .cart-footer {
+            padding: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-total-label {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .cart-total-amount {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--success);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 24px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Payment Modal */
+        .payment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1002;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .payment-modal.active {
+            display: flex;
+        }
+
+        .payment-container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--panel);
+            border-radius: 32px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .payment-header {
+            padding: 40px;
+            background: var(--gradient);
+            text-align: center;
+        }
+
+        .payment-header h3 {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .payment-body {
+            padding: 40px;
+        }
+
+        .amount-display {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .amount-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .amount {
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--success);
+            margin-bottom: 8px;
+        }
+
+        .btc-amount {
+            color: var(--text-light);
+            font-size: 18px;
+        }
+
+        .address-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+
+        .address-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .address-display {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            color: var(--text);
+            word-break: break-all;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .copy-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--success), #10b981);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(16, 185, 129, 0.3);
+        }
+
+        .payment-notice {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .payment-notice i {
+            color: #f59e0b;
+            font-size: 24px;
+        }
+
+        .payment-notice p {
+            color: #fbbf24;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        /* Overlay */
+        .overlay-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay-bg.active {
+            display: block;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--success);
+            color: white;
+            padding: 20px 32px;
+            border-radius: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s;
+            opacity: 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 60px;
+            }
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                padding: 0 24px;
+                height: 80px;
+            }
+            .logo-text {
+                font-size: 24px;
+            }
+            .hero {
+                padding: 120px 0 80px;
+            }
+            .hero h1 {
+                font-size: 40px;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+                padding: 0 24px;
+            }
+            .product-card {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .cart-modal {
+                width: 100%;
+                right: -100%;
+            }
+            .nav-overlay a {
+                font-size: 24px;
+                width: 300px;
+                padding: 16px 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-inner {
+                padding: 0 20px;
+            }
+            .logo-text {
+                font-size: 20px;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+            .section-header h2 {
+                font-size: 36px;
+            }
+            .product-title {
+                font-size: 20px;
+            }
+            .product-price {
+                font-size: 28px;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<!-- Security Banner -->
-<div class="security-banner">
-    <div class="banner-track">
-        <div class="banner-item active">
-            <i class="fas fa-globe"></i>
-            <span>Worldwide Shipping via LLC Partnerships</span>
-        </div>
-        <div class="banner-item">
-            <i class="fas fa-plane"></i>
-            <span>International Delivery: 1–2 weeks</span>
-        </div>
-        <div class="banner-item">
-            <i class="fas fa-home"></i>
-            <span>USA Domestic: 5–7 business days</span>
-        </div>
-        <div class="banner-item">
-            <i class="fas fa-shield-alt"></i>
-            <span>100% Discreet - All items shipped as airsoft replicas</span>
-        </div>
-    </div>
-</div>
-
-<!-- Header -->
-<header>
-    <div class="header-inner">
-        <a href="#" class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-cube"></i>
-            </div>
-            <div class="logo-text">3DPrintedUSA</div>
-        </a>
-        <div class="header-right">
-            <button class="cart-btn" onclick="toggleCart()">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cartCounter" class="cart-count">0</span>
-            </button>
-            <button class="menu-btn" onclick="openNav()">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </div>
-</header>
-
-<!-- Navigation Overlay -->
-<div class="nav-overlay" id="navOverlay">
-    <button class="nav-close" onclick="closeNav()">
-        <i class="fas fa-times"></i>
-    </button>
-    <a href="#products" onclick="closeNav();scrollToProducts()">Shop Products</a>
-    <a href="#features" onclick="closeNav();scrollToFeatures()">Features</a>
-    <a href="#faq" onclick="closeNav();scrollToFaq()">FAQ</a>
-    <a href="#payment" onclick="closeNav();scrollToPayment()">Bitcoin Payments</a>
-    <a href="#" onclick="closeNav();showContact()">Support</a>
-</div>
-
-<!-- Hero Section -->
-<section class="hero">
-    <div class="hero-content">
-        <div class="hero-badge">
-            <i class="fas fa-shield-alt"></i>
-            <span>Secure Bitcoin-Only Marketplace</span>
-        </div>
-        
-        <h1>Premium 3D Printed Components</h1>
-        
-        <p class="hero-subtitle">
-            Professionally assembled high-strength products with guaranteed delivery via LLC partnerships. 
-            All items shipped discreetly as airsoft replicas.
-        </p>
-        
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-number">3,200+</div>
-                <div class="stat-label">Verified Customers</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">99.8%</div>
-                <div class="stat-label">Delivery Success Rate</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">Support Available</div>
-            </div>
-        </div>
-        
-        <div class="hero-buttons">
-            <button class="btn-primary" onclick="scrollToProducts()">
-                <i class="fas fa-shopping-cart"></i>
-                Shop Products
-            </button>
-            <button class="btn-secondary" onclick="scrollToPayment()">
-                <i class="fab fa-bitcoin"></i>
-                Why Bitcoin
-            </button>
-        </div>
-    </div>
-</section>
-
-<!-- Products Section -->
-<section class="products-section" id="products">
-    <div class="section-header">
-        <div class="section-badge">Premium Products</div>
-        <h2>Complete Product Catalog</h2>
-        <p>Professionally assembled components with lifetime support guarantee</p>
-    </div>
-    
-    <div class="products-grid" id="productsGrid"></div>
-</section>
-
-<!-- Features Section -->
-<section class="features-section" id="features">
-    <div class="section-header">
-        <div class="section-badge">Why Choose Us</div>
-        <h2>Premium Manufacturing Process</h2>
-        <p>Every product undergoes rigorous testing and professional assembly</p>
-    </div>
-    
-    <div class="features-grid">
-        <div class="feature-card">
-            <div class="feature-icon">
-                <i class="fas fa-industry"></i>
-            </div>
-            <h3>Professional Assembly</h3>
-            <p>Hand-assembled by trained technicians with perfect fit and function guaranteed.</p>
-        </div>
-        
-        <div class="feature-card">
-            <div class="feature-icon">
-                <i class="fas fa-shield-alt"></i>
-            </div>
-            <h3>Maximum Strength Composite</h3>
-            <p>Proprietary PLA+ reinforced with carbon fiber and stainless steel particles.</p>
-        </div>
-        
-        <div class="feature-card">
-            <div class="feature-icon">
-                <i class="fas fa-truck"></i>
-            </div>
-            <h3>Guaranteed Delivery</h3>
-            <p>100% delivery success rate via LLC partnerships with discreet packaging.</p>
-        </div>
-    </div>
-</section>
-
-<!-- FAQ Section -->
-<section class="faq-section" id="faq">
-    <div class="section-header">
-        <div class="section-badge">FAQ</div>
-        <h2>Frequently Asked Questions</h2>
-        <p>Everything you need to know about ordering from 3DPrintedUSA</p>
-    </div>
-    
-    <div class="faq-container">
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(0)">
-                <span>Is this website legitimate? Will I actually receive my order?</span>
-                <i class="fas fa-plus faq-icon"></i>
-            </div>
-            <div class="faq-answer">
-                <p><strong>Yes, 3DPrintedUSA is the only secure marketplace you can trust.</strong> We have a 100% delivery success rate with thousands of satisfied customers. All orders are professionally assembled by our technicians and shipped via LLC partnerships with guaranteed tracking.</p>
-            </div>
-        </div>
-        
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(1)">
-                <span>What is the $50 Security Package and do I need it?</span>
-                <i class="fas fa-plus faq-icon"></i>
-            </div>
-            <div class="faq-answer">
-                <p>The Security Package provides 100% insurance against theft, loss, or damage during shipping. For $50 per product, you're fully protected. If anything happens to your shipment, we immediately send a replacement. You can remove this option if you prefer, but it's recommended for complete peace of mind.</p>
-            </div>
-        </div>
-        
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(2)">
-                <span>How do I receive tracking information after ordering?</span>
-                <i class="fas fa-plus faq-icon"></i>
-            </div>
-            <div class="faq-answer">
-                <p>Tracking information is automatically emailed to the address you provide in the Bitcoin transaction description. Include your email address in the transaction memo when sending payment. You'll receive tracking within 24-48 hours of payment confirmation.</p>
-            </div>
-        </div>
-        
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(3)">
-                <span>Are the products assembled or do I need to build them?</span>
-                <i class="fas fa-plus faq-icon"></i>
-            </div>
-            <div class="faq-answer">
-                <p>All products are <strong>professionally assembled by our technicians</strong> in the USA. We don't sell parts or kits - everything arrives ready for use after professional assembly, testing, and quality control.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Payment Section -->
-<section class="payment-section" id="payment">
-    <div class="section-header">
-        <div class="section-badge">Payment</div>
-        <h2>Bitcoin-Only Payments</h2>
-        <p>Maximum privacy and security with irreversible, anonymous transactions</p>
-    </div>
-    
-    <div class="bitcoin-card">
-        <div class="bitcoin-icon">
-            <i class="fab fa-bitcoin"></i>
-        </div>
-        <h3>Why Bitcoin-Only?</h3>
-        <p>Bitcoin protects both buyer and seller privacy, eliminates chargeback fraud, and ensures secure transactions. Traditional payment methods compromise privacy and security.</p>
-        
-        <div class="payment-features">
-            <div class="payment-feature">
-                <i class="fas fa-user-secret"></i>
-                <span>Complete Anonymity</span>
-            </div>
-            <div class="payment-feature">
-                <i class="fas fa-lock"></i>
-                <span>No Chargebacks</span>
-            </div>
-            <div class="payment-feature">
+    <!-- Security Banner -->
+    <div class="security-banner">
+        <div class="banner-track">
+            <div class="banner-item active">
                 <i class="fas fa-globe"></i>
-                <span>Global Payments</span>
+                <span>Worldwide Shipping via LLC Partnerships</span>
             </div>
-            <div class="payment-feature">
-                <i class="fas fa-bolt"></i>
-                <span>Instant Verification</span>
+            <div class="banner-item">
+                <i class="fas fa-plane"></i>
+                <span>International Delivery: 1–2 weeks</span>
+            </div>
+            <div class="banner-item">
+                <i class="fas fa-home"></i>
+                <span>USA Domestic: 5–7 business days</span>
+            </div>
+            <div class="banner-item">
+                <i class="fas fa-shield-alt"></i>
+                <span>100% Discreet - All items shipped as airsoft replicas</span>
             </div>
         </div>
     </div>
-</section>
 
-<!-- Footer -->
-<footer>
-    <div class="footer-content">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h4>Quick Links</h4>
-                <ul class="footer-links">
-                    <li><a href="#products" onclick="scrollToProducts()"><i class="fas fa-chevron-right"></i> Shop Products</a></li>
-                    <li><a href="#payment" onclick="scrollToPayment()"><i class="fas fa-chevron-right"></i> Bitcoin Payments</a></li>
-                    <li><a href="#faq" onclick="scrollToFaq()"><i class="fas fa-chevron-right"></i> FAQ</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h4>Information</h4>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Shipping Info</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h4>Contact</h4>
-                <ul class="footer-links">
-                    <li><a href="mailto:support@3dprintedusa.com"><i class="fas fa-envelope"></i> support@3dprintedusa.com</a></li>
-                    <li><a href="https://youtube.com/@3DPrintedUSA" target="_blank"><i class="fab fa-youtube"></i> YouTube Tutorials</a></li>
-                    <li><a href="https://instagram.com/3dprintedusa" target="_blank"><i class="fab fa-instagram"></i> Product Gallery</a></li>
-                </ul>
+    <!-- Header -->
+    <header>
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <div class="logo-text">3DPrintedUSA</div>
+            </a>
+            <div class="header-right">
+                <button class="cart-btn" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartCounter" class="cart-count">0</span>
+                </button>
+                <button class="menu-btn" onclick="openNav()">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
-        
-        <div class="footer-bottom">
-            <p>© 2025 3DPrintedUSA LLC · All products professionally assembled in the USA</p>
-            <p>Bitcoin-only payments · 100% delivery success rate · Discreet shipping via LLC partnerships</p>
-            <p>You are responsible for your local laws · We do not support illegal activities</p>
-        </div>
-    </div>
-</footer>
+    </header>
 
-<!-- Cart Modal -->
-<div class="cart-modal" id="cartModal">
-    <div class="cart-header">
-        <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
-        <button class="cart-close" onclick="toggleCart()">
+    <!-- Navigation -->
+    <div class="nav-overlay" id="navOverlay">
+        <button class="nav-close" onclick="closeNav()">
             <i class="fas fa-times"></i>
         </button>
+        <a href="#products" onclick="closeNav();scrollToProducts()">Shop Products</a>
+        <a href="#features" onclick="closeNav();scrollToFeatures()">Features</a>
+        <a href="#faq" onclick="closeNav();scrollToFaq()">FAQ</a>
+        <a href="#payment" onclick="closeNav();scrollToPayment()">Bitcoin Payments</a>
+        <a href="#" onclick="closeNav();showContact()">Support</a>
     </div>
-    
-    <div class="cart-items" id="cartItems"></div>
-    
-    <div class="cart-footer">
-        <div class="cart-total">
-            <span class="cart-total-label">Total:</span>
-            <span class="cart-total-amount">$<span id="cartTotal">0.00</span></span>
-        </div>
-        <button class="checkout-btn" onclick="showPaymentModal()">
-            <i class="fab fa-bitcoin"></i>
-            Proceed to Bitcoin Payment
-        </button>
-    </div>
-</div>
 
-<!-- Payment Modal -->
-<div class="payment-modal" id="paymentModal">
-    <div class="payment-container">
-        <div class="payment-header">
-            <h3><i class="fab fa-bitcoin"></i> Bitcoin Payment</h3>
-        </div>
-        
-        <div class="payment-body">
-            <div class="amount-display">
-                <div class="amount-label">Total Amount Due</div>
-                <div class="amount">$<span id="paymentAmount">0.00</span></div>
-                <div class="btc-amount">≈ <span id="btcAmount">0.000000</span> BTC</div>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>Secure Bitcoin-Only Marketplace</span>
             </div>
-            
-            <div class="address-container">
-                <div class="address-label">Bitcoin Address (BTC Network Only)</div>
-                <div class="address-display" id="paymentAddress">bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy</div>
-                <button class="copy-btn" onclick="copyAddress()">
-                    <i class="far fa-copy"></i>
-                    Copy Bitcoin Address
+            <h1>Premium 3D Printed Components</h1>
+            <p class="hero-subtitle">
+                Professionally assembled high-strength products with guaranteed delivery via LLC partnerships. 
+                All items shipped discreetly as airsoft replicas.
+            </p>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">3,200+</div>
+                    <div class="stat-label">Verified Customers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99.8%</div>
+                    <div class="stat-label">Delivery Success Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support Available</div>
+                </div>
+            </div>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="scrollToProducts()">
+                    <i class="fas fa-shopping-cart"></i>
+                    Shop Products
+                </button>
+                <button class="btn-secondary" onclick="scrollToPayment()">
+                    <i class="fab fa-bitcoin"></i>
+                    Why Bitcoin
                 </button>
             </div>
-            
-            <div class="payment-notice">
-                <i class="fas fa-exclamation-triangle"></i>
-                <p><strong>IMPORTANT:</strong> Include your EMAIL ADDRESS & SHIPPING ADDRESS in the Bitcoin transaction description/memo field! Tracking will be sent to your email.</p>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products-section" id="products">
+        <div class="section-header">
+            <div class="section-badge">Premium Products</div>
+            <h2>Complete Product Catalog</h2>
+            <p>Professionally assembled components with lifetime support guarantee</p>
+        </div>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be loaded by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features-section" id="features">
+        <div class="section-header">
+            <div class="section-badge">Why Choose Us</div>
+            <h2>Premium Manufacturing Process</h2>
+            <p>Every product undergoes rigorous testing and professional assembly</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-industry"></i>
+                </div>
+                <h3>Professional Assembly</h3>
+                <p>Hand-assembled by trained technicians with perfect fit and function guaranteed.</p>
             </div>
-            
-            <button class="copy-btn" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);" onclick="closePaymentModal()">
-                <i class="fas fa-check"></i>
-                I've Made the Payment
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Maximum Strength Composite</h3>
+                <p>Proprietary PLA+ reinforced with carbon fiber and stainless steel particles.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h3>Guaranteed Delivery</h3>
+                <p>100% delivery success rate via LLC partnerships with discreet packaging.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <div class="section-header">
+            <div class="section-badge">FAQ</div>
+            <h2>Frequently Asked Questions</h2>
+            <p>Everything you need to know about ordering from 3DPrintedUSA</p>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(0)">
+                    <span>Is this website legitimate? Will I actually receive my order?</span>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p><strong>Yes, 3DPrintedUSA is the only secure marketplace you can trust.</strong> We have a 100% delivery success rate with thousands of satisfied customers. All orders are professionally assembled by our technicians and shipped via LLC partnerships with guaranteed tracking.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(1)">
+                    <span>What is the $50 Security Package and do I need it?</span>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>The Security Package provides 100% insurance against theft, loss, or damage during shipping. For $50 per product, you're fully protected. If anything happens to your shipment, we immediately send a replacement. You can remove this option if you prefer, but it's recommended for complete peace of mind.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(2)">
+                    <span>How do I receive tracking information after ordering?</span>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Tracking information is automatically emailed to the address you provide in the Bitcoin transaction description. Include your email address in the transaction memo when sending payment. You'll receive tracking within 24-48 hours of payment confirmation.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(3)">
+                    <span>Are the products assembled or do I need to build them?</span>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>All products are <strong>professionally assembled by our technicians</strong> in the USA. We don't sell parts or kits - everything arrives ready for use after professional assembly, testing, and quality control.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment -->
+    <section class="payment-section" id="payment">
+        <div class="section-header">
+            <div class="section-badge">Payment</div>
+            <h2>Bitcoin-Only Payments</h2>
+            <p>Maximum privacy and security with irreversible, anonymous transactions</p>
+        </div>
+        <div class="bitcoin-card">
+            <div class="bitcoin-icon">
+                <i class="fab fa-bitcoin"></i>
+            </div>
+            <h3>Why Bitcoin-Only?</h3>
+            <p>Bitcoin protects both buyer and seller privacy, eliminates chargeback fraud, and ensures secure transactions. Traditional payment methods compromise privacy and security.</p>
+            <div class="payment-features">
+                <div class="payment-feature">
+                    <i class="fas fa-user-secret"></i>
+                    <span>Complete Anonymity</span>
+                </div>
+                <div class="payment-feature">
+                    <i class="fas fa-lock"></i>
+                    <span>No Chargebacks</span>
+                </div>
+                <div class="payment-feature">
+                    <i class="fas fa-globe"></i>
+                    <span>Global Payments</span>
+                </div>
+                <div class="payment-feature">
+                    <i class="fas fa-bolt"></i>
+                    <span>Instant Verification</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#products" onclick="scrollToProducts()"><i class="fas fa-chevron-right"></i> Shop Products</a></li>
+                        <li><a href="#payment" onclick="scrollToPayment()"><i class="fas fa-chevron-right"></i> Bitcoin Payments</a></li>
+                        <li><a href="#faq" onclick="scrollToFaq()"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Information</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Shipping Info</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:support@3dprintedusa.com"><i class="fas fa-envelope"></i> support@3dprintedusa.com</a></li>
+                        <li><a href="https://youtube.com/@3DPrintedUSA" target="_blank"><i class="fab fa-youtube"></i> YouTube Tutorials</a></li>
+                        <li><a href="https://instagram.com/3dprintedusa" target="_blank"><i class="fab fa-instagram"></i> Product Gallery</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 3DPrintedUSA LLC · All products professionally assembled in the USA</p>
+                <p>Bitcoin-only payments · 100% delivery success rate · Discreet shipping via LLC partnerships</p>
+                <p>You are responsible for your local laws · We do not support illegal activities</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
+            <button class="cart-close" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span class="cart-total-label">Total:</span>
+                <span class="cart-total-amount">$<span id="cartTotal">0.00</span></span>
+            </div>
+            <button class="checkout-btn" onclick="showPaymentModal()">
+                <i class="fab fa-bitcoin"></i>
+                Proceed to Bitcoin Payment
             </button>
         </div>
     </div>
-</div>
 
-<!-- Overlay Background -->
-<div class="overlay-bg" id="overlayBg" onclick="closeAllModals()"></div>
-
-<script>
-// Product Data - COMPLEET GECORRIGEERD: Alle '"> tekens volledig verwijderd
-const products = [
-    {
-        id: 1,
-        name: "Not a Glock .22LR Kit",
-        price: 400,
-        image: "NAG2.jpg",
-        orders: 1261,
-        description: "Professionally assembled pistol platform with high-strength reinforced PLA+ composite.",
-        badge: "Popular",
-        category: "Kits"
-    },
-    {
-        id: 2,
-        name: "HD22 Kit",
-        price: 550,
-        image: "hs222.jpg",
-        orders: 4057,
-        description: "Heavy-duty construction with 100% infill for ultimate reliability.",
-        badge: "Best Seller",
-        category: "Kits"
-    },
-    {
-        id: 3,
-        name: "Gambino Kit",
-        price: 100,
-        image: "gambino2.jpg",
-        orders: 2943,
-        description: "Compact high-strength design offering perfect balance between size and durability.",
-        badge: "Value",
-        category: "Kits"
-    },
-    {
-        id: 4,
-        name: "Cabfare Kit",
-        price: 100,
-        image: "cabfare2.jpg",
-        orders: 2807,
-        description: "Balanced performance and durability in a versatile platform.",
-        badge: "Popular",
-        category: "Kits"
-    },
-    {
-        id: 5,
-        name: "Harlot Kit",
-        price: 150,
-        image: "harlot2.jpg",
-        orders: 748,
-        description: "Minimalist yet extremely strong design optimized for reliability.",
-        badge: "New",
-        category: "Kits"
-    },
-    {
-        id: 6,
-        name: "HD22 Complete",
-        price: 1000,
-        image: "hs22.jpg",
-        orders: 1021,
-        description: "Fully assembled unit ready for immediate use with professional calibration.",
-        badge: "Premium",
-        category: "Complete"
-    },
-    {
-        id: 7,
-        name: "Not a Glock Complete",
-        price: 700,
-        image: "NAG.jpg",
-        orders: 1980,
-        description: "Complete ready-to-use assembly with perfect fitment guaranteed.",
-        badge: "Popular",
-        category: "Complete"
-    },
-    {
-        id: 8,
-        name: "Gambino Complete",
-        price: 250,
-        image: "gambino.jpg",
-        orders: 1953,
-        description: "Complete high-durability unit with professional-grade finish.",
-        badge: "Value",
-        category: "Complete"
-    },
-    {
-        id: 9,
-        name: "Glock Switch",
-        price: 60,
-        image: "switch.jpg",
-        orders: 2300,
-        description: "Precision printed accessory manufactured from reinforced materials.",
-        badge: "Best Seller",
-        category: "Accessories"
-    },
-    {
-        id: 10,
-        name: "Invisible Switch",
-        price: 80,
-        image: "invisible_switch.jpg",
-        orders: 2641,
-        description: "Discreet and reliable switch with carbon fiber reinforcement.",
-        badge: "Popular",
-        category: "Accessories"
-    }
-];
-
-// Security Package
-const securityPackage = {
-    id: 999,
-    name: "Security Package",
-    price: 50,
-    description: "100% insurance against theft, loss, or damage during shipping."
-};
-
-// State
-let cart = [];
-let currentBitcoinPrice = 65000;
-let currentBannerIndex = 0;
-let faqStates = [false, false, false, false];
-
-// DOM Elements
-const productsGrid = document.getElementById('productsGrid');
-const cartCounter = document.getElementById('cartCounter');
-const cartItems = document.getElementById('cartItems');
-const cartTotal = document.getElementById('cartTotal');
-const paymentAmount = document.getElementById('paymentAmount');
-const btcAmount = document.getElementById('btcAmount');
-const cartModal = document.getElementById('cartModal');
-const paymentModal = document.getElementById('paymentModal');
-const overlayBg = document.getElementById('overlayBg');
-const bannerItems = document.querySelectorAll('.banner-item');
-const navOverlay = document.getElementById('navOverlay');
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    renderProducts();
-    updateBitcoinPrice();
-    loadCart();
-    startBannerAnimation();
-    
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 140,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-});
-
-// Banner animation
-function startBannerAnimation() {
-    if (bannerItems.length === 0) return;
-    
-    setInterval(() => {
-        bannerItems[currentBannerIndex].classList.remove('active');
-        currentBannerIndex = (currentBannerIndex + 1) % bannerItems.length;
-        bannerItems[currentBannerIndex].classList.add('active');
-    }, 3000);
-}
-
-// Navigation Functions
-function openNav() {
-    navOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeNav() {
-    navOverlay.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-// FAQ Functions
-function toggleFaq(index) {
-    const answer = document.querySelectorAll('.faq-answer')[index];
-    const icon = document.querySelectorAll('.faq-icon')[index];
-    
-    faqStates[index] = !faqStates[index];
-    
-    if (faqStates[index]) {
-        answer.classList.add('active');
-        icon.classList.add('active');
-        icon.classList.remove('fa-plus');
-        icon.classList.add('fa-minus');
-    } else {
-        answer.classList.remove('active');
-        icon.classList.remove('active');
-        icon.classList.remove('fa-minus');
-        icon.classList.add('fa-plus');
-    }
-}
-
-// Scroll Functions
-function scrollToProducts() {
-    document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-}
-
-function scrollToFeatures() {
-    document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
-}
-
-function scrollToFaq() {
-    document.getElementById('faq').scrollIntoView({ behavior: 'smooth' });
-}
-
-function scrollToPayment() {
-    document.getElementById('payment').scrollIntoView({ behavior: 'smooth' });
-}
-
-// Render Products - ALLE NAMEN NU COMPLEET SCHOON
-function renderProducts() {
-    productsGrid.innerHTML = '';
-    
-    products.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.className = 'product-card';
-        
-        productCard.innerHTML = `
-            ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
-            
-            <div class="product-image">
-                <img src="${product.image}" alt="Product" 
-                     onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\"><rect width=\"100%\" height=\"100%\" fill=\"%23151515\"/></svg>'">
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-container">
+            <div class="payment-header">
+                <h3><i class="fab fa-bitcoin"></i> Bitcoin Payment</h3>
             </div>
-            
-            <div class="product-content">
-                <div class="product-header">
-                    <h3 class="product-title">${product.name}</h3>
-                    <div class="product-price">$${product.price.toFixed(2)}</div>
+            <div class="payment-body">
+                <div class="amount-display">
+                    <div class="amount-label">Total Amount Due</div>
+                    <div class="amount">$<span id="paymentAmount">0.00</span></div>
+                    <div class="btc-amount">≈ <span id="btcAmount">0.000000</span> BTC</div>
                 </div>
-                
-                <p class="product-description">${product.description}</p>
-                
-                <div class="product-meta">
-                    <div class="product-orders">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>${product.orders.toLocaleString()} orders</span>
-                    </div>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                </div>
-                
-                <div class="security-badge">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Includes <strong>Security Package</strong> (+$50) for guaranteed delivery</span>
-                </div>
-                
-                <div class="product-actions">
-                    <button class="btn-primary" onclick="addToCart(${product.id})">
-                        <i class="fas fa-cart-plus"></i>
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-        `;
-        
-        productsGrid.appendChild(productCard);
-    });
-}
-
-// Cart Functions
-function loadCart() {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
-        updateCartUI();
-    }
-}
-
-function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    if (!product) return;
-    
-    // Check if product already in cart
-    const existingItem = cart.find(item => item.id === productId && !item.isSecurityPackage);
-    
-    if (existingItem) {
-        existingItem.quantity++;
-    } else {
-        cart.push({
-            ...product,
-            quantity: 1,
-            isSecurityPackage: false
-        });
-    }
-    
-    // Add security package
-    const hasSecurity = cart.find(item => item.id === 999 && item.linkedProduct === productId);
-    if (!hasSecurity) {
-        cart.push({
-            ...securityPackage,
-            quantity: 1,
-            linkedProduct: productId,
-            isSecurityPackage: true
-        });
-    }
-    
-    saveCart();
-    updateCartUI();
-    showToast(`${product.name} added to cart`);
-    
-    // Show cart modal on mobile
-    if (window.innerWidth <= 768) {
-        toggleCart();
-    }
-}
-
-function removeFromCart(index) {
-    const item = cart[index];
-    cart.splice(index, 1);
-    
-    // Remove linked security package or product
-    if (item.isSecurityPackage && item.linkedProduct) {
-        const productIndex = cart.findIndex(i => i.id === item.linkedProduct);
-        if (productIndex > -1) {
-            cart.splice(productIndex, 1);
-        }
-    } else if (!item.isSecurityPackage) {
-        const securityIndex = cart.findIndex(i => i.isSecurityPackage && i.linkedProduct === item.id);
-        if (securityIndex > -1) {
-            cart.splice(securityIndex, 1);
-        }
-    }
-    
-    saveCart();
-    updateCartUI();
-    showToast('Item removed from cart');
-}
-
-function updateQuantity(index, change) {
-    cart[index].quantity += change;
-    
-    if (cart[index].quantity <= 0) {
-        removeFromCart(index);
-        return;
-    }
-    
-    // Update linked security package
-    if (!cart[index].isSecurityPackage) {
-        const securityIndex = cart.findIndex(item => item.isSecurityPackage && item.linkedProduct === cart[index].id);
-        if (securityIndex > -1) {
-            cart[securityIndex].quantity = cart[index].quantity;
-        }
-    } else if (cart[index].isSecurityPackage && cart[index].linkedProduct) {
-        const productIndex = cart.findIndex(item => item.id === cart[index].linkedProduct);
-        if (productIndex > -1) {
-            cart[productIndex].quantity = cart[index].quantity;
-        }
-    }
-    
-    saveCart();
-    updateCartUI();
-}
-
-function updateCartUI() {
-    // Update counter
-    const totalItems = cart.filter(item => !item.isSecurityPackage).reduce((sum, item) => sum + item.quantity, 0);
-    cartCounter.textContent = totalItems;
-    cartCounter.style.display = totalItems > 0 ? 'flex' : 'none';
-    
-    // Update cart modal
-    updateCartModal();
-    
-    // Update total
-    const total = calculateTotal();
-    cartTotal.textContent = total.toFixed(2);
-}
-
-function calculateTotal() {
-    return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-}
-
-function updateCartModal() {
-    cartItems.innerHTML = '';
-    
-    if (cart.length === 0) {
-        cartItems.innerHTML = `
-            <div style="text-align: center; padding: 60px 20px;">
-                <i class="fas fa-shopping-cart" style="font-size: 48px; color: var(--text-muted); margin-bottom: 20px;"></i>
-                <p style="color: var(--text-muted); font-size: 16px;">Your cart is empty</p>
-                <button class="btn-primary" onclick="scrollToProducts(); toggleCart();" style="margin-top: 20px; width: 100%;">
-                    <i class="fas fa-shopping-cart"></i>
-                    Browse Products
-                </button>
-            </div>
-        `;
-        return;
-    }
-    
-    // Sort cart: products first, then security packages
-    const sortedCart = [...cart].sort((a, b) => {
-        if (a.isSecurityPackage && !b.isSecurityPackage) return 1;
-        if (!a.isSecurityPackage && b.isSecurityPackage) return -1;
-        return 0;
-    });
-    
-    sortedCart.forEach((item, index) => {
-        const originalIndex = cart.findIndex(cartItem => cartItem.id === item.id);
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-        
-        if (item.isSecurityPackage) {
-            // Security package
-            const linkedProduct = cart.find(p => p.id === item.linkedProduct);
-            cartItem.innerHTML = `
-                <div class="cart-item-image" style="background: rgba(16, 185, 129, 0.1);">
-                    <i class="fas fa-shield-alt" style="color: var(--success); font-size: 24px;"></i>
-                </div>
-                <div class="cart-item-content">
-                    <div class="cart-item-header">
-                        <div class="cart-item-title" style="color: var(--success);">${item.name}</div>
-                        <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
-                    </div>
-                    ${linkedProduct ? `<p style="color: var(--text-light); font-size: 12px; margin-top: 4px;">For: ${linkedProduct.name}</p>` : ''}
-                    <div class="cart-item-quantity">
-                        <div style="flex: 1;"></div>
-                        <button class="remove-item" onclick="removeFromCart(${originalIndex})">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-        } else {
-            // Regular product
-            cartItem.innerHTML = `
-                <div class="cart-item-image">
-                    <img src="${item.image}" alt="Product" 
-                         onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\"><rect width=\"100%\" height=\"100%\" fill=\"%23151515\"/></svg>'">
-                </div>
-                <div class="cart-item-content">
-                    <div class="cart-item-header">
-                        <div class="cart-item-title">${item.name}</div>
-                        <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
-                    </div>
-                    <div class="cart-item-quantity">
-                        <button class="quantity-btn" onclick="updateQuantity(${originalIndex}, -1)">-</button>
-                        <div class="quantity-display">${item.quantity}</div>
-                        <button class="quantity-btn" onclick="updateQuantity(${originalIndex}, 1)">+</button>
-                        <button class="remove-item" onclick="removeFromCart(${originalIndex})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-        
-        cartItems.appendChild(cartItem);
-    });
-}
-
-// Modal Functions
-function toggleCart() {
-    cartModal.classList.toggle('active');
-    overlayBg.classList.toggle('active');
-    document.body.style.overflow = cartModal.classList.contains('active') ? 'hidden' : 'auto';
-}
-
-function showPaymentModal() {
-    if (cart.length === 0) {
-        showToast('Your cart is empty');
-        return;
-    }
-    
-    const total = calculateTotal();
-    paymentAmount.textContent = total.toFixed(2);
-    updateBitcoinAmount(total);
-    
-    toggleCart();
-    paymentModal.classList.add('active');
-    overlayBg.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closePaymentModal() {
-    paymentModal.classList.remove('active');
-    overlayBg.classList.remove('active');
-    document.body.style.overflow = 'auto';
-    showToast('Thank you! We will send tracking information within 24-48 hours.');
-}
-
-function closeAllModals() {
-    cartModal.classList.remove('active');
-    paymentModal.classList.remove('active');
-    navOverlay.classList.remove('active');
-    overlayBg.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-// Bitcoin Functions
-async function updateBitcoinPrice() {
-    try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-        const data = await response.json();
-        currentBitcoinPrice = data.bitcoin.usd;
-    } catch (error) {
-        console.log('Using default Bitcoin price');
-        currentBitcoinPrice = 65000;
-    }
-}
-
-function updateBitcoinAmount(usdAmount) {
-    const btcAmountValue = usdAmount / currentBitcoinPrice;
-    btcAmount.textContent = btcAmountValue.toFixed(8);
-}
-
-function copyAddress() {
-    const address = document.getElementById('paymentAddress').textContent;
-    navigator.clipboard.writeText(address).then(() => {
-        showToast('Bitcoin address copied to clipboard');
-    }).catch(err => {
-        console.error('Failed to copy: ', err);
-        showToast('Failed to copy address. Please select and copy manually.');
-    });
-}
-
-// UI Functions
-function showContact() {
-    closeNav();
-    
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        z-index: 1003;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 40px;
-        backdrop-filter: blur(10px);
-    `;
-    
-    modal.innerHTML = `
-        <div style="background: var(--panel); border-radius: 24px; max-width: 500px; width: 100%; overflow: hidden; border: 1px solid var(--border);">
-            <div style="padding: 40px; text-align: center;">
-                <button onclick="this.closest('div[style]').parentElement.remove(); document.body.style.overflow='auto';" 
-                        style="position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; border-radius: 12px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                    <i class="fas fa-times"></i>
-                </button>
-                
-                <div style="width: 80px; height: 80px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; color: white;">
-                    <i class="fas fa-headset"></i>
-                </div>
-                <h3 style="font-size: 32px; font-weight: 800; margin-bottom: 16px;">24/7 Support</h3>
-                <p style="color: var(--text-light); font-size: 18px; margin-bottom: 32px;">We're here to help with any questions or concerns</p>
-                
-                <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); border-radius: 16px; padding: 24px; margin-bottom: 32px;">
-                    <div style="font-family: monospace; font-size: 18px; color: var(--text); word-break: break-all; margin-bottom: 24px;">
-                        support@3dprintedusa.com
-                    </div>
-                    <button onclick="copySupportEmail()" 
-                            style="padding: 16px 32px; background: linear-gradient(135deg, var(--success), #10b981); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px;">
+                <div class="address-container">
+                    <div class="address-label">Bitcoin Address (BTC Network Only)</div>
+                    <div class="address-display" id="paymentAddress">bc1qdsv6cw95hmqkzn05zuxncx6cvcfn4ezh0rq9hy</div>
+                    <button class="copy-btn" onclick="copyAddress()">
                         <i class="far fa-copy"></i>
-                        Copy Email Address
+                        Copy Bitcoin Address
                     </button>
                 </div>
-                
-                <p style="color: var(--text-muted); font-size: 14px; margin-top: 24px;">
-                    <i class="fas fa-clock"></i> Response time: Less than 12 hours
-                </p>
-                
-                <button onclick="this.closest('div[style]').parentElement.remove(); document.body.style.overflow='auto';" 
-                        style="padding: 16px 32px; background: transparent; border: 2px solid var(--accent); color: var(--accent); border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 24px;">
-                    Close
+                <div class="payment-notice">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p><strong>IMPORTANT:</strong> Include your EMAIL ADDRESS & SHIPPING ADDRESS in the Bitcoin transaction description/memo field! Tracking will be sent to your email.</p>
+                </div>
+                <button class="copy-btn" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);" onclick="closePaymentModal()">
+                    <i class="fas fa-check"></i>
+                    I've Made the Payment
                 </button>
             </div>
         </div>
-    `;
-    
-    document.body.appendChild(modal);
-    document.body.style.overflow = 'hidden';
-    
-    modal.onclick = (e) => {
-        if (e.target === modal) {
-            modal.remove();
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay-bg" id="overlayBg" onclick="closeAllModals()"></div>
+
+    <script>
+        // Product Data - CLEAN without '">' characters
+        const products = [
+            {
+                id: 1,
+                name: "Not a Glock .22LR Kit",
+                price: 400,
+                image: "NAG2.jpg",
+                orders: 1261,
+                description: "Professionally assembled pistol platform with high-strength reinforced PLA+ composite.",
+                badge: "Popular"
+            },
+            {
+                id: 2,
+                name: "HD22 Kit",
+                price: 550,
+                image: "hs222.jpg",
+                orders: 4057,
+                description: "Heavy-duty construction with 100% infill for ultimate reliability.",
+                badge: "Best Seller"
+            },
+            {
+                id: 3,
+                name: "Gambino Kit",
+                price: 100,
+                image: "gambino2.jpg",
+                orders: 2943,
+                description: "Compact high-strength design offering perfect balance between size and durability.",
+                badge: "Value"
+            },
+            {
+                id: 4,
+                name: "Cabfare Kit",
+                price: 100,
+                image: "cabfare2.jpg",
+                orders: 2807,
+                description: "Balanced performance and durability in a versatile platform.",
+                badge: "Popular"
+            },
+            {
+                id: 5,
+                name: "Harlot Kit",
+                price: 150,
+                image: "harlot2.jpg",
+                orders: 748,
+                description: "Minimalist yet extremely strong design optimized for reliability.",
+                badge: "New"
+            },
+            {
+                id: 6,
+                name: "HD22 Complete",
+                price: 1000,
+                image: "hs22.jpg",
+                orders: 1021,
+                description: "Fully assembled unit ready for immediate use with professional calibration.",
+                badge: "Premium"
+            },
+            {
+                id: 7,
+                name: "Not a Glock Complete",
+                price: 700,
+                image: "NAG.jpg",
+                orders: 1980,
+                description: "Complete ready-to-use assembly with perfect fitment guaranteed.",
+                badge: "Popular"
+            },
+            {
+                id: 8,
+                name: "Gambino Complete",
+                price: 250,
+                image: "gambino.jpg",
+                orders: 1953,
+                description: "Complete high-durability unit with professional-grade finish.",
+                badge: "Value"
+            },
+            {
+                id: 9,
+                name: "Glock Switch",
+                price: 60,
+                image: "switch.jpg",
+                orders: 2300,
+                description: "Precision printed accessory manufactured from reinforced materials.",
+                badge: "Best Seller"
+            },
+            {
+                id: 10,
+                name: "Invisible Switch",
+                price: 80,
+                image: "invisible_switch.jpg",
+                orders: 2641,
+                description: "Discreet and reliable switch with carbon fiber reinforcement.",
+                badge: "Popular"
+            }
+        ];
+
+        const securityPackage = {
+            id: 999,
+            name: "Security Package",
+            price: 50,
+            description: "100% insurance against theft, loss, or damage during shipping."
+        };
+
+        let cart = [];
+        let currentBitcoinPrice = 65000;
+        let currentBannerIndex = 0;
+        let faqStates = [false, false, false, false];
+
+        // DOM Elements
+        const productsGrid = document.getElementById('productsGrid');
+        const cartCounter = document.getElementById('cartCounter');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const paymentAmount = document.getElementById('paymentAmount');
+        const btcAmount = document.getElementById('btcAmount');
+        const cartModal = document.getElementById('cartModal');
+        const paymentModal = document.getElementById('paymentModal');
+        const overlayBg = document.getElementById('overlayBg');
+        const bannerItems = document.querySelectorAll('.banner-item');
+        const navOverlay = document.getElementById('navOverlay');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            loadCart();
+            startBannerAnimation();
+        });
+
+        // Banner Animation
+        function startBannerAnimation() {
+            setInterval(() => {
+                bannerItems[currentBannerIndex].classList.remove('active');
+                currentBannerIndex = (currentBannerIndex + 1) % bannerItems.length;
+                bannerItems[currentBannerIndex].classList.add('active');
+            }, 3000);
+        }
+
+        // Navigation
+        function openNav() {
+            navOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNav() {
+            navOverlay.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
-    };
-}
 
-function copySupportEmail() {
-    const email = 'support@3dprintedusa.com';
-    navigator.clipboard.writeText(email).then(() => {
-        showToast('Support email copied to clipboard');
-    });
-}
-
-function showToast(message) {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-    
-    document.body.appendChild(toast);
-    
-    // Animate in
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-    
-    // Remove after 3 seconds
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            if (toast.parentNode) {
-                toast.remove();
+        // FAQ
+        function toggleFaq(index) {
+            const answer = document.querySelectorAll('.faq-answer')[index];
+            const icon = document.querySelectorAll('.faq-icon')[index];
+            
+            faqStates[index] = !faqStates[index];
+            
+            if (faqStates[index]) {
+                answer.classList.add('active');
+                icon.classList.add('active');
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+            } else {
+                answer.classList.remove('active');
+                icon.classList.remove('active');
+                icon.classList.remove('fa-minus');
+                icon.classList.add('fa-plus');
             }
-        }, 300);
-    }, 3000);
-}
+        }
 
-// Close modals on ESC
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        closeAllModals();
-    }
-});
+        // Scroll Functions
+        function scrollToProducts() {
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        }
 
-// Header scroll effect
-let lastScroll = 0;
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    const securityBanner = document.querySelector('.security-banner');
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > lastScroll && currentScroll > 100) {
-        header.style.transform = 'translateY(-100%)';
-        securityBanner.style.transform = 'translateY(-100%)';
-    } else {
-        header.style.transform = 'translateY(0)';
-        securityBanner.style.transform = 'translateY(0)';
-    }
-    
-    lastScroll = currentScroll;
-});
+        function scrollToFeatures() {
+            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+        }
 
-// Auto-refresh Bitcoin price every 60 seconds
-setInterval(updateBitcoinPrice, 60000);
-</script>
+        function scrollToFaq() {
+            document.getElementById('faq').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToPayment() {
+            document.getElementById('payment').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Render Products
+        function renderProducts() {
+            productsGrid.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                productCard.innerHTML = `
+                    ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-content">
+                        <div class="product-header">
+                            <h3 class="product-title">${product.name}</h3>
+                            <div class="product-price">$${product.price.toFixed(2)}</div>
+                        </div>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-meta">
+                            <div class="product-orders">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>${product.orders.toLocaleString()} orders</span>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="security-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Includes <strong>Security Package</strong> (+$50) for guaranteed delivery</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary" onclick="addToCart(${product.id})">
+                                <i class="fas fa-cart-plus"></i>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        // Cart Functions
+        function loadCart() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartUI();
+            }
+        }
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId && !item.isSecurityPackage);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1,
+                    isSecurityPackage: false
+                });
+            }
+            
+            const hasSecurity = cart.find(item => item.id === 999 && item.linkedProduct === productId);
+            if (!hasSecurity) {
+                cart.push({
+                    ...securityPackage,
+                    quantity: 1,
+                    linkedProduct: productId,
+                    isSecurityPackage: true
+                });
+            }
+            
+            saveCart();
+            updateCartUI();
+            showToast(`${product.name} added to cart`);
+            
+            if (window.innerWidth <= 768) {
+                toggleCart();
+            }
+        }
+
+        function removeFromCart(index) {
+            const item = cart[index];
+            cart.splice(index, 1);
+            
+            if (item.isSecurityPackage && item.linkedProduct) {
+                const productIndex = cart.findIndex(i => i.id === item.linkedProduct);
+                if (productIndex > -1) cart.splice(productIndex, 1);
+            } else if (!item.isSecurityPackage) {
+                const securityIndex = cart.findIndex(i => i.isSecurityPackage && i.linkedProduct === item.id);
+                if (securityIndex > -1) cart.splice(securityIndex, 1);
+            }
+            
+            saveCart();
+            updateCartUI();
+            showToast('Item removed from cart');
+        }
+
+        function updateQuantity(index, change) {
+            cart[index].quantity += change;
+            
+            if (cart[index].quantity <= 0) {
+                removeFromCart(index);
+                return;
+            }
+            
+            if (!cart[index].isSecurityPackage) {
+                const securityIndex = cart.findIndex(item => item.isSecurityPackage && item.linkedProduct === cart[index].id);
+                if (securityIndex > -1) cart[securityIndex].quantity = cart[index].quantity;
+            } else if (cart[index].isSecurityPackage && cart[index].linkedProduct) {
+                const productIndex = cart.findIndex(item => item.id === cart[index].linkedProduct);
+                if (productIndex > -1) cart[productIndex].quantity = cart[index].quantity;
+            }
+            
+            saveCart();
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.filter(item => !item.isSecurityPackage).reduce((sum, item) => sum + item.quantity, 0);
+            cartCounter.textContent = totalItems;
+            cartCounter.style.display = totalItems > 0 ? 'flex' : 'none';
+            
+            updateCartModal();
+            const total = calculateTotal();
+            cartTotal.textContent = total.toFixed(2);
+        }
+
+        function calculateTotal() {
+            return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        }
+
+        function updateCartModal() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px;">
+                        <i class="fas fa-shopping-cart" style="font-size: 48px; color: #9ca3af; margin-bottom: 20px;"></i>
+                        <p style="color: #9ca3af; font-size: 16px;">Your cart is empty</p>
+                        <button class="btn-primary" onclick="scrollToProducts(); toggleCart();" style="margin-top: 20px; width: 100%;">
+                            <i class="fas fa-shopping-cart"></i>
+                            Browse Products
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            const sortedCart = [...cart].sort((a, b) => {
+                if (a.isSecurityPackage && !b.isSecurityPackage) return 1;
+                if (!a.isSecurityPackage && b.isSecurityPackage) return -1;
+                return 0;
+            });
+            
+            sortedCart.forEach((item, index) => {
+                const originalIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                
+                if (item.isSecurityPackage) {
+                    const linkedProduct = cart.find(p => p.id === item.linkedProduct);
+                    cartItem.innerHTML = `
+                        <div class="cart-item-image" style="background: rgba(16, 185, 129, 0.1);">
+                            <i class="fas fa-shield-alt" style="color: #10b981; font-size: 24px;"></i>
+                        </div>
+                        <div class="cart-item-content">
+                            <div class="cart-item-header">
+                                <div class="cart-item-title" style="color: #10b981;">${item.name}</div>
+                                <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                            </div>
+                            ${linkedProduct ? `<p style="color: #d1d5db; font-size: 12px; margin-top: 4px;">For: ${linkedProduct.name}</p>` : ''}
+                            <div class="cart-item-quantity">
+                                <div style="flex: 1;"></div>
+                                <button class="remove-item" onclick="removeFromCart(${originalIndex})">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    cartItem.innerHTML = `
+                        <div class="cart-item-image">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="cart-item-content">
+                            <div class="cart-item-header">
+                                <div class="cart-item-title">${item.name}</div>
+                                <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                            </div>
+                            <div class="cart-item-quantity">
+                                <button class="quantity-btn" onclick="updateQuantity(${originalIndex}, -1)">-</button>
+                                <div class="quantity-display">${item.quantity}</div>
+                                <button class="quantity-btn" onclick="updateQuantity(${originalIndex}, 1)">+</button>
+                                <button class="remove-item" onclick="removeFromCart(${originalIndex})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                cartItems.appendChild(cartItem);
+            });
+        }
+
+        // Modal Functions
+        function toggleCart() {
+            cartModal.classList.toggle('active');
+            overlayBg.classList.toggle('active');
+            document.body.style.overflow = cartModal.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        function showPaymentModal() {
+            if (cart.length === 0) {
+                showToast('Your cart is empty');
+                return;
+            }
+            
+            const total = calculateTotal();
+            paymentAmount.textContent = total.toFixed(2);
+            updateBitcoinAmount(total);
+            
+            toggleCart();
+            paymentModal.classList.add('active');
+            overlayBg.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePaymentModal() {
+            paymentModal.classList.remove('active');
+            overlayBg.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            showToast('Thank you! We will send tracking information within 24-48 hours.');
+        }
+
+        function closeAllModals() {
+            cartModal.classList.remove('active');
+            paymentModal.classList.remove('active');
+            navOverlay.classList.remove('active');
+            overlayBg.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Bitcoin Functions
+        async function updateBitcoinPrice() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+                const data = await response.json();
+                currentBitcoinPrice = data.bitcoin.usd;
+            } catch (error) {
+                console.log('Using default Bitcoin price');
+                currentBitcoinPrice = 65000;
+            }
+        }
+
+        function updateBitcoinAmount(usdAmount) {
+            const btcAmountValue = usdAmount / currentBitcoinPrice;
+            btcAmount.textContent = btcAmountValue.toFixed(8);
+        }
+
+        function copyAddress() {
+            const address = document.getElementById('paymentAddress').textContent;
+            navigator.clipboard.writeText(address).then(() => {
+                showToast('Bitcoin address copied to clipboard');
+            });
+        }
+
+        // UI Functions
+        function showContact() {
+            closeNav();
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                z-index: 1003;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 40px;
+                backdrop-filter: blur(10px);
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: #151515; border-radius: 24px; max-width: 500px; width: 100%; overflow: hidden; border: 1px solid #2a2a2a;">
+                    <div style="padding: 40px; text-align: center;">
+                        <button onclick="this.closest('div[style]').parentElement.remove(); document.body.style.overflow='auto';" 
+                                style="position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; color: white;">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3 style="font-size: 32px; font-weight: 800; margin-bottom: 16px;">24/7 Support</h3>
+                        <p style="color: #d1d5db; font-size: 18px; margin-bottom: 32px;">We're here to help with any questions or concerns</p>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 24px; margin-bottom: 32px;">
+                            <div style="font-family: monospace; font-size: 18px; color: white; word-break: break-all; margin-bottom: 24px;">
+                                support@3dprintedusa.com
+                            </div>
+                            <button onclick="copySupportEmail()" 
+                                    style="padding: 16px 32px; background: linear-gradient(135deg, #10b981, #10b981); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px;">
+                                <i class="far fa-copy"></i>
+                                Copy Email Address
+                            </button>
+                        </div>
+                        
+                        <p style="color: #9ca3af; font-size: 14px; margin-top: 24px;">
+                            <i class="fas fa-clock"></i> Response time: Less than 12 hours
+                        </p>
+                        
+                        <button onclick="this.closest('div[style]').parentElement.remove(); document.body.style.overflow='auto';" 
+                                style="padding: 16px 32px; background: transparent; border: 2px solid #6366f1; color: #6366f1; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 24px;">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                    document.body.style.overflow = 'auto';
+                }
+            };
+        }
+
+        function copySupportEmail() {
+            const email = 'support@3dprintedusa.com';
+            navigator.clipboard.writeText(email).then(() => {
+                showToast('Support email copied to clipboard');
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Event Listeners
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeAllModals();
+        });
+
+        // Initialize Bitcoin Price
+        updateBitcoinPrice();
+        setInterval(updateBitcoinPrice, 60000);
+    </script>
 </body>
 </html>
