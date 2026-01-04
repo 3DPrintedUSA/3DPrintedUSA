@@ -1742,7 +1742,7 @@ footer {
 <div class="overlay-bg" id="overlayBg" onclick="closeAllModals()"></div>
 
 <script>
-// Product Data - ALL 17 PRODUCTS from the original script
+// Product Data - ALL 17 PRODUCTS with CORRECTED IMAGES
 const products = [
     {
         id: 1,
@@ -1800,7 +1800,7 @@ const products = [
     },
     {
         id: 7,
-        name: "Not a Glock Complete",
+        name: "Not a Glock .22LR Complete",
         price: 700,
         image: "NAG.jpg",
         orders: 1980,
@@ -1999,7 +1999,7 @@ function renderProducts() {
         productCard.innerHTML = `
             ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
             <div class="product-image">
-                <img src="${product.image}" alt="${product.name}">
+                <img src="${product.image}" alt="${product.name}" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"380\" height=\"280\"><rect width=\"100%\" height=\"100%\" fill=\"%231e293b\"/><text x=\"50%\" y=\"50%\" font-family=\"Inter\" font-size=\"16\" fill=\"%23f8fafc\" text-anchor=\"middle\" dy=\".3em\">${product.name}</text></svg>'">
             </div>
             <div class="product-content">
                 <div class="product-header">
@@ -2187,7 +2187,7 @@ function updateCartModal() {
         } else {
             cartItem.innerHTML = `
                 <div class="cart-item-image">
-                    <img src="${item.image}" alt="${item.name}">
+                    <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"80\" height=\"80\"><rect width=\"100%\" height=\"100%\" fill=\"%23334155\"/><text x=\"50%\" y=\"50%\" font-family=\"Inter\" font-size=\"10\" fill=\"%23f8fafc\" text-anchor=\"middle\" dy=\".3em\">${item.name.substring(0, 20)}</text></svg>'">
                 </div>
                 <div class="cart-item-content">
                     <div class="cart-item-header">
