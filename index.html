@@ -218,6 +218,70 @@ header {
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
+/* ==================== NAVIGATION OVERLAY ==================== */
+.nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1003;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.nav-overlay.active {
+    display: flex;
+}
+
+.nav-close {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-close:hover {
+    background: var(--accent);
+    transform: rotate(90deg);
+}
+
+.nav-overlay a {
+    color: white;
+    font-size: 28px;
+    text-decoration: none;
+    padding: 20px 40px;
+    border: 2px solid var(--accent);
+    border-radius: 30px;
+    transition: all 0.3s;
+    width: 350px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.nav-overlay a:hover {
+    background: var(--accent);
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
 /* ==================== HERO SECTION ==================== */
 .hero {
     padding: 160px 0 120px;
@@ -657,6 +721,71 @@ header {
     color: var(--text-light);
     font-size: 17px;
     line-height: 1.6;
+}
+
+/* ==================== FAQ SECTION ==================== */
+.faq-section {
+    padding: 120px 0;
+    background: var(--bg);
+    position: relative;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+.faq-item {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: var(--accent);
+}
+
+.faq-question {
+    padding: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--text);
+    transition: background 0.3s ease;
+}
+
+.faq-question:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.faq-answer {
+    padding: 0 24px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.faq-answer.active {
+    padding: 0 24px 24px;
+    max-height: 500px;
+}
+
+.faq-icon {
+    transition: transform 0.3s ease;
+    color: var(--accent);
+}
+
+.faq-icon.active {
+    transform: rotate(45deg);
 }
 
 /* ==================== PAYMENT SECTION ==================== */
@@ -1110,7 +1239,6 @@ header {
 .payment-notice i {
     color: #f59e0b;
     font-size: 24px;
-    margin-bottom: 16px;
 }
 
 .payment-notice p {
@@ -1209,6 +1337,23 @@ footer {
     margin-bottom: 8px;
 }
 
+/* ==================== OVERLAY BACKGROUND ==================== */
+.overlay-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 999;
+    display: none;
+}
+
+.overlay-bg.active {
+    display: block;
+}
+
 /* ==================== RESPONSIVE DESIGN ==================== */
 @media (max-width: 1200px) {
     .hero h1 {
@@ -1240,6 +1385,12 @@ footer {
     
     .features-grid {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    
+    .nav-overlay a {
+        font-size: 24px;
+        width: 300px;
+        padding: 16px 32px;
     }
 }
 
@@ -1357,6 +1508,23 @@ footer {
     .payment-features {
         grid-template-columns: 1fr;
     }
+    
+    .nav-overlay {
+        gap: 16px;
+    }
+    
+    .nav-overlay a {
+        font-size: 20px;
+        width: 250px;
+        padding: 12px 24px;
+    }
+    
+    .nav-close {
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1447,23 +1615,6 @@ footer {
         transform: translateY(0);
     }
 }
-
-/* ==================== OVERLAY BACKGROUND ==================== */
-.overlay-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    z-index: 999;
-    display: none;
-}
-
-.overlay-bg.active {
-    display: block;
-}
 </style>
 </head>
 <body>
@@ -1504,12 +1655,24 @@ footer {
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cartCounter" class="cart-count">0</span>
             </button>
-            <button class="menu-btn" onclick="toggleMenu()">
+            <button class="menu-btn" onclick="openNav()">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </div>
 </header>
+
+<!-- Navigation Overlay -->
+<div class="nav-overlay" id="navOverlay">
+    <button class="nav-close" onclick="closeNav()">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="#products" onclick="closeNav();scrollToProducts()">Shop Products</a>
+    <a href="#features" onclick="closeNav();scrollToFeatures()">Features</a>
+    <a href="#faq" onclick="closeNav();scrollToFaq()">FAQ</a>
+    <a href="#payment" onclick="closeNav();scrollToPayment()">Bitcoin Payments</a>
+    <a href="#" onclick="closeNav();showContact()">Support</a>
+</div>
 
 <!-- Hero Section -->
 <section class="hero">
@@ -1546,7 +1709,7 @@ footer {
                 <i class="fas fa-shopping-cart"></i>
                 Shop Products
             </button>
-            <button class="btn-secondary" onclick="showPaymentInfo()">
+            <button class="btn-secondary" onclick="scrollToPayment()">
                 <i class="fab fa-bitcoin"></i>
                 Why Bitcoin
             </button>
@@ -1566,7 +1729,7 @@ footer {
 </section>
 
 <!-- Features Section -->
-<section class="features-section">
+<section class="features-section" id="features">
     <div class="section-header">
         <div class="section-badge">Why Choose Us</div>
         <h2>Premium Manufacturing Process</h2>
@@ -1600,14 +1763,71 @@ footer {
     </div>
 </section>
 
+<!-- FAQ Section -->
+<section class="faq-section" id="faq">
+    <div class="section-header">
+        <div class="section-badge">FAQ</div>
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about ordering from 3DPrintedUSA</p>
+    </div>
+    
+    <div class="faq-container">
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(0)">
+                <span>Is this website legitimate? Will I actually receive my order?</span>
+                <i class="fas fa-plus faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p><strong>Yes, 3DPrintedUSA is the only secure marketplace you can trust.</strong> We have a 100% delivery success rate with thousands of satisfied customers. All orders are professionally assembled by our technicians and shipped via LLC partnerships with guaranteed tracking.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(1)">
+                <span>What is the $50 Security Package and do I need it?</span>
+                <i class="fas fa-plus faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>The Security Package provides 100% insurance against theft, loss, or damage during shipping. For $50 per product, you're fully protected. If anything happens to your shipment, we immediately send a replacement. You can remove this option if you prefer, but it's recommended for complete peace of mind.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(2)">
+                <span>How do I receive tracking information after ordering?</span>
+                <i class="fas fa-plus faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Tracking information is automatically emailed to the address you provide in the Bitcoin transaction description. Include your email address in the transaction memo when sending payment. You'll receive tracking within 24-48 hours of payment confirmation.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(3)">
+                <span>Are the products assembled or do I need to build them?</span>
+                <i class="fas fa-plus faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>All products are <strong>professionally assembled by our technicians</strong> in the USA. We don't sell parts or kits - everything arrives ready for use after professional assembly, testing, and quality control.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Payment Section -->
-<section class="payment-section">
+<section class="payment-section" id="payment">
+    <div class="section-header">
+        <div class="section-badge">Payment</div>
+        <h2>Bitcoin-Only Payments</h2>
+        <p>Maximum privacy and security with irreversible, anonymous transactions</p>
+    </div>
+    
     <div class="bitcoin-card">
         <div class="bitcoin-icon">
             <i class="fab fa-bitcoin"></i>
         </div>
-        <h3>Bitcoin-Only Payments</h3>
-        <p>Maximum privacy and security with irreversible, anonymous transactions. No personal information required.</p>
+        <h3>Why Bitcoin-Only?</h3>
+        <p>Bitcoin protects both buyer and seller privacy, eliminates chargeback fraud, and ensures secure transactions. Traditional payment methods compromise privacy and security.</p>
         
         <div class="payment-features">
             <div class="payment-feature">
@@ -1638,8 +1858,8 @@ footer {
                 <h4>Quick Links</h4>
                 <ul class="footer-links">
                     <li><a href="#products" onclick="scrollToProducts()"><i class="fas fa-chevron-right"></i> Shop Products</a></li>
-                    <li><a href="#" onclick="showPaymentInfo()"><i class="fas fa-chevron-right"></i> Bitcoin Payments</a></li>
-                    <li><a href="#" onclick="showContact()"><i class="fas fa-chevron-right"></i> Support</a></li>
+                    <li><a href="#payment" onclick="scrollToPayment()"><i class="fas fa-chevron-right"></i> Bitcoin Payments</a></li>
+                    <li><a href="#faq" onclick="scrollToFaq()"><i class="fas fa-chevron-right"></i> FAQ</a></li>
                 </ul>
             </div>
             
@@ -1849,6 +2069,7 @@ const securityPackage = {
 let cart = [];
 let currentBitcoinPrice = 65000;
 let currentBannerIndex = 0;
+let faqStates = [false, false, false, false];
 
 // DOM Elements
 const productsGrid = document.getElementById('productsGrid');
@@ -1861,6 +2082,7 @@ const cartModal = document.getElementById('cartModal');
 const paymentModal = document.getElementById('paymentModal');
 const overlayBg = document.getElementById('overlayBg');
 const bannerItems = document.querySelectorAll('.banner-item');
+const navOverlay = document.getElementById('navOverlay');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -1895,6 +2117,54 @@ function startBannerAnimation() {
         currentBannerIndex = (currentBannerIndex + 1) % bannerItems.length;
         bannerItems[currentBannerIndex].classList.add('active');
     }, 3000);
+}
+
+// Navigation Functions
+function openNav() {
+    navOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeNav() {
+    navOverlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// FAQ Functions
+function toggleFaq(index) {
+    const answer = document.querySelectorAll('.faq-answer')[index];
+    const icon = document.querySelectorAll('.faq-icon')[index];
+    
+    faqStates[index] = !faqStates[index];
+    
+    if (faqStates[index]) {
+        answer.classList.add('active');
+        icon.classList.add('active');
+        icon.classList.remove('fa-plus');
+        icon.classList.add('fa-minus');
+    } else {
+        answer.classList.remove('active');
+        icon.classList.remove('active');
+        icon.classList.remove('fa-minus');
+        icon.classList.add('fa-plus');
+    }
+}
+
+// Scroll Functions
+function scrollToProducts() {
+    document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+}
+
+function scrollToFeatures() {
+    document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+}
+
+function scrollToFaq() {
+    document.getElementById('faq').scrollIntoView({ behavior: 'smooth' });
+}
+
+function scrollToPayment() {
+    document.getElementById('payment').scrollIntoView({ behavior: 'smooth' });
 }
 
 // Render Products
@@ -1940,10 +2210,6 @@ function renderProducts() {
                 </div>
                 
                 <div class="product-actions">
-                    <button class="btn-secondary" onclick="showProductDetails(${product.id})">
-                        <i class="fas fa-info-circle"></i>
-                        Details
-                    </button>
                     <button class="btn-primary" onclick="addToCart(${product.id})">
                         <i class="fas fa-cart-plus"></i>
                         Add to Cart
@@ -2157,11 +2423,6 @@ function toggleCart() {
     document.body.style.overflow = cartModal.classList.contains('active') ? 'hidden' : 'auto';
 }
 
-function toggleMenu() {
-    // Mobile menu functionality - simple alert for now
-    showToast('Menu functionality would be implemented here');
-}
-
 function showPaymentModal() {
     if (cart.length === 0) {
         showToast('Your cart is empty');
@@ -2188,6 +2449,7 @@ function closePaymentModal() {
 function closeAllModals() {
     cartModal.classList.remove('active');
     paymentModal.classList.remove('active');
+    navOverlay.classList.remove('active');
     overlayBg.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
@@ -2220,61 +2482,9 @@ function copyAddress() {
 }
 
 // UI Functions
-function scrollToProducts() {
-    document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-}
-
-function showPaymentInfo() {
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        z-index: 1003;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 40px;
-        backdrop-filter: blur(10px);
-    `;
-    
-    modal.innerHTML = `
-        <div style="background: var(--panel); border-radius: 24px; max-width: 600px; width: 100%; overflow: hidden; border: 1px solid var(--border);">
-            <div style="padding: 40px; text-align: center;">
-                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; color: white;">
-                    <i class="fab fa-bitcoin"></i>
-                </div>
-                <h3 style="font-size: 32px; font-weight: 800; margin-bottom: 20px;">Why Bitcoin-Only?</h3>
-                <div style="text-align: left; color: var(--text-light); font-size: 16px; line-height: 1.6; margin-bottom: 32px;">
-                    <p style="margin-bottom: 16px;"><strong>1. Maximum Privacy:</strong> No personal information required. Your identity remains completely anonymous.</p>
-                    <p style="margin-bottom: 16px;"><strong>2. No Chargebacks:</strong> Bitcoin transactions are irreversible, protecting both buyer and seller.</p>
-                    <p style="margin-bottom: 16px;"><strong>3. Global Accessibility:</strong> Available worldwide without currency conversion or banking restrictions.</p>
-                    <p style="margin-bottom: 16px;"><strong>4. Instant Verification:</strong> Payments are confirmed within minutes, allowing faster shipping.</p>
-                    <p style="margin-bottom: 16px;"><strong>5. Enhanced Security:</strong> No sensitive financial data is stored or transmitted.</p>
-                </div>
-                <button onclick="this.closest('div[style]').parentElement.remove(); document.body.style.overflow='auto';" 
-                        style="padding: 16px 32px; background: var(--gradient); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%;">
-                    Close
-                </button>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    document.body.style.overflow = 'hidden';
-    
-    modal.onclick = (e) => {
-        if (e.target === modal) {
-            modal.remove();
-            document.body.style.overflow = 'auto';
-        }
-    };
-}
-
 function showContact() {
+    closeNav();
+    
     const modal = document.createElement('div');
     modal.style.cssText = `
         position: fixed;
@@ -2294,6 +2504,11 @@ function showContact() {
     modal.innerHTML = `
         <div style="background: var(--panel); border-radius: 24px; max-width: 500px; width: 100%; overflow: hidden; border: 1px solid var(--border);">
             <div style="padding: 40px; text-align: center;">
+                <button onclick="this.closest('div[style]').parentElement.remove(); document.body.style.overflow='auto';" 
+                        style="position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; border-radius: 12px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-times"></i>
+                </button>
+                
                 <div style="width: 80px; height: 80px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; color: white;">
                     <i class="fas fa-headset"></i>
                 </div>
@@ -2341,108 +2556,6 @@ function copySupportEmail() {
     });
 }
 
-function showProductDetails(productId) {
-    const product = products.find(p => p.id === productId);
-    if (!product) return;
-    
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        z-index: 1003;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 40px;
-        backdrop-filter: blur(10px);
-        overflow-y: auto;
-    `;
-    
-    modal.innerHTML = `
-        <div style="background: var(--panel); border-radius: 24px; max-width: 800px; width: 100%; overflow: hidden; border: 1px solid var(--border);">
-            <div style="padding: 40px;">
-                <button onclick="this.closest('div[style]').parentElement.parentElement.remove(); document.body.style.overflow='auto';" 
-                        style="position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; border-radius: 12px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                    <i class="fas fa-times"></i>
-                </button>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
-                    <div style="background: linear-gradient(45deg, #151515, #1a1a1a); border-radius: 16px; padding: 40px; display: flex; align-items: center; justify-content: center;">
-                        <img src="${product.image}" alt="${product.name}" style="max-width: 100%; max-height: 300px; object-fit: contain;"
-                             onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\"><rect width=\"100%\" height=\"100%\" fill=\"%23151515\"/><text x=\"50%\" y=\"50%\" font-family=\"Inter\" font-size=\"16\" fill=\"%23ffffff\" text-anchor=\"middle\" dy=\".3em\">${product.name}</text></svg>'">
-                    </div>
-                    
-                    <div>
-                        ${product.badge ? `<div style="background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: white; padding: 8px 20px; border-radius: 50px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 20px;">${product.badge}</div>` : ''}
-                        
-                        <h3 style="font-size: 32px; font-weight: 800; margin-bottom: 16px;">${product.name}</h3>
-                        
-                        <div style="font-size: 48px; font-weight: 900; color: var(--success); margin-bottom: 24px;">
-                            $${product.price.toFixed(2)}
-                        </div>
-                        
-                        <p style="color: var(--text-light); font-size: 18px; line-height: 1.6; margin-bottom: 32px;">
-                            ${product.description}
-                        </p>
-                        
-                        <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 32px;">
-                            <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted);">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span>${product.orders.toLocaleString()} orders</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 4px; color: #fbbf24;">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 24px; margin-bottom: 32px;">
-                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-                        <i class="fas fa-shield-alt" style="color: var(--success); font-size: 24px;"></i>
-                        <div style="flex: 1;">
-                            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">Security Package Included</div>
-                            <div style="color: var(--text-light); font-size: 14px;">100% insurance against theft, loss, or damage during shipping</div>
-                        </div>
-                        <div style="font-size: 24px; font-weight: 800; color: var(--success);">+$50</div>
-                    </div>
-                </div>
-                
-                <div style="display: flex; gap: 16px;">
-                    <button onclick="this.closest('div[style]').parentElement.parentElement.remove(); document.body.style.overflow='auto';" 
-                            style="flex: 1; padding: 20px; background: transparent; border: 2px solid var(--accent); color: var(--accent); border-radius: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px;">
-                        <i class="fas fa-times"></i>
-                        Close
-                    </button>
-                    <button onclick="addToCart(${product.id}); this.closest('div[style]').parentElement.parentElement.remove(); document.body.style.overflow='auto';" 
-                            style="flex: 1; padding: 20px; background: var(--gradient); color: white; border: none; border-radius: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px;">
-                        <i class="fas fa-cart-plus"></i>
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    document.body.style.overflow = 'hidden';
-    
-    modal.onclick = (e) => {
-        if (e.target === modal) {
-            modal.remove();
-            document.body.style.overflow = 'auto';
-        }
-    };
-}
-
 function showToast(message) {
     const toast = document.createElement('div');
     toast.className = 'toast';
@@ -2477,12 +2590,15 @@ document.addEventListener('keydown', (e) => {
 let lastScroll = 0;
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
+    const securityBanner = document.querySelector('.security-banner');
     const currentScroll = window.pageYOffset;
     
     if (currentScroll > lastScroll && currentScroll > 100) {
         header.style.transform = 'translateY(-100%)';
+        securityBanner.style.transform = 'translateY(-100%)';
     } else {
         header.style.transform = 'translateY(0)';
+        securityBanner.style.transform = 'translateY(0)';
     }
     
     lastScroll = currentScroll;
